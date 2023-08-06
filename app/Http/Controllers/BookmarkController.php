@@ -29,12 +29,13 @@ class BookmarkController extends Controller
         }
     }
 
-    public function bookmarks()
+    public function bookmarkAds()
 {
     $user = Auth::user();
     $bookmarkedAds = $user->bookmarks;
 
     return view('bookmarks', compact('bookmarkedAds'));
 }
+
 
 }

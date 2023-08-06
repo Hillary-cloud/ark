@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Lodge;
 use App\Models\School;
-use App\Models\SavedAd;
 use App\Models\Bookmark;
 use App\Models\Location;
 use App\Models\SchoolArea;

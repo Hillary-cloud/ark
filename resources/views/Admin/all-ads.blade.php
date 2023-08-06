@@ -61,7 +61,9 @@
                                         <a href="{{route('admin.view-ad',$advert->uuid)}}"><button class="btn btn-success btn-sm text-light">View</button></a>
                                     </td>
                                     <td>
-                                        <a href="{{route('admin.delete-ad',$advert->uuid)}}" onclick="return confirm('You are about to delete this advert')"><button class="btn btn-danger btn-sm text-light">Delete</button></a>
+                                        <a href="{{ route('admin.delete-ad', $advert->uuid) }}"
+                                            onclick="event.preventDefault(); deleteAdByAdmin('{{ route('admin.delete-ad', $advert->uuid) }}')"
+                                            class="btn btn-danger btn-sm text-light">Delete</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -74,4 +76,22 @@
             @endif
         </div>
     </div>
+
+    <script>
+        function deleteAdByAdmin(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this ad',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+        </script>
 @endsection

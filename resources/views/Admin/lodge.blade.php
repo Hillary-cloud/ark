@@ -47,7 +47,9 @@
                                     <a href="{{route('admin.edit-lodge', $lodge->id)}}"><button class="btn btn-primary text-light">Edit</button></a>
                                 </td>
                                 <td>
-                                    <a href="{{route('admin.delete-lodge', $lodge->id)}}" onclick="return confirm('You are about to delete this lodge')"><button class="btn btn-danger text-light">Delete</button></a>
+                                    <a href="{{ route('admin.delete-lodge', $lodge->id) }}"
+                                        onclick="event.preventDefault(); deleteLodge('{{ route('admin.delete-lodge', $lodge->id) }}')"
+                                        class="btn btn-danger text-light">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -58,4 +60,21 @@
             </div>
         </div>
     </div>
+    <script>
+        function deleteLodge(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this lodge',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+        </script>
 @endsection

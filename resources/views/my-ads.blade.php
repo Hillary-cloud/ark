@@ -12,10 +12,11 @@
                     <button class="btn btn-outline-light btn-success form-control-lg" type="submit"><i class="bi bi-search" style="font-size: 20px"></i></button>
                 </form>
             </div>
-            @if ($adverts->isEmpty())
-            <p class="text-danger text-center">Nothing was found.</p>
-            @endif
+           
         </div>
+        @if ($adverts->isEmpty())
+        <p class="text-danger text-center">No ad available.</p>
+        @endif
         <div class="card w-100 p-2 mt-3">
             @if (session('message'))
                 <div class="alert alert-success">
@@ -26,7 +27,7 @@
                 use App\Models\Advert;
             @endphp
             @if (Advert::count() < 1)
-                <p class="text-danger text-center">No ad found</p>
+                <p class="text-danger text-center">No ad available</p>
             @else
             <div class="row">
                 <div class="col-12">
@@ -52,7 +53,10 @@
                                         <a href="{{route('view-my-ad',$advert->uuid)}}"><button class="btn btn-success btn-sm text-light">View</button></a>
                                     </td>
                                     <td>
-                                        <a href="{{route('delete-my-ad',$advert->uuid)}}" onclick="return confirm('You are about to delete this advert')"><button class="btn btn-danger btn-sm text-light">Delete</button></a>
+                                        {{-- <a href="{{route('delete-my-ad',$advert->uuid)}}" onclick="return confirm('You are about to delete this advert')"><button class="btn btn-danger btn-sm text-light">Delete</button></a> --}}
+                                        <a href="{{ route('delete-my-ad', $advert->uuid) }}"
+                                            onclick="event.preventDefault(); deleteAdByUser('{{ route('delete-my-ad', $advert->uuid) }}')"
+                                            class="btn btn-danger btn-sm text-light">Delete</a>
                                     </td>
                                     @if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false)
                                     <td>
@@ -70,4 +74,22 @@
             @endif
         </div>
     </div>
+
+    <script>
+        function deleteAdByUser(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this ad',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+        </script>
 @endsection

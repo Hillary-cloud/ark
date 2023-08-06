@@ -4,14 +4,14 @@
     <div class="container">
         <div class="card my-3 p-2">
             <div class="d-flex justify-content-between">
-                <h3>Bookmarked Ads</h3>
+                <h3>Saved Ads</h3>
                 <a href="javascript:history.back()" class="text-decoration-none">< Back</a>
             </div>
         </div>
 
         <div class="row d-flex justify-content-start" id="filtered-results">
             @if ($bookmarkedAds->isEmpty())
-            <p class="text-danger text-center">You have no bookmark yet</p>
+            <p class="text-danger text-center">You have no saved ad yet</p>
             @else
             @foreach ($bookmarkedAds as $bookmark)
             <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-4">
@@ -21,7 +21,7 @@
                     </a>
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-tittle fw-bold text-dark ">{{ucfirst($bookmark->advert->lodge->name)}}</h4>                                
+                                <h4 class="card-tittle fw-bold text-dark ">{{ucfirst($bookmark->advert->lodge->name)}}</h4>                              
                             </div>
                             
                             <div class="d-flex justify-content-between">
@@ -35,7 +35,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                             <p class="card-text "><small class="text-muted">Listed {{($bookmark->advert->created_at)->diffForHumans()}}</small></p>
-                            {{-- <i class="bi bi-eye" style="font-size: 25px"></i> --}}
+                            <i class="bi bi-eye"> {{ $bookmark->advert->view_count }}</i>
                             </div>
                         </div>
                     </div>

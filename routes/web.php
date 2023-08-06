@@ -108,7 +108,7 @@ Route::middleware(['auth','verified'])->group(function () {
     // bookmark
     Route::post('/bookmark/toggle', [BookmarkController::class, 'toggleBookmark'])
     ->name('bookmark.toggle');
-    Route::get('/bookmark', [BookmarkController::class, 'bookmarks'])->name('bookmarks');
+    Route::get('/bookmark', [BookmarkController::class, 'bookmarkAds'])->name('bookmarks');
 
 });
 // email verification routes

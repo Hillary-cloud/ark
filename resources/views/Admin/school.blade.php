@@ -47,7 +47,9 @@
                             <a href="{{route('admin.edit-school', $school->id)}}"><button class="btn btn-primary text-light">Edit</button></a>
                         </td>
                         <td>
-                            <a href="{{route('admin.delete-school', $school->id)}}" onclick="return confirm('You are about to delete this school')"><button class="btn btn-danger text-light">Delete</button></a>
+                            <a href="{{ route('admin.delete-school', $school->id) }}"
+                                onclick="event.preventDefault(); deleteSchool('{{ route('admin.delete-school', $school->id) }}')"
+                                class="btn btn-danger text-light">Delete</a>
                         </td>
                     </tr>        
                     @endforeach
@@ -57,4 +59,22 @@
             @endif
         </div>
     </div>
+
+    <script>
+        function deleteSchool(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this school',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+        </script>
 @endsection
