@@ -126,7 +126,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                         <p class="card-text "><small class="text-muted">Listed {{($advert->created_at)->diffForHumans()}}</small></p>
-                        {{-- <i class="bi bi-eye" style="font-size: 25px"></i> --}}
+                        <i class="bi bi-eye"> {{ $advert->view_count }}</i>
                         </div>
                     </div>
                 </div>

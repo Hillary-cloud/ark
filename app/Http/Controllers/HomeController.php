@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('query');
-    
+
         $adverts = Advert::where('active', true)
             ->where('draft', false)
             ->where('expiration_date', '>', Carbon::now())
@@ -32,16 +32,17 @@ class HomeController extends Controller
                             ->orWhere('locations.state', 'like', '%' . $query . '%');
                     });
             })->get();
-    
+
         $locations = Location::all();
         $schools = School::all();
         $school_areas = SchoolArea::all();
         $lodges = Lodge::all();
-    
+
         return view('index', compact('adverts', 'locations', 'schools', 'school_areas', 'lodges', 'query'));
     }
 
-    public function filteredAd(Request $request){
+    public function filteredAd(Request $request)
+    {
         $query = Advert::query();
 
         // Apply filters if provided in the request
@@ -66,7 +67,7 @@ class HomeController extends Controller
             $priceRange = explode('-', $request->input('price'));
             $minPrice = (int) $priceRange[0];
             $maxPrice = (int) $priceRange[1];
-    
+
             // Filter the adverts where combined_price is within the selected range
             $query->whereBetween('combined_price', [$minPrice, $maxPrice]);
         }
@@ -81,18 +82,27 @@ class HomeController extends Controller
 
         $locations = Location::all();
         $schools = School::all();
-        $school_areas = SchoolArea::all(); 
+        $school_areas = SchoolArea::all();
         $lodges = Lodge::all();
 
-        return view('filtered-results',compact('adverts','locations','schools','school_areas','lodges'));
+        return view('filtered-results', compact('adverts', 'locations', 'schools', 'school_areas', 'lodges'));
     }
 
-    public function AdDetail($uuid){
-            $advert = Advert::where('uuid',$uuid)->firstOrFail();
-            $adverts = Advert::where('school_id', $advert->school->id)
-            ->where('lodge_id',$advert->lodge->id)
-            ->whereNotIn('uuid',[$uuid])->get();
-            return view('detail',compact('advert','adverts'));
-            
+    public function AdDetail($uuid)
+    {
+        $advert = Advert::where('uuid', $uuid)->firstOrFail();
+
+        // Check if the ad has been viewed in the current session
+        $viewedAds = session()->get('viewed_ads', []);
+        if (!in_array($uuid, $viewedAds)) {
+            $advert->increment('view_count'); // Increment view count
+            $viewedAds[] = $uuid;
+            session()->put('viewed_ads', $viewedAds);
+        }
+        $adverts = Advert::where('school_id', $advert->school->id)
+            ->where('lodge_id', $advert->lodge->id)
+            ->whereNotIn('uuid', [$uuid])->get();
+
+        return view('detail', compact('advert', 'adverts'));
     }
 }
