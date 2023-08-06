@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\School;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class SchoolArea extends Model
+{
+    use HasFactory;
+
+    protected $table = 'school_areas';
+    protected $guarded = [];
+
+    public function school(){
+        return $this->belongsTo(School::class, 'school_id');
+    }
+}

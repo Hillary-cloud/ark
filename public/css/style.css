@@ -1,0 +1,29 @@
+a .card img:hover{
+    transform: scale(1.1);
+}
+a .card img{
+    transition: transform 0.2s ease;
+}
+
+.dropdown-menu .dropdown-item a:hover{
+    background-color: gray;
+    color: white;
+}
+
+.bookmark-button {
+    display: inline-block;
+    text-decoration: none;
+    color: gray; /* Default color */
+}
+
+.bookmarked {
+    color: rgb(233, 233, 21); /* Change color when bookmarked */
+    font-weight: bold; /* Apply bold font */
+}
+
+@media (min-width: 576px){
+    .dropdown:hover > .dropdown-menu{
+        display: block;
+        margin-top: 0;
+    }
+}
