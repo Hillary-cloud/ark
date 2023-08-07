@@ -37,7 +37,7 @@
                         @csrf
                         @method('put')
                         <div class="mb-3">
-                            <label for="price" class="form-label">Price (&#8358):</label>
+                            <label for="price" class="form-label">Price(&#8358)<span class="text-danger">*</span></label>
                             <input type="number" name="price" id="price" value="{{ $advert->price }}"
                                 class="form-control" step="0.01">
                             @error('price')
@@ -46,7 +46,7 @@
                         </div>
                     
                     <div class="mb-3">
-                        <label for="agent_fee" class="form-label">Agent fee (&#8358):</label>
+                        <label for="agent_fee" class="form-label">Agent fee(&#8358)</label>
                         <input type="number" name="agent_fee" id="agent_fee" value="{{ $advert->agent_fee }}"
                             class="form-control" step="0.01">
                         @error('agent_fee')
@@ -62,7 +62,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="phone_number" class="form-label">Phone number:</label>
+                        <label for="phone_number" class="form-label">Phone number<span class="text-danger">*</span></label>
                         <input type="text" name="phone_number" id="phone_number"
                             value="{{ $advert->phone_number }}"
                             class="form-control">

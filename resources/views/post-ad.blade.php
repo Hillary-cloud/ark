@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="mb-3">
-                                <label for="lodge" class="form-label">Lodge:</label>
+                                <label for="lodge" class="form-label">Lodge<span class="text-danger">*</span></label>
                                 <select class="form-control" name="lodge_id" id="lodge" onchange="generateSlug()">
                                     <option value="">Select Lodge</option>
                                     @foreach ($lodges as $lodge)
@@ -51,7 +51,7 @@
                             <input type="hidden" id="slug" class="" name="slug">
 
                             <div class="mb-3">
-                                <label for="location" class="form-label">Location:</label>
+                                <label for="location" class="form-label">Location<span class="text-danger">*</span></label>
                                 <select class="form-control" name="location_id" id="location">
                                     <option value="">Select Location</option>
                                     @foreach ($locations as $location)
@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="school" class="form-label">School:</label>
+                                <label for="school" class="form-label">School<span class="text-danger">*</span></label>
                                 <select class="form-control" name="school_id" id="school" disabled>
                                     <option value="">Select School</option>
                                 </select>
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="school_area" class="form-label">School Area:</label>
+                                <label for="school_area" class="form-label">School Area<span class="text-danger">*</span></label>
                                 <select class="form-control" name="school_area_id" id="school_area" disabled>
                                     <option value="">Select School Area</option>
                                 </select>
@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="cover_image" class="form-label">Cover Image:</label>
+                                <label for="cover_image" class="form-label">Cover Image<span class="text-danger">*</span></label>
                                 <input type="file" name="cover_image" id="cover_image" accept="image/*"
                                     class="form-control">
                                 <div id="coverImagePreview" class="mt-2"></div>
@@ -94,7 +94,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="other_images" class="form-label">Other Images (not more than 4 images):</label>
+                                <label for="other_images" class="form-label">Other Images (not more than 4 images)</label>
                                 <input type="file" name="other_images[]" id="other_images" accept="image/*"
                                     class="form-control" multiple max="4">
                                 <div id="otherImagesPreview" class="mt-2"></div>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="mb-3">
-                                <label for="price" class="form-label">Price (&#8358):</label>
+                                <label for="price" class="form-label">Price(&#8358)<span class="text-danger">*</span></label>
                                 <input type="number" name="price" id="price" value="{{ old('price') }}"
                                     class="form-control" step="0.01">
                                 @error('price')
@@ -115,7 +115,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="agent_fee" class="form-label">Agent fee (&#8358):</label>
+                                <label for="agent_fee" class="form-label">Agent fee(&#8358)</label>
                                 <input type="number" name="agent_fee" id="agent_fee" value="{{ old('agent_fee') }}"
                                     class="form-control" step="0.01">
                                 @error('agent_fee')
@@ -133,8 +133,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description:</label>
-                                <textarea name="description" id="description" placeholder="a brief description of your ad" class="form-control"
+                                <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                                <textarea name="description" id="description" placeholder="Give a detailed description of your ad" class="form-control"
                                     rows="3">{{ old('description') }}</textarea>
                                 @error('description')
                                     <p class="text-danger">{{ $message }}</p>
@@ -142,9 +142,9 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone_number" class="form-label">Phone number:</label>
+                                <label for="phone_number" class="form-label">Phone number<span class="text-danger">*</span></label>
                                 <input type="text" name="phone_number" id="phone_number"
-                                    value="{{ old('phone_number') }}" placeholder="Your phone number"
+                                    value="{{ old('phone_number') }}" placeholder="e.g, 080123456789"
                                     class="form-control">
                                     <p class="text-muted fst-italic">NB: Provide your active phone number as people will reach out to you through it.</p>
                                 @error('phone_number')
@@ -155,7 +155,7 @@
                             <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
 
                             <div class="mb-3">
-                                <label for="seller_name" class="form-label">Name:</label>
+                                {{-- <label for="seller_name" class="form-label">Name:</label> --}}
                                 <input type="text" name="seller_name" id="seller_name"
                                     value="{{ ucfirst(auth()->user()->name) }}" class="form-control" readonly>
                                 @error('seller_name')
