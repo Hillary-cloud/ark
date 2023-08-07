@@ -9,6 +9,8 @@ use App\Models\School;
 use App\Models\Location;
 use App\Models\SchoolArea;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class HomeController extends Controller
 {
@@ -93,11 +95,24 @@ class HomeController extends Controller
         $advert = Advert::where('uuid', $uuid)->firstOrFail();
 
         // Check if the ad has been viewed in the current session
-        $viewedAds = session()->get('viewed_ads', []);
+        // $viewedAds = session()->get('viewed_ads', []);
+        // if (!in_array($uuid, $viewedAds)) {
+        //     $advert->increment('view_count'); // Increment view count
+        //     $viewedAds[] = $uuid;
+        //     session()->put('viewed_ads', $viewedAds);
+        // }
+        // Get the user's IP address
+        $ip = FacadesRequest::ip();
+
+        // Check if the ad has been viewed by this IP address
+        $viewedAds = Cache::remember('viewed_ads:' . $ip, now()->addHours(24), function () use ($ip) {
+            return [];
+        });
+
         if (!in_array($uuid, $viewedAds)) {
-            $advert->increment('view_count'); // Increment view count
+            $advert->increment('view_count'); // Increment IP view count
             $viewedAds[] = $uuid;
-            session()->put('viewed_ads', $viewedAds);
+            Cache::put('viewed_ads:' . $ip, $viewedAds, now()->addHours(24));
         }
         $adverts = Advert::where('school_id', $advert->school->id)
             ->where('lodge_id', $advert->lodge->id)
