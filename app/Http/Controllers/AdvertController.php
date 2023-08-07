@@ -105,9 +105,37 @@ class AdvertController extends Controller
         return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
     }
 
-    public function draftGet(){
+    public function getDraft(){
         $adverts = Advert::where(['user_id' => auth()->user()->id, 'draft' => true])->get();
         return view('draft',compact('adverts'));
+    }
+
+    public function editDraft($uuid){
+        $advert = Advert::where('uuid',$uuid)->firstOrFail();
+        return view('edit-draft',compact('advert'));
+    }
+
+    public function updateDraft(Request $request,$uuid){
+        $request->validate([
+            'price' => 'required|numeric',
+            'agent_fee' => 'nullable|numeric',
+            'negotiable' => 'nullable|boolean',
+            'phone_number' => 'required|string',
+        ]);
+
+        $negotiable = $request->has('negotiable') ? true : false;
+        $combinedPrice = $request->price + $request->agent_fee;
+
+        $advert = Advert::where('uuid',$uuid)->firstOrFail();
+        $advert->price = $request->price;
+        $advert->agent_fee = $request->agent_fee;
+        $advert->combined_price = $combinedPrice;
+        $advert->negotiable = $negotiable;
+        $advert->phone_number = $request->phone_number;
+        $advert->save();
+
+        return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
+
     }
 
     public function deleteDraft($uuid){
@@ -213,7 +241,6 @@ class AdvertController extends Controller
         $advert->save();
 
         return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
-
 
     }
 

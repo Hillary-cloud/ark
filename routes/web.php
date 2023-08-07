@@ -47,7 +47,9 @@ Route::middleware(['auth','verified'])->group(function () {
     // advert
     Route::get('post-ad', [AdvertController::class, 'index'])->name('postAd');
     Route::post('post-ad', [AdvertController::class, 'store'])->name('store-ad');
-    Route::get('draft', [AdvertController::class, 'draftGet'])->name('draft');
+    Route::get('draft', [AdvertController::class, 'getDraft'])->name('draft');
+    Route::get('edit-draft/{uuid}', [AdvertController::class, 'editDraft'])->name('edit-draft');
+    Route::put('update-draft/{uuid}', [AdvertController::class, 'updateDraft'])->name('update-draft');
     Route::get('draft/{uuid}', [AdvertController::class, 'deleteDraft'])->name('delete-draft');
     Route::post('/save-ad', [AdvertController::class, 'saveAd'])->name('save-ad');
     // admin ads

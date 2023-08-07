@@ -31,7 +31,7 @@
                         @endif
                       
                         <div class="my-auto">
-                            <a href="{{route('payment-page', $advert->uuid)}}"><button class="btn btn-light btn-outline-success btn-sm ">Post ad</button></a>
+                            <a href="{{route('edit-draft', $advert->uuid)}}"><button class="btn btn-light btn-outline-success btn-sm ">Edit</button></a>
                             <a href="{{route('delete-draft', $advert->uuid)}}"><button class="btn btn-danger btn-sm">Delete</button></a>
                         </div>
                     </div>
