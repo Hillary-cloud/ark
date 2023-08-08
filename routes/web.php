@@ -72,6 +72,7 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/payment/success/{uuid}', function () {
         return view('success');
     })->name('success');
+    Route::get('/transaction-history', [PaymentController::class, 'showTransactionHistoryPage'])->name('payment-history');
 
     // admin routes
     // location

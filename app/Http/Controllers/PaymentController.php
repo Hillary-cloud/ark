@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Advert;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Unicodeveloper\Paystack\Paystack;
 
 class PaymentController extends Controller
 {
-    
+
     public function showPaymentPage($uuid)
     {
-        $advert = Advert::where('uuid',$uuid)->firstOrFail();
+        $advert = Advert::where('uuid', $uuid)->firstOrFail();
         // Pass the advert data to the payment page view
         return view('payment-page', compact('advert'));
     }
@@ -28,7 +29,7 @@ class PaymentController extends Controller
 
     public function redirectToGateway($uuid)
     {
-        $advert = Advert::where('uuid',$uuid)->firstOrFail();
+        $advert = Advert::where('uuid', $uuid)->firstOrFail();
         $email = auth()->user()->email;
         $name = auth()->user()->name;
         // Replace this with your desired payment amount and other details
@@ -60,32 +61,56 @@ class PaymentController extends Controller
                 ]
             ];
         }
-        
-        // Generate the callback URL with the UUID included
-    $callbackUrl = URL::route('payment.callback', ['uuid' => $uuid]);
 
-    // Append the callback URL to the payment data
-    $paymentData['callback_url'] = $callbackUrl;
+        // Generate the callback URL with the UUID included
+        $callbackUrl = URL::route('payment.callback', ['uuid' => $uuid]);
+
+        // Append the callback URL to the payment data
+        $paymentData['callback_url'] = $callbackUrl;
 
         return $this->paystack->getAuthorizationUrl($paymentData)->redirectNow();
     }
-    
+
     public function handleGatewayCallback($uuid)
     {
         $expirationDate = Carbon::now()->addDays(30);
         $paymentDetails = $this->paystack->getPaymentData();
 
         $status = $paymentDetails['data']['status'];
+        $metadata = $paymentDetails['data']['metadata'];
+
+        // Extract custom fields from metadata
+        $paymentFor = null;
+        foreach ($metadata['custom_fields'] as $customField) {
+            if ($customField['variable_name'] === 'payment_for') {
+                $paymentFor = $customField['value'];
+                break;
+            }
+        }
         // dd($paymentDetails);
 
         // Process payment details and update your database accordingly
         // For example, you can check if the payment was successful and update the user's order status.
-        if($status === 'success'){
-            $advert = Advert::where('uuid',$uuid)->firstOrFail();
+        if ($status === 'success') {
+            $advert = Advert::where('uuid', $uuid)->firstOrFail();
             $advert->update(['expiration_date' => $expirationDate, 'draft' => false, 'active' => true]);
+
+            // Create a new payment record and associate it with the authenticated user and advert
+            Payment::create([
+                'reference_number' => $paymentDetails['data']['reference'],
+                'amount' => $paymentDetails['data']['amount'] / 100, // Assuming the amount is in kobo and needs to be converted to naira
+                'payment_for' => $paymentFor,
+                'user_id' => auth()->user()->id,
+                'advert_id' => $advert->id, // Associate with the advert
+            ]);
         }
-        
+
         return redirect()->route('success', ['uuid' => $advert->uuid]); // Redirect to a success page
     }
 
+    public function showTransactionHistoryPage(){
+        $payments = Payment::where('user_id',auth()->user()->id)->get();
+        
+        return view('payment-history',compact('payments'));
+    }
 }

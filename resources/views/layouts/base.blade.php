@@ -89,6 +89,10 @@
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li><a class="dropdown-item" href="{{route('bookmarks')}}"><i class="bi bi-bookmark"></i> Saved</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{route('payment-history')}}">Transaction History</a></li>
                         
                                     </ul>
                                 </li>
@@ -139,7 +143,11 @@
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li><a class="dropdown-item" href="{{route('bookmarks')}}"><i class="bi bi-bookmark"></i> Saved</a></li>
-                            
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('payment-history')}}">Transaction History</a></li>
+                                            
                                         </ul>
                                     </li>
                                     
