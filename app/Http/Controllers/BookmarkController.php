@@ -30,12 +30,18 @@ class BookmarkController extends Controller
     }
 
     public function bookmarkAds()
-{
-    $user = Auth::user();
-    $bookmarkedAds = $user->bookmarks;
+    {
+        $user = Auth::user();
+        $bookmarkedAds = $user->bookmarks;
 
-    return view('bookmarks', compact('bookmarkedAds'));
-}
+        return view('bookmarks', compact('bookmarkedAds'));
+    }
 
+    public function deleteBookmark($id)
+    {
+        $bookmark = Bookmark::where('id',$id)->where('user_id', auth()->user()->id)->first();
+        $bookmark->delete();
 
+        return redirect()->route('bookmarks',compact('bookmark'));
+    }
 }

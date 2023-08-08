@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\LodgeController;
 use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\SchoolAreaController;
+use App\Models\Bookmark;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -111,6 +112,7 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::post('/bookmark/toggle', [BookmarkController::class, 'toggleBookmark'])
     ->name('bookmark.toggle');
     Route::get('/bookmark', [BookmarkController::class, 'bookmarkAds'])->name('bookmarks');
+    Route::get('/bookmark/delete/{id}', [BookmarkController::class, 'deleteBookmark'])->name('delete-bookmark');
 
 });
 // email verification routes

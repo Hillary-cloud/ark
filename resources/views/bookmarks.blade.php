@@ -11,7 +11,7 @@
 
         <div class="row d-flex justify-content-start" id="filtered-results">
             @if ($bookmarkedAds->isEmpty())
-            <p class="text-danger text-center">You have no saved ad yet</p>
+            <p class="text-danger text-center">You have no saved ad</p>
             @else
             @foreach ($bookmarkedAds as $bookmark)
             <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-4">
@@ -21,7 +21,11 @@
                     </a>
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-tittle fw-bold text-dark ">{{ucfirst($bookmark->advert->lodge->name)}}</h4>                              
+                                <h4 class="card-tittle fw-bold text-dark ">{{ucfirst($bookmark->advert->lodge->name)}}</h4>
+                                {{-- <a href="{{route('delete-bookmark',$bookmark->id)}}"><button class="btn btn-danger btn-sm">Delete</button></a>                               --}}
+                                <a href="{{ route('delete-bookmark', $bookmark->id) }}"
+                                    onclick="event.preventDefault(); deleteBookmark('{{ route('delete-bookmark', $bookmark->id) }}')"
+                                    class="btn btn-danger text-light">Delete</a>
                             </div>
                             
                             <div class="d-flex justify-content-between">
@@ -47,4 +51,22 @@
             
         </div>
     </div>
+
+    <script>
+        function deleteBookmark(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this saved ad',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+        </script>
 @endsection
