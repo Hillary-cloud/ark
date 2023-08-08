@@ -32,7 +32,10 @@
                       
                         <div class="my-auto">
                             <a href="{{route('edit-draft', $advert->uuid)}}"><button class="btn btn-light btn-outline-success btn-sm ">Edit</button></a>
-                            <a href="{{route('delete-draft', $advert->uuid)}}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                            <a href="{{ route('delete-draft', $advert->uuid) }}"
+                                onclick="event.preventDefault(); deleteDraft('{{ route('delete-draft', $advert->uuid) }}')"
+                                class="btn btn-danger btn-sm text-light">Delete</a>
+                            {{-- <a href="{{route('delete-draft', $advert->uuid)}}"><button class="btn btn-danger btn-sm">Delete</button></a> --}}
                         </div>
                     </div>
                 </div>
@@ -48,4 +51,22 @@
         </div>
         @endif
     </div>
+
+    <script>
+        function deleteDraft(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this draft',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+        </script>
 @endsection
