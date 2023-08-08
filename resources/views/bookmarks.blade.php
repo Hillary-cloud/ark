@@ -56,7 +56,7 @@
         function deleteBookmark(deleteUrl) {
             Swal.fire({
                 title: 'Are you sure?',
-                text: 'You are about to delete this saved ad',
+                text: 'You are about to remove this saved ad',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
