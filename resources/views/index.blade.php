@@ -9,6 +9,7 @@ height: 400px;
 background-size: cover;
 background-position: center;
 background-size: 100%;
+background-repeat: no-repeat;
 ">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
         <div class="container-fluid h-100" style="padding-left: 10%; padding-top: 100px;">

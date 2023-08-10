@@ -17,7 +17,8 @@
     <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
     <link href="css/style.css" rel="stylesheet">
     <!-- Scripts -->
@@ -60,10 +61,6 @@
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('my-ads')}}">My Ads</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
                                         <li><a class="dropdown-item" href="{{route('admin.all-ads')}}">All Ads</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
@@ -81,19 +78,7 @@
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li><a class="dropdown-item" href="{{route('admin.school-area')}}">School Area</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" href="{{route('draft')}}">Draft</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" href="{{route('bookmarks')}}"><i class="bi bi-bookmark"></i> Saved</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" href="{{route('payment-history')}}">Transaction History</a></li>
-                        
+                                    
                                     </ul>
                                 </li>
         
@@ -110,6 +95,22 @@
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
+                                            <li><a class="dropdown-item" href="{{route('my-ads')}}">My Ads</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('draft')}}">Draft</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{route('bookmarks')}}"><i class="bi bi-bookmark"></i> Saved</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{route('payment-history')}}">Transaction History</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
@@ -147,7 +148,7 @@
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li><a class="dropdown-item" href="{{route('payment-history')}}">Transaction History</a></li>
-                                            
+
                                         </ul>
                                     </li>
                                     

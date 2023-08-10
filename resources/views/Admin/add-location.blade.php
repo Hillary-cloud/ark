@@ -2,14 +2,14 @@
 @extends('layouts.base')
 @section('content')
     <div class="container">
-        <div class="card w-100 m-3 shadow-sm p-2">
+        <div class="card w-100 shadow-sm p-2">
             <div class="d-flex justify-content-between">
                 <h3 class="fw-bold">Add Location</h3>
                 <a href="{{ route('admin.location') }}" class="btn btn-success rounded-pill text-light p-1"
                     style="width: 12rem">All Location</a>
             </div>
         </div>
-        <div class="card w-50 p-2 m-3 shadow-lg mx-auto ">
+        <div class="card p-2 m-3 shadow-lg mx-auto ">
             @if (session('message'))
                 <div class="alert alert-success">
                     {{ session('message') }}

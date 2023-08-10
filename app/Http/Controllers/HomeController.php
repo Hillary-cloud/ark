@@ -82,6 +82,7 @@ class HomeController extends Controller
         // Get filtered results
         $adverts = $query->get();
 
+        // Needed when you are not including the filered results page in the index page
         $locations = Location::all();
         $schools = School::all();
         $school_areas = SchoolArea::all();
