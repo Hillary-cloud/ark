@@ -7,6 +7,7 @@ use App\Models\Lodge;
 use App\Models\Advert;
 use App\Models\School;
 use App\Models\Location;
+use Jorenvh\Share\ShareFacade as Share;
 use App\Models\SchoolArea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -120,10 +121,15 @@ class HomeController extends Controller
         ->where('draft', false)
         ->where('expiration_date', '>', Carbon::now())
         ->where('school_id', $advert->school->id)
-            ->where('lodge_id', $advert->lodge->id)
-            ->whereNotIn('uuid', [$uuid])->get();
+        ->where('lodge_id', $advert->lodge->id)
+        ->whereNotIn('uuid', [$uuid])->get();
 
-        return view('detail', compact('advert', 'adverts'));
+        $shareButton = Share::page(url()->current())
+            ->facebook()
+            ->twitter()
+            ->whatsapp();
+
+        return view('detail', compact('advert', 'adverts','shareButton'));
     }
 
 }

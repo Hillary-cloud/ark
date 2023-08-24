@@ -34,6 +34,24 @@
     margin: auto;
 }
 
+#social-links ul li {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+#social-links ul li a {
+    padding: 5px;
+    margin: 2px;
+    font-size: 20px;
+    color: rgb(46,41,114);
+    background-color: #ccc;
+}
+
+#social-links ul li a:hover{
+    background-color: rgb(46,41,114);
+    color: white;
+}
+
 </style>
 
     <div class="container my-5">
@@ -81,6 +99,10 @@
                     @else
                     <a href="{{url('login')}}" class="text-center btn btn-success btn-lg fw-bold rounded-pill"><i class="bi bi-telephone"></i> CONTACT SELLER</a>
                     @endauth
+                    <div class="d-flex">
+                        <p style="font-size:20px; margin-top:15px"><i class="bi bi-share" style="font-size:20px; margin-top:15px"></i> Share on</p>
+                        {!! $shareButton !!}
+                    </div>
                 </div>
             </div>
         </div>
