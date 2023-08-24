@@ -41,10 +41,11 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 Route::get('/filter', [HomeController::class, 'filteredAd'])->name('filtered-advert');
-Route::get('/detail/{uuid}', [HomeController::class, 'AdDetail'])->name('property-detail');
+Route::get('/detail/{uuid}', [HomeController::class, 'adDetail'])->name('property-detail');
 
 // protected routes
 Route::middleware(['auth','verified'])->group(function () {
+    
     // advert
     Route::get('post-ad', [AdvertController::class, 'index'])->name('postAd');
     Route::post('post-ad', [AdvertController::class, 'store'])->name('store-ad');

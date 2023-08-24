@@ -9,7 +9,7 @@
                 <a href="{{route('admin.lodge')}}" class="btn btn-success rounded-pill text-light p-1" style="width: 12rem">All Lodge</a>
             </div>
         </div>
-        <div class="card w-50 p-2 m-3 shadow-lg mx-auto ">
+        <div class="card p-2 m-3 shadow-lg mx-auto ">
             @if (session('message'))
             <div class="alert alert-success">
                 {{ session('message') }}

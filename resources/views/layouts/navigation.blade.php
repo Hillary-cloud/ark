@@ -1,4 +1,5 @@
-<nav x-data="{ open: false }" class="bg-green-900 border-b border-gray-100">
+<nav x-data="{ open: false }" style="background-color: #198754
+" class="border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -23,7 +24,8 @@
                 <a class="text-white" aria-current="page" href="/">Home</a>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-900 focus:outline-none transition ease-in-out duration-150">
+                        <button style="background-color: #198754
+                        " class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white focus:outline-none transition ease-in-out duration-150">
                             <div>({{explode(' ', trim( Auth::user()->name) )[0]}})</div>
 
                             <div class="ml-1">

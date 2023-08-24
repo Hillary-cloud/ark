@@ -9,6 +9,7 @@ use App\Models\School;
 use App\Models\Location;
 use App\Models\SchoolArea;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
@@ -91,7 +92,7 @@ class HomeController extends Controller
         return view('filtered-results', compact('adverts', 'locations', 'schools', 'school_areas', 'lodges'));
     }
 
-    public function AdDetail($uuid)
+    public function adDetail($uuid)
     {
         $advert = Advert::where('uuid', $uuid)->firstOrFail();
 
@@ -115,10 +116,14 @@ class HomeController extends Controller
             $viewedAds[] = $uuid;
             Cache::put('viewed_ads:' . $ip, $viewedAds, now()->addHours(24));
         }
-        $adverts = Advert::where('school_id', $advert->school->id)
+        $adverts = Advert::where('active', true)
+        ->where('draft', false)
+        ->where('expiration_date', '>', Carbon::now())
+        ->where('school_id', $advert->school->id)
             ->where('lodge_id', $advert->lodge->id)
             ->whereNotIn('uuid', [$uuid])->get();
 
         return view('detail', compact('advert', 'adverts'));
     }
+
 }

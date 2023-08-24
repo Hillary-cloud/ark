@@ -2,6 +2,26 @@
 @extends('layouts.base')
 @section('content')
 
+<style>
+    /* Add your CSS styles here */
+    #back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #back-to-top.show {
+        display: block;
+    }
+</style>
+
 <header class="text-light" 
 style="
 background-image: url('../post-single-1.jpg'); 
@@ -104,6 +124,45 @@ background-repeat: no-repeat;
         @include('filtered-results')
     </div>
 </main>
+<footer style="width:100%" class=" bg-success align-middle text-center">
+    <div class="container" >
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <p class="text-light">&copy; 2023 Tetmart. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end ">
+          <p>
+            <a style="color: black" href="#"><i class="bi bi-instagram"></i> </a>
+             <a class="mx-3" style="color: black" href="#"><i class="bi bi-twitter"></i></a>
+            <a style="color: black" href="#"><i class="bi bi-facebook"></i></a>
+        </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<button id="back-to-top" class="show"><i class="bi bi-arrow-up"></i></button>
+    
+<script>
+    const backToTopButton = document.getElementById('back-to-top');
+
+    // Show/hide the button based on scroll position
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    // Scroll smoothly to the top when the button is clicked
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
 
 <script>
    $(document).ready(function() {

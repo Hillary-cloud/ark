@@ -24,7 +24,7 @@
         @else
             <table class="table table-striped table-bordered table-hover text-center">
                 <thead class="bg-success text-light">
-                    <tr>
+                    <tr class="align-middle text-center">
                         <th>n/s</th>
                         <th>School</th>
                         <th>Slug</th>
@@ -38,7 +38,7 @@
                         $i = 1;
                     @endphp
                     @foreach ($schools as $school)
-                    <tr>
+                    <tr class="align-middle text-center">
                         <td>{{$i++}}</td>
                         <td>{{ucfirst($school->name)}}</td>
                         <td>{{$school->slug}}</td>

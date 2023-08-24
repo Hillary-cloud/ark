@@ -125,9 +125,7 @@
                                         {{-- </div> --}}
                                     </li>
                                 @else
-                                    <li class="nav-item my-auto">
-                                        <a class="nav-link" href="#"><i class="bi bi-bell-fill" style="font-size: 15px; color:yellow"><sub>4</sub></i></a>
-                                    </li>
+                                <i class="bi bi-bell-fill"></i>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownii" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -198,6 +196,7 @@
         </nav>
 
         @yield('content')
+          
     </div>
    
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

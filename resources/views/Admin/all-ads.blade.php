@@ -2,6 +2,26 @@
 @extends('layouts.base')
 @section('content')
 
+<style>
+    /* Add your CSS styles here */
+    #back-to-top {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #back-to-top.show {
+        display: block;
+    }
+</style>
+
     <div class="container">
 
         <div class="card w-100 mt-3 shadow-sm p-2">
@@ -76,6 +96,29 @@
             @endif
         </div>
     </div>
+
+    <button id="back-to-top" class="show"><i class="bi bi-arrow-up"></i></button>
+
+    <script>
+        const backToTopButton = document.getElementById('back-to-top');
+    
+        // Show/hide the button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+    
+        // Scroll smoothly to the top when the button is clicked
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 
     <script>
         function deleteAdByAdmin(deleteUrl) {
