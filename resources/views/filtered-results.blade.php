@@ -1,4 +1,4 @@
-<div class="row d-flex justify-content-start" id="filtered-results">
+<div class="row d-flex justify-content-start" style="margin-bottom: 100px" id="filtered-results">
     @if ($adverts->count() > 0)
 
         <p class="text-muted fst-italic">({{ $adverts->count() }} ad{{ $adverts->count() !== 1 ? 's' : '' }})</p>

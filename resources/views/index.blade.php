@@ -7,7 +7,7 @@
     #back-to-top {
         display: none;
         position: fixed;
-        bottom: 20px;
+        bottom: 100px;
         right: 20px;
         background-color: green;
         color: white;
@@ -28,7 +28,6 @@ background-image: url('../post-single-1.jpg');
 height: 400px;
 background-size: cover;
 background-position: center;
-background-size: 100%;
 background-repeat: no-repeat;
 ">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
@@ -111,7 +110,7 @@ background-repeat: no-repeat;
                 
             </select>
            
-            <select style="width:80px" name="location" id="location">
+            <select style="width:85px" name="location" id="location">
                 <option value="">Location</option>
                 @foreach ($locations as $location)
                 <option value="{{$location->id}}" {{Request::get('location_id') == $location->id ? 'selected' : ''}}>{{ucfirst($location->state)}}</option>
@@ -124,22 +123,6 @@ background-repeat: no-repeat;
         @include('filtered-results')
     </div>
 </main>
-<footer style="width:100%" class=" bg-success align-middle text-center">
-    <div class="container" >
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <p class="text-light">&copy; 2023 Tetmart. All rights reserved.</p>
-        </div>
-        <div class="col-md-6 text-md-end ">
-          <p>
-            <a style="color: black" href="#"><i class="bi bi-instagram"></i> </a>
-             <a class="mx-3" style="color: black" href="#"><i class="bi bi-twitter"></i></a>
-            <a style="color: black" href="#"><i class="bi bi-facebook"></i></a>
-        </p>
-        </div>
-      </div>
-    </div>
-  </footer>
 
 <button id="back-to-top" class="show"><i class="bi bi-arrow-up"></i></button>
     

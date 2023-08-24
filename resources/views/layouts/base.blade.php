@@ -27,7 +27,7 @@
     
 </head>
 
-<body>
+<body style="overflow-x: hidden">
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
             <div class="container-fluid">
@@ -196,7 +196,24 @@
         </nav>
 
         @yield('content')
-          
+
+        <footer style="width:100%" class="fixed-bottom  bg-success align-middle text-center">
+            <div class="container" >
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <p class="text-light">&copy; 2023 Tetmart. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end ">
+                  <p>
+                    <a style="color: black" href="#"><i class="bi bi-instagram"></i> </a>
+                     <a class="mx-3" style="color: black" href="#"><i class="bi bi-twitter"></i></a>
+                    <a style="color: black" href="#"><i class="bi bi-facebook"></i></a>
+                </p>
+                </div>
+              </div>
+            </div>
+          </footer>
+        
     </div>
    
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
