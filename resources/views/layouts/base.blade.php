@@ -197,7 +197,7 @@
 
         @yield('content')
 
-        <footer style="width:100%" class="fixed-bottom  bg-success align-middle text-center">
+        <footer style="width:100%" class="fixed-bottom bg-success align-middle text-center">
             <div class="container" >
               <div class="row mt-3">
                 <div class="col-md-6">

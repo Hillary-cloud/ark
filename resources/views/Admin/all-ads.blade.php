@@ -7,7 +7,7 @@
     #back-to-top {
         display: none;
         position: fixed;
-        bottom: 20px;
+        bottom: 100px;
         right: 20px;
         background-color: green;
         color: white;
@@ -20,9 +20,17 @@
     #back-to-top.show {
         display: block;
     }
+
+    nav svg{
+        height: 20px;
+    }
+    nav .hidden{
+        display: block !important;
+    }
+            
 </style>
 
-    <div class="container">
+    <div class="container" style="margin-bottom: 100px">
 
         <div class="card w-100 mt-3 shadow-sm p-2">
             <div class="d-flex justify-content-between">
@@ -94,6 +102,9 @@
             </div>
                 
             @endif
+            <div class="pagination">
+                {{ $adverts->links() }}
+            </div>
         </div>
     </div>
 

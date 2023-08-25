@@ -150,6 +150,7 @@ class AdvertController extends Controller
         return view('admin.over-view',$adverts);
     }
 
+    // displays all ads in the admin side
     public function allAds(Request $request){
         $query = $request->input('query');
     
@@ -166,7 +167,7 @@ class AdvertController extends Controller
                             ->orWhere('lodges.name', 'like', '%' . $query . '%')
                             ->orWhere('locations.state', 'like', '%' . $query . '%');
                     });
-            })->get();
+            })->paginate(10);
 
         return view('admin.all-ads',compact('adverts','query'));
     }
