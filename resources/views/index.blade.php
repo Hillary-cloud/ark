@@ -20,6 +20,7 @@
     #back-to-top.show {
         display: block;
     }
+
 </style>
 
 <header class="text-light" 
@@ -121,6 +122,8 @@ background-repeat: no-repeat;
         </form>
 
         @include('filtered-results')
+        
+        
     </div>
 </main>
 

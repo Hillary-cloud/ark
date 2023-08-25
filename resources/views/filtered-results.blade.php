@@ -43,6 +43,18 @@
             </div>
 </div>
 @endforeach
+
+<div class="pagination">
+    <style>
+        nav svg{
+            height: 20px;
+        }
+        nav .hidden{
+            display: block !important;
+        }
+    </style>
+    {{ $adverts->links() }}
+</div>
 @else
 <p class="text-danger text-center">No ad found</p>
 @endif

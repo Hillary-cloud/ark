@@ -35,7 +35,7 @@ class HomeController extends Controller
                             ->orWhere('lodges.name', 'like', '%' . $query . '%')
                             ->orWhere('locations.state', 'like', '%' . $query . '%');
                     });
-            })->get();
+            })->paginate(4);
 
         $locations = Location::all();
         $schools = School::all();
@@ -82,7 +82,7 @@ class HomeController extends Controller
             ->where('expiration_date', '>', Carbon::now());
 
         // Get filtered results
-        $adverts = $query->get();
+        $adverts = $query->paginate(4);
 
         // Needed when you are not including the filered results page in the index page
         $locations = Location::all();
