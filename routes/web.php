@@ -40,8 +40,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
-Route::get('/filter', [HomeController::class, 'filteredAd'])->name('filtered-advert');
 Route::get('/detail/{uuid}', [HomeController::class, 'adDetail'])->name('property-detail');
+Route::get('/lodges', [HomeController::class, 'ViewMoreLodges'])->name('view-more-lodges');
 
 // protected routes
 Route::middleware(['auth','verified'])->group(function () {

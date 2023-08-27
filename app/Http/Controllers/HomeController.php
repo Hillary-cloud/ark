@@ -35,18 +35,12 @@ class HomeController extends Controller
                             ->orWhere('lodges.name', 'like', '%' . $query . '%')
                             ->orWhere('locations.state', 'like', '%' . $query . '%');
                     });
-            })->paginate(4);
+            })->paginate(6);
 
-        $locations = Location::all();
-        $schools = School::all();
-        $school_areas = SchoolArea::all();
-        $lodges = Lodge::all();
-
-        return view('index', compact('adverts', 'locations', 'schools', 'school_areas', 'lodges', 'query'));
+        return view('index', compact('adverts','query'));
     }
 
-    public function filteredAd(Request $request)
-    {
+    public function ViewMoreLodges(Request $request){
         $query = Advert::query();
 
         // Apply filters if provided in the request
@@ -84,13 +78,12 @@ class HomeController extends Controller
         // Get filtered results
         $adverts = $query->paginate(4);
 
-        // Needed when you are not including the filered results page in the index page
         $locations = Location::all();
         $schools = School::all();
         $school_areas = SchoolArea::all();
         $lodges = Lodge::all();
 
-        return view('filtered-results', compact('adverts', 'locations', 'schools', 'school_areas', 'lodges'));
+        return view('more-lodges', compact('adverts', 'locations', 'schools', 'school_areas', 'lodges'));
     }
 
     public function adDetail($uuid)
