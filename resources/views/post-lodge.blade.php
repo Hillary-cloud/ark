@@ -18,17 +18,28 @@
             display: block;
             margin-bottom: 5px;
         }
+        #imageContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.added-image {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+}
+
     </style>
     <div class="container">
         <div class="card w-100 my-3 shadow-sm p-2">
             <div class="d-flex justify-content-between">
-                <h3>Post ad</h3>
+                <h3>Post Lodge</h3>
                 <a href="javascript:history.back()" class="text-decoration-none">< Back</a>
             </div>
         </div>
 
         <div class="card w-100 mx-auto my-3 shadow-sm">
-            <form action="{{ route('store-ad') }}" class="p-4" method="POST" enctype="multipart/form-data" 
+            <form action="{{ route('store-lodge') }}" class="p-4" method="POST" enctype="multipart/form-data" 
                 id="postAdForm">
                 @csrf
 
@@ -102,7 +113,7 @@
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-
+        
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="mb-3">
@@ -134,7 +145,7 @@
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
-                                <textarea name="description" id="description" placeholder="Give a detailed description of your ad" class="form-control"
+                                <textarea name="description" id="description" placeholder="Give a detailed description of the lodge" class="form-control"
                                     rows="3">{{ old('description') }}</textarea>
                                 @error('description')
                                     <p class="text-danger">{{ $message }}</p>
@@ -166,7 +177,7 @@
                         </div>
 
                     </div>
-                    <button type="submit" class="btn btn-light btn-outline-success btn-lg w-100">Post Ad</button>
+                    <button type="submit" class="btn btn-light btn-outline-success btn-lg w-100">Post Lodge</button>
 
                 </div>
 
@@ -175,5 +186,4 @@
     </div>
 
 <script src="{{asset('js/script.js')}}"></script>
-
 @endsection

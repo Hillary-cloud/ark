@@ -46,7 +46,11 @@
                             @foreach ($adverts as $advert)
                                 <tr class="align-middle">
                                     <td><img src="{{asset($advert->cover_image)}}" class="img-fluid" style="object-fit: cover; width:10vw; height:10vh" alt=""></td>
+                                    @if ($advert->service_id !== null)
+                                    <td>{{ ucfirst($advert->service->name) }}</td>
+                                    @else
                                     <td>{{ ucfirst($advert->lodge->name) }}</td>
+                                    @endif
                                     <td>{{ ucfirst($advert->school_area->name) }}</td>
                                     
                                     <td>

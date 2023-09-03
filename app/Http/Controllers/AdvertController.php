@@ -2,48 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Lodge;
 use App\Models\Advert;
 use App\Models\School;
+use Ramsey\Uuid\Uuid; 
+use App\Models\Service;
 use App\Models\Location;
 use App\Models\SchoolArea;
-use Ramsey\Uuid\Uuid; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\StoreLodgeRequest;
 
 class AdvertController extends Controller
 {
-    public function index()
+    public function lodgeIndex()
     {
         $lodges = Lodge::all();
         $locations = Location::all();
         $schools = School::all();
         $school_areas = SchoolArea::all();
-        return view('post-ad', compact('locations', 'schools', 'school_areas', 'lodges'));
+        return view('post-lodge', compact('locations', 'schools', 'school_areas', 'lodges'));
     }
 
-    public function store(Request $request)
+    public function serviceIndex(){
+        $services = Service::all();
+        $locations = Location::all();
+        $schools = School::all();
+        $school_areas = SchoolArea::all();
+        return view('post-service', compact('locations', 'schools', 'school_areas', 'services'));
+
+    }
+
+    // store method stores lodge
+    public function storeLodge(StoreLodgeRequest $request)
     {
-        $request->validate([
-            'user_id' => 'required',
-            'lodge_id' => 'required|numeric',
-            'slug' => 'required|string',
-            'location_id' => 'required|numeric',
-            'school_id' => 'required|numeric',
-            'school_area_id' => 'required|numeric',
-            'price' => 'required|numeric',
-            'agent_fee' => 'nullable|numeric',
-            'negotiable' => 'nullable|boolean',
-            'description' => 'required',
-            'phone_number' => 'required|string',
-            'seller_name' => 'required|string',
-            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'other_images' => 'nullable|array|max:4', // Allow up to 4 images
-            'other_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            // 'expiration_date' => 'required|date|after:today', // Assuming the product should expire in the future.
-            'active' => 'nullable|boolean',
-            'draft' => 'nullable|boolean',
-        ]);
+         //    the validation rules are in app/http/request/StoreLodgeRequest
 
         // Generate a UUID for the new ad
         $uuid = Uuid::uuid4()->toString();
@@ -96,13 +91,93 @@ class AdvertController extends Controller
         // $adId = $advert->id;
         $uuid = $advert->uuid;
 
-          // Check if the ad with the given ID exists
-    // if (!$advert) {
-    //     // Handle the case where the ad does not exist (e.g., redirect to an error page)
-    // }
+        // Redirect to the payment page with the UUID as a query parameter. This page post ad with payment
+        // return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
 
-        // Redirect to the payment page with the UUID as a query parameter
-        return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
+        // Redirect to the post ad page with the UUID as a query parameter. this page posts ad without payment
+        return redirect()->route('post-ad-page', ['uuid' => $advert->uuid]);
+    }
+
+    // storeService method stores service
+    public function storeService(StoreServiceRequest $request)
+    {
+    //    the validation rules are in app/http/request/StoreServiceRequest
+
+        // Generate a UUID for the new ad
+        $uuid = Uuid::uuid4()->toString();
+
+
+        // Store the cover image
+        $coverImagePath = $request->file('cover_image')->store('public/advert_images');
+
+        // Convert the cover image path to a publicly accessible URL
+        $coverImageURL = Storage::url($coverImagePath);
+
+        // Store the other images (if any)
+        $otherImages = [];
+        if ($request->hasFile('other_images')) {
+            foreach ($request->file('other_images') as $file) {
+                $otherImagePath = $file->store('public/advert_images');
+                $otherImages[] = Storage::url($otherImagePath);
+            }
+        }
+
+        $on_contact = $request->has('on_contact') ? true : false;
+
+        // Calculate the combined price (service price)
+        $combinedPrice = $request->input('price');
+
+        // Save the ad as a draft in the database
+        $advert = new Advert([
+            'uuid' => $uuid,
+            'user_id' => $request->input('user_id'),
+            'service_id' => $request->input('service_id'),
+            'slug' => $request->input('slug'),
+            'location_id' => $request->input('location_id'),
+            'school_id' => $request->input('school_id'),
+            'school_area_id' => $request->input('school_area_id'),
+            'price' => $request->input('price'),
+            'combined_price' => $combinedPrice,
+            'on_contact' => $on_contact,
+            'description' => $request->input('description'),
+            'phone_number' => $request->input('phone_number'),
+            'seller_name' => $request->input('seller_name'),
+            'cover_image' => $coverImageURL,
+            'other_images' => $otherImages,
+            // 'expiration_date' => 0,
+            'active' => false, 
+            'draft' => true
+        ]);
+        $advert->save();
+
+         // Get the ID of the newly created ad
+        // $adId = $advert->id;
+        $uuid = $advert->uuid;
+
+       // Redirect to the payment page with the UUID as a query parameter. This page post ad with payment
+        // return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
+
+        // Redirect to the post ad page with the UUID as a query parameter. this page posts ad without payment
+        return redirect()->route('post-ad-page', ['uuid' => $advert->uuid]);
+    }
+
+    // the two functions below are used when we want users to be able to post ad for free
+    public function showPostAdPage($uuid){
+        $advert = Advert::where('uuid', $uuid)->firstOrFail();
+        // Pass the advert data to the post ad page view
+        return view('post-ad-page', compact('advert'));
+    }
+
+
+    public function post($uuid){
+
+        $expirationDate = Carbon::now()->addDays(30);
+
+        $advert = Advert::where('uuid', $uuid)->firstOrFail();
+        $advert->update(['expiration_date' => $expirationDate, 'draft' => false, 'active' => true]);
+
+        return redirect()->route('success-two', ['uuid' => $advert->uuid]); // Redirect to a success page
+
     }
 
     public function getDraft(){
@@ -115,7 +190,7 @@ class AdvertController extends Controller
         return view('edit-draft',compact('advert'));
     }
 
-    public function updateDraft(Request $request,$uuid){
+    public function updateLodgeDraft(Request $request,$uuid){
         $request->validate([
             'price' => 'required|numeric',
             'agent_fee' => 'nullable|numeric',
@@ -134,8 +209,36 @@ class AdvertController extends Controller
         $advert->phone_number = $request->phone_number;
         $advert->save();
 
-        return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
+        // Redirect to the payment page with the UUID as a query parameter. This page post ad with payment
+        // return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
 
+        // Redirect to the post ad page with the UUID as a query parameter. this page posts ad without payment
+        return redirect()->route('post-ad-page', ['uuid' => $advert->uuid]);
+
+    }
+
+    public function updateServiceDraft(Request $request,$uuid){
+        $request->validate([
+            'price' => 'required_without:on_contact|nullable|numeric',
+            'on_contact' => 'required_without:price|boolean',
+            'phone_number' => 'required|string',
+        ]);
+
+        $on_contact = $request->has('on_contact') ? true : false;
+        $combinedPrice = $request->price;
+
+        $advert = Advert::where('uuid',$uuid)->firstOrFail();
+        $advert->price = $request->price;
+        $advert->combined_price = $combinedPrice;
+        $advert->on_contact = $on_contact;
+        $advert->phone_number = $request->phone_number;
+        $advert->save();
+
+         // Redirect to the payment page with the UUID as a query parameter. This page post ad with payment
+        // return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
+
+        // Redirect to the post ad page with the UUID as a query parameter. this page posts ad without payment
+        return redirect()->route('post-ad-page', ['uuid' => $advert->uuid]);
     }
 
     public function deleteDraft($uuid){
@@ -156,19 +259,23 @@ class AdvertController extends Controller
     
         $adverts = Advert::where('draft', false)
             ->when($query, function ($queryBuilder) use ($query) {
-                return $queryBuilder->join('locations', 'locations.id', '=', 'adverts.location_id')
+                return $queryBuilder
+                    ->leftJoin('lodges', 'lodges.id', '=', 'adverts.lodge_id')
+                    ->leftJoin('services', 'services.id', '=', 'adverts.service_id')
+                    ->join('locations', 'locations.id', '=', 'adverts.location_id')
                     ->join('schools', 'schools.id', '=', 'adverts.school_id')
                     ->join('school_areas', 'school_areas.id', '=', 'adverts.school_area_id')
-                    ->join('lodges', 'lodges.id', '=', 'adverts.lodge_id')
                     ->where(function ($innerQueryBuilder) use ($query) {
-                        $innerQueryBuilder->where('adverts.description', 'like', '%' . $query . '%')
+                        $innerQueryBuilder
+                            ->where('adverts.description', 'like', '%' . $query . '%')
                             ->orWhere('schools.name', 'like', '%' . $query . '%')
                             ->orWhere('school_areas.name', 'like', '%' . $query . '%')
+                            ->orWhere('locations.state', 'like', '%' . $query . '%')
                             ->orWhere('lodges.name', 'like', '%' . $query . '%')
-                            ->orWhere('locations.state', 'like', '%' . $query . '%');
+                            ->orWhere('services.name', 'like', '%' . $query . '%');
                     });
             })->paginate(10);
-
+        
         return view('admin.all-ads',compact('adverts','query'));
     }
 
@@ -190,15 +297,18 @@ class AdvertController extends Controller
         $adverts = Advert::where('user_id',auth()->user()->id)
         ->where('draft', false)
         ->when($query, function ($queryBuilder) use ($query) {
-            return $queryBuilder->join('locations', 'locations.id', '=', 'adverts.location_id')
+            return $queryBuilder
+                ->leftJoin('lodges', 'lodges.id', '=', 'adverts.lodge_id')
+                ->leftJoin('services', 'services.id', '=', 'adverts.service_id')
+                ->join('locations', 'locations.id', '=', 'adverts.location_id')
                 ->join('schools', 'schools.id', '=', 'adverts.school_id')
                 ->join('school_areas', 'school_areas.id', '=', 'adverts.school_area_id')
-                ->join('lodges', 'lodges.id', '=', 'adverts.lodge_id')
                 ->where(function ($innerQueryBuilder) use ($query) {
                     $innerQueryBuilder->where('adverts.description', 'like', '%' . $query . '%')
                         ->orWhere('schools.name', 'like', '%' . $query . '%')
                         ->orWhere('school_areas.name', 'like', '%' . $query . '%')
                         ->orWhere('lodges.name', 'like', '%' . $query . '%')
+                        ->orWhere('services.name', 'like', '%' . $query . '%')
                         ->orWhere('locations.state', 'like', '%' . $query . '%');
                 });
         })->get();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -9,9 +10,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\Admin\LodgeController;
 use App\Http\Controllers\Admin\SchoolController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\SchoolAreaController;
-use App\Models\Bookmark;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -40,18 +41,31 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
-Route::get('/detail/{uuid}', [HomeController::class, 'adDetail'])->name('property-detail');
+Route::get('/lodge/details/{uuid}', [HomeController::class, 'lodgeDetail'])->name('lodge-detail');
+Route::get('/service/details/{uuid}', [HomeController::class, 'serviceDetail'])->name('service-detail');
 Route::get('/lodges', [HomeController::class, 'ViewMoreLodges'])->name('view-more-lodges');
+Route::get('/services', [HomeController::class, 'ViewMoreServices'])->name('view-more-services');
 
 // protected routes
 Route::middleware(['auth','verified'])->group(function () {
     
     // advert
-    Route::get('post-ad', [AdvertController::class, 'index'])->name('postAd');
-    Route::post('post-ad', [AdvertController::class, 'store'])->name('store-ad');
+    Route::get('post-ad/lodge', [AdvertController::class, 'lodgeIndex'])->name('postLodge');
+    Route::get('post-ad/service', [AdvertController::class, 'serviceIndex'])->name('postService');
+    Route::post('store-ad/lodge', [AdvertController::class, 'storeLodge'])->name('store-lodge');
+    Route::post('store-ad/service', [AdvertController::class, 'storeService'])->name('store-service');
+
+    // this three routes below is responsible for posting ad without payment
+    Route::get('/post-ad/{uuid}', [AdvertController::class, 'showPostAdPage'])->name('post-ad-page');
+    Route::post('/post/{uuid}', [AdvertController::class, 'post'])->name('post');
+    Route::get('/post/success/{uuid}', function () {
+        return view('success-two');
+    })->name('success-two');
+
     Route::get('draft', [AdvertController::class, 'getDraft'])->name('draft');
     Route::get('edit-draft/{uuid}', [AdvertController::class, 'editDraft'])->name('edit-draft');
-    Route::put('update-draft/{uuid}', [AdvertController::class, 'updateDraft'])->name('update-draft');
+    Route::put('update-lodge-draft/{uuid}', [AdvertController::class, 'updateLodgeDraft'])->name('update-lodge-draft');
+    Route::put('update-service-draft/{uuid}', [AdvertController::class, 'updateServiceDraft'])->name('update-service-draft');
     Route::get('draft/{uuid}', [AdvertController::class, 'deleteDraft'])->name('delete-draft');
     Route::post('/save-ad', [AdvertController::class, 'saveAd'])->name('save-ad');
     // admin ads
@@ -109,6 +123,14 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/admin/lodge/edit/{id}', [LodgeController::class, 'edit'])->name('admin.edit-lodge');
     Route::put('/admin/lodge/edit/{id}', [LodgeController::class, 'update'])->name('admin.update-lodge');
     Route::get('/admin/lodge/delete/{id}', [LodgeController::class, 'delete'])->name('admin.delete-lodge');
+
+    // service
+    Route::get('admin/service', [ServiceController::class, 'index'])->name('admin.service');
+    Route::get('admin/add-service', [ServiceController::class, 'add'])->name('admin.add-service');
+    Route::post('admin/add-service', [ServiceController::class, 'store'])->name('admin.store-service');
+    Route::get('/admin/service/edit/{id}', [ServiceController::class, 'edit'])->name('admin.edit-service');
+    Route::put('/admin/service/edit/{id}', [ServiceController::class, 'update'])->name('admin.update-service');
+    Route::get('/admin/service/delete/{id}', [ServiceController::class, 'delete'])->name('admin.delete-service');
 
     // bookmark
     Route::post('/bookmark/toggle', [BookmarkController::class, 'toggleBookmark'])

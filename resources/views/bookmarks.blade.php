@@ -15,13 +15,24 @@
             @else
             @foreach ($bookmarkedAds as $bookmark)
             <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-4">
-                <a href="{{route('property-detail',$bookmark->advert->uuid)}}" class="text-decoration-none">
+                @if ($bookmark->advert->lodge_id !== null)
+                <a href="{{route('lodge-detail',$bookmark->advert->uuid)}}" class="text-decoration-none">
+                @else
+                <a href="{{route('service-detail',$bookmark->advert->uuid)}}" class="text-decoration-none">
+                @endif
                     <div class="card shadow-lg">
                         <img src="{{asset($bookmark->advert->cover_image)}}" class="card-img-top w-100" style="object-fit: cover; height:25vh" alt="">
                     </a>
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
+                                @if ($bookmark->advert->lodge_id !== null)
                                 <h4 class="card-tittle fw-bold text-dark ">{{ucfirst($bookmark->advert->lodge->name)}}</h4>
+                                @else
+                                <h4 class="card-tittle fw-bold text-dark ">{{ucfirst($bookmark->advert->service->name)}}</h4>
+                                
+
+                                @endif
+                               
                                 {{-- <a href="{{route('delete-bookmark',$bookmark->id)}}"><button class="btn btn-danger btn-sm">Delete</button></a>                               --}}
                                 <a href="{{ route('delete-bookmark', $bookmark->id) }}"
                                     onclick="event.preventDefault(); deleteBookmark('{{ route('delete-bookmark', $bookmark->id) }}')"

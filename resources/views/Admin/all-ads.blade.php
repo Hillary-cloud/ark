@@ -63,7 +63,7 @@
                             <tr class="align-middle">
                                 <th>n/s</th>
                                 <th>Image</th>
-                                <th>Lodge</th>
+                                <th>Ads</th>
                                 <th>School</th>
                                 <th>Status</th>
                                 <th>View</th>
@@ -78,7 +78,12 @@
                                 <tr class="align-middle">
                                     <td>{{ $i++ }}</td>
                                     <td><img src="{{asset($advert->cover_image)}}" class="img-fluid" style="object-fit: cover; width:10vw; height:10vh" alt=""></td>
+                                    @if ($advert->service_id !== null)
+                                    <td>{{ ucfirst($advert->service->name) }}</td>
+                                    @else
                                     <td>{{ ucfirst($advert->lodge->name) }}</td>
+                                    @endif
+                                    
                                     <td>{{ ucfirst($advert->school->name) }}</td>
                                     @if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false)
                                         <td class="text-danger fst-italic">De-listed</td>

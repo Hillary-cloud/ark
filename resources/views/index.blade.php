@@ -39,7 +39,7 @@ background-repeat: no-repeat;
                 <input class=" me-2" style="width: 450px; height: 50px" type="search" name="query" value="{{ old('query', $query) }}" placeholder="Search" aria-label="Search" >
                 <button class="btn btn-outline-light btn-success form-control-lg" type="submit"><i class="bi bi-search" style="font-size: 20px"></i></button>
             </form>
-            @if ($adverts->isEmpty())
+            @if ($lodgeAds->isEmpty() && $serviceAds->isEmpty())
             <p class="text-danger">Nothing was found.</p>
             @endif
         </div>
@@ -76,28 +76,99 @@ background-repeat: no-repeat;
         </div>
     </div>
     
-    <div class="container my-4 ">
-        <h4 class="fw-bold">Listed Lodges</h4>
+    <div class="container my-5 ">
+
+        <h4 class="fw-bold">Listed Service</h4>
         <div class="row d-flex justify-content-start" style="margin-bottom: 100px">
-            @if ($adverts->count() > 0)
         
-            <div class="d-flex justify-content-between">
-                <p class="text-muted fst-italic">({{ $adverts->count() }} ad{{ $adverts->count() !== 1 ? 's' : '' }})</p>
-                <a href="{{route('view-more-lodges')}}" class="btn btn-success rounded-pill text-light p-1"
-                style="width: 12rem">View all lodges
+            <div class="d-flex justify-content-end">
+                <a href="{{route('view-more-services')}}" class="btn btn-success rounded-pill text-light p-1"
+                style="width: 12rem">View all services
                 </a>
             </div>
         
-                @foreach ($adverts as $advert)
+                @foreach ($serviceAds as $advert)
+                @if ($advert->service_id !== null )
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-4">
-                        <a href="{{ route('property-detail', $advert->uuid) }}" class="text-decoration-none">
+                        <a href="{{ route('service-detail', $advert->uuid) }}" class="text-decoration-none">
                             <div class="card shadow-lg">
                                 <img src="{{ asset($advert->cover_image) }}" class="card-img-top w-100"
                                     style="object-fit: cover; height:25vh" alt="">
                         </a>
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
+                                {{-- use if statement to prevent attempt to read property name on null error --}}
+                                
+                                <h4 class="card-tittle fw-bold text-dark ">{{ ucfirst($advert->service->name) }}</h4>
+                                
+                                
+                                @auth
+                                    <a href="#"
+                                        class="bookmark-button {{ $advert->isBookmarkedByUser(Auth::user()) ? 'bookmarked' : '' }}"
+                                        data-ad-id="{{ $advert->id }}">
+                                        <i class="bi bi-bookmark-fill" style="font-size: 25px"></i>
+                                    </a>
+                                @endauth
+        
+                            </div>
+        
+                            <div class="d-flex justify-content-between">
+                                @if ($advert->on_contact == true)
+                                <p class="card-text fw-bold bg-success p-2 rounded-pill text-light w-52 text-center">Price on contact</p>
+                                @else
+                                <p class="card-text fw-bold bg-success p-2 rounded-pill text-light w-52 text-center">&#8358
+                                    {{ number_format($advert->combined_price) }}</p>
+                                @endif
+                                
+                                <p class="card-text "><small class="text-muted">{{ ucfirst($advert->location->state) }}</small>
+                                </p>
+                            </div>
+        
+                            <div class="d-flex justify-content-between mb-0">
+                                <p class="card-text fw-bold text-dark">{{ ucfirst($advert->school->name) }}</p>
+                                <p class="card-text text-dark">{{ ucfirst($advert->school_area->name) }}</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text "><small class="text-muted">Listed
+                                        {{ $advert->created_at->diffForHumans() }}</small></p>
+                                <i class="bi bi-eye"> {{ $advert->view_count }}</i>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        @endif
+        @endforeach
+        
+        <div class="d-flex justify-content-center">
+            <a href="{{route('view-more-services')}}" class="btn btn-success rounded-pill text-light p-1"
+            style="width: 12rem">View all services
+            </a>
+        </div>
+        
+        <h4 class="fw-bold">Listed Lodges</h4>
+        <div class="row d-flex justify-content-start">
+        
+            <div class="d-flex justify-content-end">
+                <a href="{{route('view-more-lodges')}}" class="btn btn-success rounded-pill text-light p-1"
+                style="width: 12rem">View all lodges
+                </a>
+            </div>
+        
+                @foreach ($lodgeAds as $advert)
+                @if ($advert->lodge_id !== null )
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-4">
+                        <a href="{{ route('lodge-detail', $advert->uuid) }}" class="text-decoration-none">
+                            <div class="card shadow-lg">
+                                <img src="{{ asset($advert->cover_image) }}" class="card-img-top w-100"
+                                    style="object-fit: cover; height:25vh" alt="">
+                        </a>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                {{-- use if statement to prevent attempt to read property name on null error --}}
+                                
                                 <h4 class="card-tittle fw-bold text-dark ">{{ ucfirst($advert->lodge->name) }}</h4>
+                                
+                                
                                 @auth
                                     <a href="#"
                                         class="bookmark-button {{ $advert->isBookmarkedByUser(Auth::user()) ? 'bookmarked' : '' }}"
@@ -127,12 +198,14 @@ background-repeat: no-repeat;
                         </div>
                     </div>
         </div>
+        @endif
         @endforeach
         
-        @else
-        <p class="text-danger text-center">No ad found</p>
-        @endif
-        
+        <div class="d-flex justify-content-center">
+            <a href="{{route('view-more-lodges')}}" class="btn btn-success rounded-pill text-light p-1"
+            style="width: 12rem">View all lodges
+            </a>
+        </div>
         </div>
         </div>        
         

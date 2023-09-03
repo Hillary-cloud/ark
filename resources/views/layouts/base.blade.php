@@ -24,6 +24,26 @@
     <!-- Scripts -->
     {{-- @vite('resources/css/bootstrap.min.css') --}}
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    <style>
+        footer{
+            padding: 10px;
+            text-align: center;
+            position: absolute;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        }
+        html{
+            height: 100%;
+            box-sizing: border-box;
+        }
+        body{
+            position: relative;
+            min-height: 100%;
+            padding-bottom: 6rem;
+            box-sizing: inherit;
+        }
+    </style>
     
 </head>
 
@@ -43,9 +63,23 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('postAd')}}"> <button class="btn btn-warning fw-bold rounded-pill text-dark btn-sm">Post Ad</button></a>
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" href="{{route('postAd')}}"> <button class="btn btn-secondary fw-bold text-light btn-sm">Post Lodge</button></a>
+                        </li> --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle btn-primary btn-sm fw-bold text-light" href="#" id="navbarDropdownn" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Post Ad
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownn">
+                                <li><a class="dropdown-item" href="{{route('postLodge')}}">Post Lodge</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{{route('postService')}}">Post Service</a></li>
+                            </ul>
                         </li>
+
                         
                         @if (Route::has('login'))
                             @auth
@@ -66,6 +100,10 @@
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li><a class="dropdown-item" href="{{route('admin.lodge')}}">Lodge</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{route('admin.service')}}">Service</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
@@ -197,11 +235,11 @@
 
         @yield('content')
 
-        <footer style="width:100%" class="fixed-bottom bg-success align-middle text-center">
+        <footer class="bg-success">
             <div class="container" >
               <div class="row mt-3">
                 <div class="col-md-6">
-                  <p class="text-light">&copy; 2023 Tetmart. All rights reserved.</p>
+                  <p class="text-light">&copy; <script>document.write(new Date().getFullYear())</script> Tetmart. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end ">
                   <p>

@@ -94,6 +94,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-12 my-2">
+                                        <div class="card shadow-lg bg-danger text-light" style="height: 200px">
+                                            <div class="card-body">
+                                                @php
+                                                use App\Models\Service;
+                                            @endphp
+                                                    <h3>Services</h3>
+                                                    <h2 class="text-center">{{Service::count()}}</h2>
+                                                </div>
+                                            </div>
+                                        </div>
             
             </div>
         </div>

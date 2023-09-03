@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Lodge;
 use App\Models\School;
 use App\Models\Payment;
+use App\Models\Service;
 use App\Models\Bookmark;
 use App\Models\Location;
 use App\Models\SchoolArea;
@@ -44,6 +45,10 @@ class Advert extends Model
 
     public function lodge(){
         return $this->belongsTo(Lodge::class, 'lodge_id');
+    }
+
+    public function service(){
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     public function user(){

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use app\Models\Advert;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lodge extends Model
 {
@@ -11,5 +12,10 @@ class Lodge extends Model
     
     protected $table = 'lodges';
     protected $guarded = [];
+
+    public function adverts()
+    {
+        return $this->hasMany(Advert::class);
+    }
     
 }

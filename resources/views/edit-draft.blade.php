@@ -23,7 +23,12 @@
                             <img src="{{asset($images)}}" class="img-fluid mb-2" style="object-fit: cover; width:8vw; height:8vh" alt="">
                         @endforeach
                     @endif
+                    @if ($advert->lodge_id !== null)
                     <p><strong>Lodge</strong> - {{ ucfirst($advert->lodge->name)}}</p>
+                    @else
+                    <p><strong>Service</strong> - {{ ucfirst($advert->service->name)}}</p>
+                    @endif
+                    
                     <p><strong>School Area</strong> - {{ ucfirst($advert->school_area->name)}}</p>
                     <p><strong>School</strong> - {{ ucfirst($advert->School->name)}}</p>
                     <p><strong>Location</strong> - {{ ucfirst($advert->location->state)}}</p>
@@ -33,7 +38,9 @@
                     
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                    <form action="{{route('update-draft',$advert->uuid)}}" method="POST">
+
+                    @if ($advert->lodge_id !== null)
+                    <form action="{{route('update-lodge-draft',$advert->uuid)}}" method="POST">
                         @csrf
                         @method('put')
                         <div class="mb-3">
@@ -72,10 +79,62 @@
                         @enderror
                     </div>
 
-                    <button class=" btn btn-primary btn-lg mx-auto w-100">Post ad</button>
+                    <button class=" btn btn-primary btn-lg mx-auto w-100">Proceed to post this lodge</button>
                 </form>
+                    @else
+                    <form action="{{route('update-service-draft',$advert->uuid)}}" method="POST">
+                        @csrf
+                        @method('put')
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price(&#8358)</label>
+                            <input type="number" name="price" id="price"
+                                class="form-control" onchange="handleInputToggle()" step="0.01">
+                            @error('price')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" name="on_contact"
+                            id="onContact" class="form-check-input" onchange="handleInputToggle()" value="1" @if($advert->on_contact) checked @endif>
+                        <label for="on_contact" class="form-check-label">On Contact</label>
+                        @error('on_contact')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone number<span class="text-danger">*</span></label>
+                        <input type="text" name="phone_number" id="phone_number"
+                            value="{{ $advert->phone_number }}"
+                            class="form-control">
+                            <p class="text-muted fst-italic">NB: Provide your active phone number as people will reach out to you through it.</p>
+                        @error('phone_number')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button class=" btn btn-primary btn-lg mx-auto w-100">Proceed to post this service</button>
+                </form>
+                    @endif
+                    
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+function handleInputToggle() {
+  const priceInput = document.getElementById('price');
+  const onContactInput = document.getElementById('onContact');
+
+  if (onContactInput.checked) {
+    priceInput.value = ''; // Clear the value
+    priceInput.disabled = true; // Disable the field
+  } else if (priceInput.value !== '') {
+    onContactInput.disabled = true; // Disable the checkbox
+  } else {
+    priceInput.disabled = false; // Enable the field
+    onContactInput.disabled = false; // Enable the checkbox
+  }
+}
+    </script>
 @endsection

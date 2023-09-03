@@ -11,11 +11,22 @@
                     </div>
 
                     <div class="card-body">
-                        <p><strong>Lodge:</strong> {{ ucfirst($advert->lodge->name) }}</p>
+                        @if ($advert->service_id !== null)
+                            <p><strong>Service:</strong> {{ ucfirst($advert->service->name) }}</p>
+                        @else
+                            <p><strong>Lodge:</strong> {{ ucfirst($advert->lodge->name) }}</p>
+                        @endif
+                        
+                        
                         <p><strong>Location:</strong> {{ ucfirst($advert->location->state) }}</p>
                         <p><strong>School:</strong> {{ ucfirst($advert->school->name) }}</p>
                         <p><strong>School Area:</strong> {{ ucfirst($advert->school_area->name) }}</p>
-                        <p><strong>Price:</strong> &#8358 {{ number_format($advert->combined_price) }}</p>
+                        @if ($advert->combined_price !== null)
+                            <p><strong>Price:</strong> &#8358 {{ number_format($advert->combined_price) }}</p>
+                        @else
+                            <p><strong>Price:</strong> On Contact</p>
+                        @endif
+                        
                         <p><strong>Description:</strong> {{ ucfirst($advert->description) }}</p>
                         <form action="{{ route('pay', $advert->uuid) }}" method="POST">
                             @csrf

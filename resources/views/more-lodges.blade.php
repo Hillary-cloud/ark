@@ -24,7 +24,10 @@
 </style>
 
     <div class="container my-4">
-        <h3 class="fw-bold">Listed Lodges</h3>
+        <div class="d-flex justify-content-between">
+            <h3 class="fw-bold">Listed Lodges</h3>
+            <a href="javascript:history.back()" class="text-decoration-none">< Back</a>
+        </div>
         <form action="{{ route('view-more-lodges') }}" method="GET" class="row g-3">
 
             <div class="col-2">
@@ -91,7 +94,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-2 text-center align-self-end">
+            <div class="col-2 align-self-end">
                 <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-funnel"></i> Filter</button>
             </div>
 
@@ -102,8 +105,9 @@
                 <p class="text-muted fst-italic">({{ $adverts->count() }} ad{{ $adverts->count() !== 1 ? 's' : '' }})</p>
 
                 @foreach ($adverts as $advert)
+                {{-- @if ($advert->lodge_id !== null ) --}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-4">
-                        <a href="{{ route('property-detail', $advert->uuid) }}" class="text-decoration-none">
+                        <a href="{{ route('lodge-detail', $advert->uuid) }}" class="text-decoration-none">
                             <div class="card shadow-lg">
                                 <img src="{{ asset($advert->cover_image) }}" class="card-img-top w-100"
                                     style="object-fit: cover; height:25vh" alt="">
@@ -141,6 +145,7 @@
                         </div>
                     </div>
         </div>
+        {{-- @endif --}}
         @endforeach
 
             <div class="pagination">
