@@ -29,6 +29,8 @@ class PaymentController extends Controller
 
     public function redirectToGateway($uuid)
     {
+        try {
+
         $advert = Advert::where('uuid', $uuid)->firstOrFail();
         $email = auth()->user()->email;
         $name = auth()->user()->name;
@@ -69,6 +71,11 @@ class PaymentController extends Controller
         $paymentData['callback_url'] = $callbackUrl;
 
         return $this->paystack->getAuthorizationUrl($paymentData)->redirectNow();
+    } catch (\Exception $e) {
+        // Handle the exception and return an error response
+        $errorMessage = 'Payment redirection failed. Please try again later.';
+        return view('payment-page', compact('errorMessage','advert'));
+    }
     }
 
     public function handleGatewayCallback($uuid)

@@ -332,7 +332,7 @@ class AdvertController extends Controller
         return view('relist',compact('advert'));
     }
 
-    public function updateRelist(Request $request,$uuid){
+    public function updateRelistLodge(Request $request,$uuid){
         $request->validate([
             'price' => 'required|numeric',
             'agent_fee' => 'nullable|numeric',
@@ -348,6 +348,27 @@ class AdvertController extends Controller
         $advert->agent_fee = $request->agent_fee;
         $advert->combined_price = $combinedPrice;
         $advert->negotiable = $negotiable;
+        $advert->phone_number = $request->phone_number;
+        $advert->save();
+
+        return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
+
+    }
+
+    public function updateRelistService(Request $request,$uuid){
+        $request->validate([
+            'price' => 'required_if:on_contact,false|nullable|numeric',
+            'on_contact' => 'required_if:price,null|boolean',
+            'phone_number' => 'required|string',
+        ]);
+
+        $on_contact = $request->has('on_contact') ? true : false;
+        $combinedPrice = $request->price;
+
+        $advert = Advert::where('uuid',$uuid)->firstOrFail();
+        $advert->price = $request->price;
+        $advert->combined_price = $combinedPrice;
+        $advert->on_contact = $on_contact;
         $advert->phone_number = $request->phone_number;
         $advert->save();
 

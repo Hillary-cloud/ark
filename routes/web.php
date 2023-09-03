@@ -78,7 +78,8 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('my-ad-details/{uuid}', [AdvertController::class, 'viewMyAd'])->name('view-my-ad');
     Route::get('delete-my-ad/{uuid}', [AdvertController::class, 'deleteMyAd'])->name('delete-my-ad');
     Route::get('relist/{uuid}', [AdvertController::class, 'Relist'])->name('relist');
-    Route::put('update-relist-ad/{uuid}', [AdvertController::class, 'updateRelist'])->name('update-relist');
+    Route::put('update-relist-lodge/{uuid}', [AdvertController::class, 'updateRelistLodge'])->name('update-relist-lodge');
+    Route::put('update-relist-service/{uuid}', [AdvertController::class, 'updateRelistService'])->name('update-relist-service');
 
 
     Route::get('/payment/{uuid}', [PaymentController::class, 'showPaymentPage'])->name('payment-page');

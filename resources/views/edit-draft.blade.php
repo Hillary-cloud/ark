@@ -12,15 +12,17 @@
         <div class="card shadow-sm my-2 p-3">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                    <div class="my-2">
-                        <p><strong>Cover Image</strong></p> 
-                        <img src="{{asset($advert->cover_image)}}" class="img-fluid" style="object-fit: cover; width:15vw; height:15vh" alt="">
+                    <div class="">
+                        <p><strong>Cover Image</strong></p>
+                        <img src="{{ asset($advert->cover_image) }}" class="img-fluid w-100 h-25"
+                            style="object-fit: cover;" alt="">
                     </div>
-                    
+
                     @if ($advert->other_images)
-                    <p><strong>Other Images</strong></p>
+                        <p><strong>Other Images</strong></p>
                         @foreach ($advert->other_images as $images)
-                            <img src="{{asset($images)}}" class="img-fluid mb-2" style="object-fit: cover; width:8vw; height:8vh" alt="">
+                            <img src="{{ asset($images) }}" class="img-fluid w-25 h-25 mb-2"
+                                style="width:23%; object-fit: cover;" alt="">
                         @endforeach
                     @endif
                     @if ($advert->lodge_id !== null)
