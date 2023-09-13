@@ -47,30 +47,30 @@ background-repeat: no-repeat;
 </header>
 
 <main>
-    <div class="container" >
+    <div class="container bg-light" >
         <div class="my-5 text-center">
             <h1 class="fw-bold text-success">Featured Lodges</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing Lorem ipsum dolor sit amet consectetur adipisicing</p>
         </div>
         <div class="row d-flex justify-content-evenly text-center">
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../property-1.jpg" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pls4.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
                 <h6 class="fw-bold">Self contain</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../property-1.jpg" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pl5.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
                 <h6 class="fw-bold">Short let</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../property-1.jpg" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pls2.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
                 <h6 class="fw-bold">Flat</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../property-1.jpg" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pls1.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
                 <h6 class="fw-bold">Single room</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../property-1.jpg" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../roomie.jpg" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
                 <h6 class="fw-bold">Roomie</h6>
             </div>
         </div>
@@ -82,9 +82,9 @@ background-repeat: no-repeat;
         <div class="row d-flex justify-content-start" style="margin-bottom: 100px">
         
             <div class="d-flex justify-content-end">
-                <a href="{{route('view-more-services')}}" class="btn btn-success rounded-pill text-light p-1"
+                {{-- <a href="{{route('view-more-services')}}" class="btn btn-success rounded-pill text-light p-1"
                 style="width: 12rem">View all services
-                </a>
+                </a> --}}
             </div>
         
                 @foreach ($serviceAds as $advert)
@@ -120,17 +120,17 @@ background-repeat: no-repeat;
                                     {{ number_format($advert->combined_price) }}</p>
                                 @endif
                                 
-                                <p class="card-text "><small class="text-muted">{{ ucfirst($advert->location->state) }}</small>
+                                <p class="card-text "><small class="text-muted"><i class="bi bi-geo-alt"></i>{{ ucfirst($advert->location->state) }}</small>
                                 </p>
                             </div>
         
                             <div class="d-flex justify-content-between mb-0">
-                                <p class="card-text fw-bold text-dark">{{ ucfirst($advert->school->name) }}</p>
+                                <p class="card-text fw-bold text-dark"><i class="bi bi-bank2"></i> {{ ucfirst($advert->school->name) }}</p>
                                 <p class="card-text text-dark">{{ ucfirst($advert->school_area->name) }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="card-text "><small class="text-muted">Listed
-                                        {{ $advert->created_at->diffForHumans() }}</small></p>
+                                        {{ $advert->updated_at->diffForHumans() }}</small></p>
                                 <i class="bi bi-eye"> {{ $advert->view_count }}</i>
                             </div>
                         </div>
@@ -139,7 +139,7 @@ background-repeat: no-repeat;
         @endif
         @endforeach
         
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mb-5">
             <a href="{{route('view-more-services')}}" class="btn btn-success rounded-pill text-light p-1"
             style="width: 12rem">View all services
             </a>
@@ -149,9 +149,9 @@ background-repeat: no-repeat;
         <div class="row d-flex justify-content-start">
         
             <div class="d-flex justify-content-end">
-                <a href="{{route('view-more-lodges')}}" class="btn btn-success rounded-pill text-light p-1"
+                {{-- <a href="{{route('view-more-lodges')}}" class="btn btn-success rounded-pill text-light p-1"
                 style="width: 12rem">View all lodges
-                </a>
+                </a> --}}
             </div>
         
                 @foreach ($lodgeAds as $advert)
@@ -182,17 +182,17 @@ background-repeat: no-repeat;
                             <div class="d-flex justify-content-between">
                                 <p class="card-text fw-bold bg-success p-2 rounded-pill text-light w-52 text-center">&#8358
                                     {{ number_format($advert->combined_price) }}</p>
-                                <p class="card-text "><small class="text-muted">{{ ucfirst($advert->location->state) }}</small>
+                                <p class="card-text "><small class="text-muted"><i class="bi bi-geo-alt"></i>{{ ucfirst($advert->location->state) }}</small>
                                 </p>
                             </div>
         
                             <div class="d-flex justify-content-between mb-0">
-                                <p class="card-text fw-bold text-dark">{{ ucfirst($advert->school->name) }}</p>
+                                <p class="card-text fw-bold text-dark"><i class="bi bi-bank2"></i> {{ ucfirst($advert->school->name) }}</p>
                                 <p class="card-text text-dark">{{ ucfirst($advert->school_area->name) }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="card-text "><small class="text-muted">Listed
-                                        {{ $advert->created_at->diffForHumans() }}</small></p>
+                                        {{ $advert->updated_at->diffForHumans() }}</small></p>
                                 <i class="bi bi-eye"> {{ $advert->view_count }}</i>
                             </div>
                         </div>

@@ -40,7 +40,7 @@
 
         <div class="card w-100 mx-auto my-3 shadow-sm">
             <form action="{{ route('store-lodge') }}" class="p-4" method="POST" enctype="multipart/form-data" 
-                id="postAdForm">
+                id="postLodgeForm">
                 @csrf
 
                 <div class="container">

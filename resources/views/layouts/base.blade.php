@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+    <link rel="icon" href="{{ asset('title-logo.jpg') }}" type="image/jpg" sizes="32X32">
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -51,7 +52,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
             <div class="container-fluid">
-                <a class="navbar-brand text ps-4 fw-bold" href="/">Navbar</a>
+                <a class="navbar-brand text ps-4 fw-bold" href="/"><img src="../loggo2.png" class="img-fluid" style="width: 150px" alt=""></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -91,31 +92,31 @@
                                         Dashboard
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="{{route('over-view')}}">Overview</a></li>
+                                        <li><a class="dropdown-item" href="{{route('over-view')}}"><i class="bi bi-speedometer2"></i> Overview</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('admin.all-ads')}}">All Ads</a></li>
+                                        <li><a class="dropdown-item" href="{{route('admin.all-ads')}}"><i class="bi bi-badge-ad-fill"></i> All Ads</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('admin.lodge')}}">Lodge</a></li>
+                                        <li><a class="dropdown-item" href="{{route('admin.lodge')}}"><i class="bi bi-house"></i> Lodge</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('admin.service')}}">Service</a></li>
+                                        <li><a class="dropdown-item" href="{{route('admin.service')}}"><i class="bi bi-tools"></i> Service</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('admin.location')}}">Location</a></li>
+                                        <li><a class="dropdown-item" href="{{route('admin.location')}}"><i class="bi bi-geo-alt"></i> Location</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('admin.school')}}">School</a></li>
+                                        <li><a class="dropdown-item" href="{{route('admin.school')}}"><i class="bi bi-bank2"></i> School</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('admin.school-area')}}">School Area</a></li>
+                                        <li><a class="dropdown-item" href="{{route('admin.school-area')}}"><i class="bi bi-houses"></i> School Area</a></li>
                                     
                                     </ul>
                                 </li>
@@ -129,15 +130,15 @@
 
                                         {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdowni">
-                                            <a class="dropdown-item" href="{{route('profile.edit')}}">Profile</a>
+                                            <a class="dropdown-item" href="{{route('profile.edit')}}"><i class="bi bi-person"></i> Profile</a>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('my-ads')}}">My Ads</a></li>
+                                            <li><a class="dropdown-item" href="{{route('my-ads')}}"><i class="bi bi-badge-ad"></i> My Ads</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('draft')}}">Draft</a></li>
+                                            <li><a class="dropdown-item" href="{{route('draft')}}"><i class="bi bi-file-earmark"></i> Draft</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
@@ -145,14 +146,14 @@
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-                                        <li><a class="dropdown-item" href="{{route('payment-history')}}">Transaction History</a></li>
+                                        <li><a class="dropdown-item" href="{{route('payment-history')}}"><i class="bi bi-credit-card-2-back"></i> Transaction History</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
+                                               <i class="bi bi-box-arrow-right"></i> {{ __('Logout') }}
                                             </a>
 
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -163,7 +164,13 @@
                                         {{-- </div> --}}
                                     </li>
                                 @else
-                                <i class="bi bi-bell-fill"></i>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{route('notification')}}"><i class="bi bi-bell-fill"></i>
+                                        @if(auth()->user()->unreadNotifications->count() > 0)
+                                        <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                    @endif</a>
+                                </li>
+                                
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownii" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -171,11 +178,11 @@
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownii">
                                             
-                                            <li><a class="dropdown-item" href="{{route('my-ads')}}">My Ads</a></li>
+                                            <li><a class="dropdown-item" href="{{route('my-ads')}}"><i class="bi bi-badge-ad"></i> My Ads</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('draft')}}">Draft</a></li>
+                                            <li><a class="dropdown-item" href="{{route('draft')}}"><i class="bi bi-file-earmark"></i> Draft</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
@@ -183,7 +190,7 @@
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('payment-history')}}">Transaction History</a></li>
+                                            <li><a class="dropdown-item" href="{{route('payment-history')}}"><i class="bi bi-credit-card-2-back"></i> Transaction History</a></li>
 
                                         </ul>
                                     </li>
@@ -197,14 +204,14 @@
 
                                         {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdowniii">
-                                            <a class="dropdown-item" href="{{route('profile.edit')}}">Profile</a>
+                                            <a class="dropdown-item" href="{{route('profile.edit')}}"><i class="bi bi-person"></i> Profile</a>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
+                                               <i class="bi bi-box-arrow-right"></i> {{ __('Logout') }}
                                             </a>
 
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST"

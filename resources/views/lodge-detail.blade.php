@@ -91,7 +91,7 @@
                     <p><span class="">School Area -</span> {{ ucfirst($advert->school_area->name) }}</p>
                     <p><span class="">School -</span> {{ ucfirst($advert->school->name) }}</p>
                     <p><span class="">State -</span> {{ ucfirst($advert->location->state) }}</p>
-                    <p><span class="">Time Listed -</span> {{ $advert->created_at->diffForHumans() }}</p>
+                    <p><span class="">Time Listed -</span> {{ $advert->updated_at->diffForHumans() }}</p>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <h4 class="fw-bold">Description</h4>
@@ -155,16 +155,16 @@
                                     <p class="card-text fw-bold bg-success p-2 rounded-pill text-light w-52 text-center">
                                         &#8358 {{ number_format($advert->combined_price) }}</p>    
                                     <p class="card-text "><small
-                                            class="text-muted">{{ ucfirst($advert->location->state) }}</small></p>
+                                            class="text-muted"><i class="bi bi-geo-alt"></i>{{ ucfirst($advert->location->state) }}</small></p>
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-0">
-                                    <p class="card-text fw-bold text-dark">{{ ucfirst($advert->school->name) }}</p>
+                                    <p class="card-text fw-bold text-dark"><i class="bi bi-bank2"></i> {{ ucfirst($advert->school->name) }}</p>
                                     <p class="card-text text-dark">{{ ucfirst($advert->school_area->name) }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <p class="card-text "><small class="text-muted">Listed
-                                            {{ $advert->created_at->diffForHumans() }}</small></p>
+                                            {{ $advert->updated_at->diffForHumans() }}</small></p>
                                     <i class="bi bi-eye"> {{ $advert->view_count }}</i>
                                 </div>
                             </div>

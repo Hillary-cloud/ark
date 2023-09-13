@@ -31,55 +31,56 @@ class PaymentController extends Controller
     {
         try {
 
-        $advert = Advert::where('uuid', $uuid)->firstOrFail();
-        $email = auth()->user()->email;
-        $name = auth()->user()->name;
-        // Replace this with your desired payment amount and other details
-        // $amountInNaira = 100000;
-        // $amountInKobo = $amountInNaira * 100; // Convert Naira to Kobo
+            $advert = Advert::where('uuid', $uuid)->firstOrFail();
+            $email = auth()->user()->email;
+            $name = auth()->user()->name;
+            // Replace this with your desired payment amount and other details
+            // $amountInNaira = 100000;
+            // $amountInKobo = $amountInNaira * 100; // Convert Naira to Kobo
 
-        if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false) {
-            $paymentData = [
-                'amount' => 80000, // Amount in kobo
-                'email' => $email,
-                'metadata' => [
-                    'custom_fields' => [
-                        ['display_name' => "Payment For", 'variable_name' => "payment_for", 'value' => "Ad Re-listing"],
-                        ['display_name' => "Customer Name", 'variable_name' => "customer_name", 'value' => $name],
-                        ['display_name' => "Ad UUID", 'variable_name' => "ad_uuid", 'value' => $uuid],
+            if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false) {
+                $paymentData = [
+                    'amount' => 10000, // Amount in kobo
+                    'email' => $email,
+                    'metadata' => [
+                        'custom_fields' => [
+                            ['display_name' => "Payment For", 'variable_name' => "payment_for", 'value' => "Ad Re-listing"],
+                            ['display_name' => "Customer Name", 'variable_name' => "customer_name", 'value' => $name],
+                            ['display_name' => "Ad ID", 'variable_name' => "ad_uuid", 'value' => $uuid],
+                        ]
                     ]
-                ]
-            ];
-        } else {
-            $paymentData = [
-                'amount' => 100000, // Amount in kobo
-                'email' => $email,
-                'metadata' => [
-                    'custom_fields' => [
-                        ['display_name' => "Payment For", 'variable_name' => "payment_for", 'value' => "Ad Listing"],
-                        ['display_name' => "Customer Name", 'variable_name' => "customer_name", 'value' => $name],
-                        ['display_name' => "Ad UUID", 'variable_name' => "ad_uuid", 'value' => $uuid],
+                ];
+            } else {
+                $paymentData = [
+                    'amount' => 100000, // Amount in kobo
+                    'email' => $email,
+                    'metadata' => [
+                        'custom_fields' => [
+                            ['display_name' => "Payment For", 'variable_name' => "payment_for", 'value' => "Ad Listing"],
+                            ['display_name' => "Customer Name", 'variable_name' => "customer_name", 'value' => $name],
+                            ['display_name' => "Ad ID", 'variable_name' => "ad_uuid", 'value' => $uuid],
+                        ]
                     ]
-                ]
-            ];
+                ];
+            }
+
+            // Generate the callback URL with the UUID included
+            $callbackUrl = URL::route('payment.callback', ['uuid' => $uuid]);
+
+            // Append the callback URL to the payment data
+            $paymentData['callback_url'] = $callbackUrl;
+
+            return $this->paystack->getAuthorizationUrl($paymentData)->redirectNow();
+        } catch (\Exception $e) {
+            // Handle the exception and return an error response
+            $errorMessage = 'Payment redirection failed. Please try again later.';
+            return view('payment-page', compact('errorMessage', 'advert'));
         }
-
-        // Generate the callback URL with the UUID included
-        $callbackUrl = URL::route('payment.callback', ['uuid' => $uuid]);
-
-        // Append the callback URL to the payment data
-        $paymentData['callback_url'] = $callbackUrl;
-
-        return $this->paystack->getAuthorizationUrl($paymentData)->redirectNow();
-    } catch (\Exception $e) {
-        // Handle the exception and return an error response
-        $errorMessage = 'Payment redirection failed. Please try again later.';
-        return view('payment-page', compact('errorMessage','advert'));
-    }
     }
 
     public function handleGatewayCallback($uuid)
     {
+        try{
         $expirationDate = Carbon::now()->addDays(30);
         $paymentDetails = $this->paystack->getPaymentData();
 
@@ -113,11 +114,17 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('success', ['uuid' => $advert->uuid]); // Redirect to a success page
+    } catch (\Exception $e) {
+        // Handle the exception and return an error response
+        $errorMessage = 'Payment failed. Please try again later.';
+        return redirect()->route('payment-page', compact('errorMessage'));
+    }
     }
 
-    public function showTransactionHistoryPage(){
-        $payments = Payment::where('user_id',auth()->user()->id)->get();
-        
-        return view('payment-history',compact('payments'));
+    public function showTransactionHistoryPage()
+    {
+        $payments = Payment::where('user_id', auth()->user()->id)->get();
+
+        return view('payment-history', compact('payments'));
     }
 }

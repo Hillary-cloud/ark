@@ -97,50 +97,43 @@ $(document).ready(function() {
             };
             reader.readAsDataURL(input.files[0]);
         }
-    };
+    }
 
     // Function to preview the selected other images
     function previewOtherImages(input) {
         var files = input.files;
+        var container = $("#otherImagesPreview");
+
+        // Clear old previews
+        container.empty();
+        otherImagesArray = []; // Clear old selections
+
         for (var i = 0; i < files.length; i++) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 var previewId = "preview_" + imageCounter;
                 otherImagesArray.push(e.target.result); // Add image data URL to the array
-                $("#otherImagesPreview").append('<div id="' + previewId + '"><img src="' + e.target
+                container.append('<div id="' + previewId + '"><img src="' + e.target
                     .result +
-                    '" width="100" height="100" /><br><button type="button" class="deleteBtn btn-danger text-light btn-sm rounded-sm mt-1" data-preview="' +
-                    previewId + '">Delete</button></div>');
+                    '" width="100" height="100" /></div>');
                 imageCounter++;
             };
             reader.readAsDataURL(files[i]);
         }
-    };
+    }
 
     // Preview the selected cover image
     $("#cover_image").on("change", function() {
         previewCoverImage(this);
     });
 
-    // Preview the selected other images
+    // Preview the selected other images and replace old ones
     $("#other_images").on("change", function() {
         previewOtherImages(this);
     });
 
-    // Handle image deletion
-    $(document).on("click", ".deleteBtn", function() {
-        var previewDiv = $(this).data("preview");
-        $("#" + previewDiv).remove();
-        if (previewDiv === "coverImagePreview") {
-            $("#cover_image").val(""); // Reset the cover image input
-        } else {
-            var index = $(this).closest("div").index();
-            otherImagesArray.splice(index, 1); // Remove the image data URL from the array
-        }
-    });
-
     // Function to update the hidden input for other_images with the selected images
-    $("#postAdForm").submit(function() {
+    $("#postLodgeForm").submit(function() {
         var otherImagesInput = $("#other_images");
         var otherImages = otherImagesArray.map(function(imageDataUrl) {
             return dataURLtoFile(imageDataUrl, "image_" + imageCounter + ".png");

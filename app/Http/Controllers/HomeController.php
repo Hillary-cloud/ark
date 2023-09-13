@@ -61,10 +61,10 @@ class HomeController extends Controller
         });
 
     // Paginate Lodge Ads
-    $lodgeAds = $lodgeAdsQuery->paginate(6);
+    $lodgeAds = $lodgeAdsQuery->paginate(8);
 
     // Paginate Service Ads
-    $serviceAds = $serviceAdsQuery->paginate(6);
+    $serviceAds = $serviceAdsQuery->paginate(8);
 
     return view('index', compact('lodgeAds', 'serviceAds', 'query'));
 }
@@ -74,31 +74,67 @@ class HomeController extends Controller
         $query = Advert::query();
 
         // Apply filters if provided in the request
-        if ($request->filled('location')) {
-            $query->where('location_id', $request->input('location'));
-        }
+if ($request->filled('location')) {
+    // Assuming the 'location' parameter now contains the location slug
+    $locationSlug = $request->input('location');
 
-        if ($request->filled('school')) {
-            $query->where('school_id', $request->input('school'));
-        }
+    // Retrieve the location based on the slug
+    $location = Location::where('slug', $locationSlug)->first();
 
-        if ($request->filled('school_area')) {
-            $query->where('school_area_id', $request->input('school_area'));
-        }
+    if ($location) {
+        // Use the location's ID in the query
+        $query->where('location_id', $location->id);
+    }
+}
 
-        if ($request->filled('lodge')) {
-            $query->where('lodge_id', $request->input('lodge'));
-        }
+if ($request->filled('school')) {
+    // Assuming the 'school' parameter now contains the school slug
+    $schoolSlug = $request->input('school');
 
-        if ($request->filled('price')) {
-            // Extract the price range from the request (e.g., '0-100000')
-            $priceRange = explode('-', $request->input('price'));
-            $minPrice = (int) $priceRange[0];
-            $maxPrice = (int) $priceRange[1];
+    // Retrieve the school based on the slug
+    $school = School::where('slug', $schoolSlug)->first();
 
-            // Filter the adverts where combined_price is within the selected range
-            $query->whereBetween('combined_price', [$minPrice, $maxPrice]);
-        }
+    if ($school) {
+        // Use the school's ID in the query
+        $query->where('school_id', $school->id);
+    }
+}
+
+if ($request->filled('school_area')) {
+    // Assuming the 'school_area' parameter now contains the school area slug
+    $schoolAreaSlug = $request->input('school_area');
+
+    // Retrieve the school area based on the slug
+    $schoolArea = SchoolArea::where('slug', $schoolAreaSlug)->first();
+
+    if ($schoolArea) {
+        // Use the school area's ID in the query
+        $query->where('school_area_id', $schoolArea->id);
+    }
+}
+
+if ($request->filled('lodge')) {
+    // Assuming the 'lodge' parameter now contains the lodge slug
+    $lodgeSlug = $request->input('lodge');
+
+    // Retrieve the lodge based on the slug
+    $lodge = Lodge::where('slug', $lodgeSlug)->first();
+
+    if ($lodge) {
+        // Use the lodge's ID in the query
+        $query->where('lodge_id', $lodge->id);
+    }
+}
+
+if ($request->filled('price')) {
+    // Extract the price range from the request (e.g., '0-100000')
+    $priceRange = explode('-', $request->input('price'));
+    $minPrice = (int) $priceRange[0];
+    $maxPrice = (int) $priceRange[1];
+
+    // Filter the adverts where combined_price is within the selected range
+    $query->whereBetween('combined_price', [$minPrice, $maxPrice]);
+}
 
         // Additional conditions for active, draft, and expiration date
         $adverts = $query->where('active', true)
@@ -117,23 +153,58 @@ class HomeController extends Controller
     public function ViewMoreServices(Request $request){
         $query = Advert::query();
 
-        // Apply filters if provided in the request
-        if ($request->filled('location')) {
-            $query->where('location_id', $request->input('location'));
-        }
+               // Apply filters if provided in the request
+if ($request->filled('location')) {
+    // Assuming the 'location' parameter now contains the location slug
+    $locationSlug = $request->input('location');
 
-        if ($request->filled('school')) {
-            $query->where('school_id', $request->input('school'));
-        }
+    // Retrieve the location based on the slug
+    $location = Location::where('slug', $locationSlug)->first();
 
-        if ($request->filled('school_area')) {
-            $query->where('school_area_id', $request->input('school_area'));
-        }
+    if ($location) {
+        // Use the location's ID in the query
+        $query->where('location_id', $location->id);
+    }
+}
 
-        if ($request->filled('service')) {
-            $query->where('service_id', $request->input('service'));
-        }
+if ($request->filled('school')) {
+    // Assuming the 'school' parameter now contains the school slug
+    $schoolSlug = $request->input('school');
 
+    // Retrieve the school based on the slug
+    $school = School::where('slug', $schoolSlug)->first();
+
+    if ($school) {
+        // Use the school's ID in the query
+        $query->where('school_id', $school->id);
+    }
+}
+
+if ($request->filled('school_area')) {
+    // Assuming the 'school_area' parameter now contains the school area slug
+    $schoolAreaSlug = $request->input('school_area');
+
+    // Retrieve the school area based on the slug
+    $schoolArea = SchoolArea::where('slug', $schoolAreaSlug)->first();
+
+    if ($schoolArea) {
+        // Use the school area's ID in the query
+        $query->where('school_area_id', $schoolArea->id);
+    }
+}
+
+if ($request->filled('lodge')) {
+    // Assuming the 'lodge' parameter now contains the lodge slug
+    $lodgeSlug = $request->input('lodge');
+
+    // Retrieve the lodge based on the slug
+    $lodge = Lodge::where('slug', $lodgeSlug)->first();
+
+    if ($lodge) {
+        // Use the lodge's ID in the query
+        $query->where('lodge_id', $lodge->id);
+    }
+}
         // Additional conditions for active, draft, and expiration date
         $ads = $query->where('active', true)
             ->where('draft', false)

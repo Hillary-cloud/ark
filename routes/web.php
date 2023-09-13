@@ -80,7 +80,7 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('relist/{uuid}', [AdvertController::class, 'Relist'])->name('relist');
     Route::put('update-relist-lodge/{uuid}', [AdvertController::class, 'updateRelistLodge'])->name('update-relist-lodge');
     Route::put('update-relist-service/{uuid}', [AdvertController::class, 'updateRelistService'])->name('update-relist-service');
-
+    Route::get('notification', [AdvertController::class, 'showNotifications'])->name('notification');
 
     Route::get('/payment/{uuid}', [PaymentController::class, 'showPaymentPage'])->name('payment-page');
     Route::post('/pay/{uuid}', [PaymentController::class, 'redirectToGateway'])->name('pay');

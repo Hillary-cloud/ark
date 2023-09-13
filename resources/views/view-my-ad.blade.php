@@ -88,7 +88,7 @@
                     <p><span class="">School Area -</span> {{ ucfirst($advert->school_area->name) }}</p>
                     <p><span class="">School -</span> {{ ucfirst($advert->school->name) }}</p>
                     <p><span class="">State -</span> {{ ucfirst($advert->location->state) }}</p>
-                    <p><span class="">Date Listed -</span> {{ $advert->created_at }}</p>
+                    <p><span class="">Date Listed -</span> {{ $advert->updated_at }}</p>
                     @if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false)
                         <p>Status - <span class="text-danger fst-italic">This ad has elapsed 30 days, and because of that,
                                 it has been de-listed from active ads.

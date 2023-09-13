@@ -29,8 +29,8 @@ class UpdateExpiredAds extends Command
      */
     public function handle()
     {
-        $now = Carbon::now();
-        $currentTime = $now->addHour(); //adds 1hour to the time because carbon::now() is 1hour ago
+        $now = now();
+        $currentTime = $now; //adds 1hour to the time because carbon::now() is 1hour ago
 
         Advert::where('expiration_date', '<=', $currentTime)->where('active',true)
         ->update([

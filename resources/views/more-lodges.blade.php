@@ -35,7 +35,7 @@
                 <select style="width: 100%" name="lodge" id="lodge">
                     <option value="">Lodge</option>
                     @foreach ($lodges as $lodge)
-                        <option value="{{ $lodge->id }}" {{ Request::get('lodge') == $lodge->id ? 'selected' : '' }}>
+                        <option value="{{ $lodge->slug }}" {{ Request::get('lodge') == $lodge->slug ? 'selected' : '' }}>
                             {{ ucfirst($lodge->name) }}</option>
                     @endforeach
                 </select>
@@ -46,7 +46,7 @@
                 <select style="width: 100%" name="school" id="school">
                     <option value="">School</option>
                     @foreach ($schools as $school)
-                        <option value="{{ $school->id }}" {{ Request::get('school') == $school->id ? 'selected' : '' }}>
+                        <option value="{{ $school->slug }}" {{ Request::get('school') == $school->slug ? 'selected' : '' }}>
                             {{ ucfirst($school->name) }}
                         </option>
                     @endforeach
@@ -76,7 +76,7 @@
                 <select style="width: 100%" name="school_area" id="school_area">
                     <option value="">School Area</option>
                     @foreach ($school_areas as $school_area)
-                        <option value="{{ $school_area->id }}" {{ Request::get('school_area') == $school_area->id ? 'selected' : '' }}>
+                        <option value="{{ $school_area->slug }}" {{ Request::get('school_area') == $school_area->slug ? 'selected' : '' }}>
                             {{ ucfirst($school_area->name) }}
                         </option>
                     @endforeach
@@ -88,13 +88,13 @@
                 <select style="width: 100%" name="location" id="location">
                     <option value="">Location</option>
                     @foreach ($locations as $location)
-                        <option value="{{ $location->id }}" {{ Request::get('location') == $location->id ? 'selected' : '' }}>
+                        <option value="{{ $location->slug }}" {{ Request::get('location') == $location->slug ? 'selected' : '' }}>
                             {{ ucfirst($location->state) }}
                         </option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-2 align-self-end">
+            <div class="">
                 <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-funnel"></i> Filter</button>
             </div>
 
@@ -105,7 +105,6 @@
                 <p class="text-muted fst-italic">({{ $adverts->count() }} ad{{ $adverts->count() !== 1 ? 's' : '' }})</p>
 
                 @foreach ($adverts as $advert)
-                {{-- @if ($advert->lodge_id !== null ) --}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-4">
                         <a href="{{ route('lodge-detail', $advert->uuid) }}" class="text-decoration-none">
                             <div class="card shadow-lg">
@@ -129,23 +128,22 @@
                                 <p class="card-text fw-bold bg-success p-2 rounded-pill text-light w-52 text-center">&#8358
                                     {{ number_format($advert->combined_price) }}</p>
                                 <p class="card-text "><small
-                                        class="text-muted">{{ ucfirst($advert->location->state) }}</small>
+                                        class="text-muted"><i class="bi bi-geo-alt"></i>{{ ucfirst($advert->location->state) }}</small>
                                 </p>
                             </div>
 
                             <div class="d-flex justify-content-between mb-0">
-                                <p class="card-text fw-bold text-dark">{{ ucfirst($advert->school->name) }}</p>
+                                <p class="card-text fw-bold text-dark"><i class="bi bi-bank2"></i> {{ ucfirst($advert->school->name) }}</p>
                                 <p class="card-text text-dark">{{ ucfirst($advert->school_area->name) }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="card-text "><small class="text-muted">Listed
-                                        {{ $advert->created_at->diffForHumans() }}</small></p>
+                                        {{ $advert->updated_at->diffForHumans() }}</small></p>
                                 <i class="bi bi-eye"> {{ $advert->view_count }}</i>
                             </div>
                         </div>
                     </div>
         </div>
-        {{-- @endif --}}
         @endforeach
 
             <div class="pagination">

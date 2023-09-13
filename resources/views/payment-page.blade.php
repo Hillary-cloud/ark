@@ -48,8 +48,8 @@
                                 @if ($advert->other_images)
                                     <p><strong>Other Images</strong></p>
                                     @foreach ($advert->other_images as $images)
-                                        <img src="{{ asset($images) }}" class="img-fluid w-25 h-25 mb-2"
-                                            style="object-fit: cover;" alt="">
+                                        <img src="{{ asset($images) }}" class="img-fluid h-25 mb-2"
+                                            style=" width:23%; object-fit: cover;" alt="">
                                     @endforeach
                                 @endif
 

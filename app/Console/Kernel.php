@@ -14,6 +14,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:update-expired-ads')->daily();
+
+        // New scheduled task for ad expiration notifications
+    $schedule->command('ads:send-expiration-notifications')->daily();
     
     }
 
