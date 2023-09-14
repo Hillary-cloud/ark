@@ -14,10 +14,13 @@ class SendAdExpirationNotifications extends Command
 
     public function handle()
     {
-        $expiredAds = Advert::where('expiration_date', null)->where('active',false)->where('draft',false)->get();
+        $expiredAds = Advert::where('expiration_date', null)->where('notification_sent', false)->where('active',false)->where('draft',false)->get();
 
         foreach ($expiredAds as $ad) {
             $ad->user->notify(new AdExpired($ad));
+
+            // Mark the notification as sent
+        $ad->update(['notification_sent' => true]);
         }
 
         $this->info('Ad expiration notifications sent successfully.');

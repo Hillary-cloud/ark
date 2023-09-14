@@ -7,7 +7,9 @@ use App\Models\Advert;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 use Unicodeveloper\Paystack\Paystack;
+use App\Notifications\AdCreatedNotification;
 
 class PaymentController extends Controller
 {
@@ -40,7 +42,7 @@ class PaymentController extends Controller
 
             if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false) {
                 $paymentData = [
-                    'amount' => 10000, // Amount in kobo
+                    'amount' => 1000, // Amount in kobo
                     'email' => $email,
                     'metadata' => [
                         'custom_fields' => [
@@ -80,45 +82,49 @@ class PaymentController extends Controller
 
     public function handleGatewayCallback($uuid)
     {
-        try{
-        $expirationDate = Carbon::now()->addDays(30);
-        $paymentDetails = $this->paystack->getPaymentData();
+        try {
+            $expirationDate = Carbon::now()->addDays(30);
+            $paymentDetails = $this->paystack->getPaymentData();
 
-        $status = $paymentDetails['data']['status'];
-        $metadata = $paymentDetails['data']['metadata'];
+            $status = $paymentDetails['data']['status'];
+            $metadata = $paymentDetails['data']['metadata'];
 
-        // Extract custom fields from metadata
-        $paymentFor = null;
-        foreach ($metadata['custom_fields'] as $customField) {
-            if ($customField['variable_name'] === 'payment_for') {
-                $paymentFor = $customField['value'];
-                break;
+            // Extract custom fields from metadata
+            $paymentFor = null;
+            foreach ($metadata['custom_fields'] as $customField) {
+                if ($customField['variable_name'] === 'payment_for') {
+                    $paymentFor = $customField['value'];
+                    break;
+                }
             }
+            // dd($paymentDetails);
+
+            // Process payment details and update your database accordingly
+            // For example, you can check if the payment was successful and update the user's order status.
+            if ($status === 'success') {
+                $advert = Advert::where('uuid', $uuid)->firstOrFail();
+                $advert->update(['expiration_date' => $expirationDate, 'notification_sent' => false, 'draft' => false, 'active' => true]);
+
+                // Create a new payment record and associate it with the authenticated user and advert
+                Payment::create([
+                    'reference_number' => $paymentDetails['data']['reference'],
+                    'amount' => $paymentDetails['data']['amount'] / 100, // Assuming the amount is in kobo and needs to be converted to naira
+                    'payment_for' => $paymentFor,
+                    'user_id' => auth()->user()->id,
+                    'advert_id' => $advert->id, // Associate with the advert
+                ]);
+            }
+
+            // Dispatch the AdCreatedNotification
+            $user = Auth::user(); // Get the user who created the ad
+            $advert->user->notify(new AdCreatedNotification($advert));
+
+            return redirect()->route('success', compact('uuid', 'advert')); // Redirect to a success page
+        } catch (\Exception $e) {
+            // Handle the exception and return an error response
+            $errorMessage = 'Payment failed. Please try again later.';
+            return redirect()->route('payment-page', compact('errorMessage', 'advert', 'uuid'));
         }
-        // dd($paymentDetails);
-
-        // Process payment details and update your database accordingly
-        // For example, you can check if the payment was successful and update the user's order status.
-        if ($status === 'success') {
-            $advert = Advert::where('uuid', $uuid)->firstOrFail();
-            $advert->update(['expiration_date' => $expirationDate, 'draft' => false, 'active' => true]);
-
-            // Create a new payment record and associate it with the authenticated user and advert
-            Payment::create([
-                'reference_number' => $paymentDetails['data']['reference'],
-                'amount' => $paymentDetails['data']['amount'] / 100, // Assuming the amount is in kobo and needs to be converted to naira
-                'payment_for' => $paymentFor,
-                'user_id' => auth()->user()->id,
-                'advert_id' => $advert->id, // Associate with the advert
-            ]);
-        }
-
-        return redirect()->route('success', ['uuid' => $advert->uuid]); // Redirect to a success page
-    } catch (\Exception $e) {
-        // Handle the exception and return an error response
-        $errorMessage = 'Payment failed. Please try again later.';
-        return redirect()->route('payment-page', compact('errorMessage'));
-    }
     }
 
     public function showTransactionHistoryPage()

@@ -41,7 +41,7 @@ class AdCreatedNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'A new advert was created: ' . $this->ad->uuid,
+            'message' => 'Your advert has been listed: ' . $this->ad->uuid,
             'ad_uuid' => $this->ad->uuid,
         ];
     }

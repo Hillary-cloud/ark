@@ -171,6 +171,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Unicodeveloper\Paystack\PaystackServiceProvider::class,
         Jorenvh\Share\Providers\ShareServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -188,6 +189,7 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
+        'Backup' => Spatie\Backup\Facades\Backup::class,
     ])->toArray(),
 
 ];

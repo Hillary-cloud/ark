@@ -175,30 +175,39 @@ class AdvertController extends Controller
     public function post($uuid)
     {
         try {
-            
+
             $expirationDate = Carbon::now()->addDays(30);
 
             $advert = Advert::where('uuid', $uuid)->firstOrFail();
             $advert->update(['expiration_date' => $expirationDate, 'draft' => false, 'active' => true]);
-               // Dispatch the AdCreatedNotification
-    $user = Auth::user(); // Get the user who created the ad
-    $advert->user->notify(new AdCreatedNotification($advert));
-    
-            return redirect()->route('success-two', compact('uuid','advert',)); // Redirect to a success page
+            // Dispatch the AdCreatedNotification
+            $user = Auth::user(); // Get the user who created the ad
+            $advert->user->notify(new AdCreatedNotification($advert));
+
+            return redirect()->route('success-two', compact('uuid', 'advert',)); // Redirect to a success page
         } catch (\Exception $e) {
             // Handle the exception and return an error response
             $errorMessage = 'Sorry, ad listing failed. Please try again later.';
-            return view('post-ad-page', compact('errorMessage', 'advert','uuid'));
+            return view('post-ad-page', compact('errorMessage', 'advert', 'uuid'));
         }
     }
 
     public function showNotifications()
-{
-    $user = Auth::user(); // Get the authenticated user
-    $notifications = $user->notifications; // Retrieve the user's notifications
+    {
+        $user = Auth::user(); // Get the authenticated user
+        $notifications = $user->notifications; // Retrieve the user's notifications
 
-    return view('notification', compact('notifications'));
-}
+        return view('notification', compact('notifications'));
+    }
+
+    public function markNotificationAsRead(Request $request, $notification)
+    {
+        $notification = $request->user()->notifications()->findOrFail($notification);
+        $notification->markAsRead();
+
+        return response()->json(['success' => true]);
+    }
+
 
     public function getDraft()
     {
@@ -372,6 +381,7 @@ class AdvertController extends Controller
             'negotiable' => 'nullable|boolean',
             'phone_number' => 'required|string',
         ]);
+
 
         $negotiable = $request->has('negotiable') ? true : false;
         $combinedPrice = $request->price + $request->agent_fee;

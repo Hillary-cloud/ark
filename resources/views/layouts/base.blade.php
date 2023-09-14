@@ -68,7 +68,7 @@
                             <a class="nav-link" href="{{route('postAd')}}"> <button class="btn btn-secondary fw-bold text-light btn-sm">Post Lodge</button></a>
                         </li> --}}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle btn-primary btn-sm fw-bold text-light" href="#" id="navbarDropdownn" role="button"
+                            <a class="nav-link dropdown-toggle btn-primary btn-sm fw-bold rounded-pill p-2 text-light" href="#" id="navbarDropdownn" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Post Ad
                             </a>
@@ -85,6 +85,15 @@
                         @if (Route::has('login'))
                             @auth
                                 @if (Auth::user()->user_type === 'ADM')
+
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{route('notification')}}">
+                                        <i class="bi bi-bell-fill" style="color: yellow"></i>
+                                        @if(auth()->user()->unreadNotifications->count() > 0)
+                                        <span class="text-warning"><sup class="notification-count bg-warning text-danger fw-bold" style="border-radius: 50%; padding-left:5px; padding-right:5px;">{{ auth()->user()->unreadNotifications->count() }}</sup></span>
+                                    @endif
+                                </a>
+                                </li>
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -164,11 +173,14 @@
                                         {{-- </div> --}}
                                     </li>
                                 @else
+                                
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{route('notification')}}"><i class="bi bi-bell-fill"></i>
+                                    <a class="nav-link" aria-current="page" href="{{route('notification')}}">
+                                        <i class="bi bi-bell-fill" style="color: yellow"></i>
                                         @if(auth()->user()->unreadNotifications->count() > 0)
-                                        <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
-                                    @endif</a>
+                                        <span class="text-warning"><sup class="notification-count bg-warning text-danger fw-bold" style="border-radius: 50%; padding-left:5px; padding-right:5px;">{{ auth()->user()->unreadNotifications->count() }}</sup></span>
+                                    @endif
+                                </a>
                                 </li>
                                 
                                     <li class="nav-item dropdown">

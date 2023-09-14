@@ -81,6 +81,8 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::put('update-relist-lodge/{uuid}', [AdvertController::class, 'updateRelistLodge'])->name('update-relist-lodge');
     Route::put('update-relist-service/{uuid}', [AdvertController::class, 'updateRelistService'])->name('update-relist-service');
     Route::get('notification', [AdvertController::class, 'showNotifications'])->name('notification');
+    Route::post('/mark-notification-as-read/{notification}', [AdvertController::class, 'markNotificationAsRead'])->name('mark-notification-as-read');
+
 
     Route::get('/payment/{uuid}', [PaymentController::class, 'showPaymentPage'])->name('payment-page');
     Route::post('/pay/{uuid}', [PaymentController::class, 'redirectToGateway'])->name('pay');

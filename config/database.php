@@ -58,6 +58,9 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
+            'dump' => [
+                'dump_binary_path' => 'C:/xampp/mysql/bin/',
+             ], //this solves mysqldumb not recognized as internal or external command
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],

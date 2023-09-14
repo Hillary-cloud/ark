@@ -13,11 +13,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('app:update-expired-ads')->daily();
+        $schedule->command('app:update-expired-ads')->dailyAt('00:00');
 
         // New scheduled task for ad expiration notifications
-    $schedule->command('ads:send-expiration-notifications')->daily();
-    
+        $schedule->command('ads:send-expiration-notifications')->dailyAt('01:00');
+
+        $schedule->command('backup:clean')->daily()->at('01:00'); // Comment out or remove this line
+        $schedule->command('backup:run')->daily()->at('02:00');   // Create a new backup daily
+
     }
 
     /**
@@ -25,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

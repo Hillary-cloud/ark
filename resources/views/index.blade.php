@@ -33,7 +33,7 @@ background-repeat: no-repeat;
 ">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
         <div class="container-fluid h-100" style="padding-left: 10%; padding-top: 100px;">
-            <h1 class="display-5">dolfin</h1>
+            <h1 class="display-5">Tetmart</h1>
             <p class="col-md-8 lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             <form class="mt-5 d-flex">
                 <input class=" me-2" style="width: 450px; height: 50px" type="search" name="query" value="{{ old('query', $query) }}" placeholder="Search" aria-label="Search" >
@@ -47,38 +47,71 @@ background-repeat: no-repeat;
 </header>
 
 <main>
-    <div class="container bg-light" >
+    <div class="container" >
         <div class="my-5 text-center">
-            <h1 class="fw-bold text-success">Featured Lodges</h1>
+            <h1 class="text-success">Featured Lodges</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing Lorem ipsum dolor sit amet consectetur adipisicing</p>
         </div>
         <div class="row d-flex justify-content-evenly text-center">
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../pls4.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pls4.png" class="img-fluid w-75" alt="">
                 <h6 class="fw-bold">Self contain</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../pl5.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pl5.png" class="img-fluid w-75" alt="">
                 <h6 class="fw-bold">Short let</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../pls2.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pls2.png" class="img-fluid w-75" alt="">
                 <h6 class="fw-bold">Flat</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../pls1.png" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../pls1.png" class="img-fluid w-75" alt="">
                 <h6 class="fw-bold">Single room</h6>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
-                <img src="../roomie.jpg" class="shadow-lg img-thumbnail img-fluid w-75" alt="">
+                <img src="../roomie.jpg" class="img-fluid w-75" alt="">
                 <h6 class="fw-bold">Roomie</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" >
+        <div class="my-5 text-center">
+            <h1 class="text-success">Featured Services</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing Lorem ipsum dolor sit amet consectetur adipisicing</p>
+        </div>
+        <div class="row d-flex justify-content-evenly text-center">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
+                <img src="../paint.png" class="img-fluid w-75" alt="">
+                <h6 class="fw-bold">Painter</h6>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
+                <img src="../laundry.png" class="img-fluid w-75" alt="">
+                <h6 class="fw-bold">Laundry</h6>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
+                <img src="../plumber.PNG" class="img-fluid w-75" alt="">
+                <h6 class="fw-bold">Plumber</h6>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
+                <img src="../electricia.PNG" class="img-fluid w-75" alt="">
+                <h6 class="fw-bold">Electrician</h6>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
+                <img src="../makeup.PNG" class="img-fluid w-75" alt="">
+                <h6 class="fw-bold">Make up</h6>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-4 my-2">
+                <img src="../delivery.PNG" class="img-fluid w-75" alt="">
+                <h6 class="fw-bold">Delivery</h6>
             </div>
         </div>
     </div>
     
     <div class="container my-5 ">
 
-        <h4 class="fw-bold">Listed Service</h4>
+        <h3 class="fw-bold">Listed Service</h3>
         <div class="row d-flex justify-content-start" style="margin-bottom: 100px">
         
             <div class="d-flex justify-content-end">
@@ -145,7 +178,7 @@ background-repeat: no-repeat;
             </a>
         </div>
         
-        <h4 class="fw-bold">Listed Lodges</h4>
+        <h3 class="fw-bold">Listed Lodges</h3>
         <div class="row d-flex justify-content-start">
         
             <div class="d-flex justify-content-end">

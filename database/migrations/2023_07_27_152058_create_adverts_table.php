@@ -35,6 +35,7 @@ return new class extends Migration
             $table->boolean('active');
             $table->boolean('draft');
             $table->unsignedInteger('view_count')->default(0);
+            $table->boolean('notification_sent')->default(false);
             $table->timestamps();
 
             // Foreign key constraints
