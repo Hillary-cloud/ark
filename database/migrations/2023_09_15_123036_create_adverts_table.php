@@ -45,7 +45,6 @@ return new class extends Migration
             $table->foreign('lodge_id')->references('id')->on('lodges')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');
-
         });
     }
 

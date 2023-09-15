@@ -64,3 +64,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+<!-- APP_NAME=Tetmart
+APP_ENV=production
+APP_KEY=base64:00ubbd3dTw0/ZVY1yveLUnSZlmk6FhQy1NJm5L9MnII=
+APP_DEBUG=false
+APP_URL=http://localhost -->
