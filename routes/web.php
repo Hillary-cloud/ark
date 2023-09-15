@@ -47,7 +47,7 @@ Route::get('/lodges', [HomeController::class, 'ViewMoreLodges'])->name('view-mor
 Route::get('/services', [HomeController::class, 'ViewMoreServices'])->name('view-more-services');
 
 // protected routes
-Route::middleware(['auth','verified'])->group(function () {
+Route::middleware('auth')->group(function () {
     
     // advert
     Route::get('post-ad/lodge', [AdvertController::class, 'lodgeIndex'])->name('postLodge');
