@@ -61,7 +61,7 @@
                     <table class="table table-striped table-bordered table-hover text-center">
                         <thead class="bg-success text-light">
                             <tr class="align-middle">
-                                <th>n/s</th>
+                                <th>S/N</th>
                                 <th>Image</th>
                                 <th>Ads</th>
                                 <th>School</th>

@@ -25,7 +25,7 @@
 
 <header class="text-light" 
 style="
-background-image: url('../post-single-1.jpg'); 
+background-image: url('../property-1.jpg'); 
 height: 400px;
 background-size: cover;
 background-position: center;

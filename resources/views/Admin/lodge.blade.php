@@ -25,7 +25,7 @@
                 <table class="table table-striped table-bordered table-hover text-center">
                     <thead class="bg-success text-light">
                         <tr class="align-middle text-center">
-                            <th>n/s</th>
+                            <th>S/N</th>
                             <th>Name</th>
                             <th>Slug</th>
                             <th>Date Added</th>

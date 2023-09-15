@@ -15,7 +15,7 @@
            
         </div>
         @if ($adverts->isEmpty())
-        <p class="text-danger text-center">Nothing was found</p>
+        <p class="text-danger text-center">No ad found</p>
         @endif
         <div class="card w-100 p-2 mt-3">
             @if (session('message'))
@@ -23,12 +23,7 @@
                     {{ session('message') }}
                 </div>
             @endif
-            @php
-                use App\Models\Advert;
-            @endphp
-            @if (Advert::where('user_id',auth()->user()->id)->count() < 1)
-                <p class="text-danger text-center">No ad available</p>
-            @else
+       
             <div class="row">
                 <div class="col-12">
                     <table class="table table-striped table-bordered table-hover text-center">
@@ -74,8 +69,6 @@
                     </table>
                 </div>
             </div>
-                
-            @endif
         </div>
     </div>
 
