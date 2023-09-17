@@ -28,24 +28,31 @@
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div>
+              @if (Route::has('password.request'))
+                <a href="{{ route('password.request') }}" class="text-gray-600 text-sm text-decoration-none rounded-md d-block">
+                  {{ __('Forgot your password?') }}
                 </a>
-            @endif
-
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-        <p>
-                <a href="/register" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    Don't have an account yet?, Register</a>
-        </p>
+              @endif
+            </div>
+            <div>
+              <x-primary-button class="ms-3">
+                {{ __('Login') }}
+              </x-primary-button>
+            </div>
+          </div>
+          <div class="mt-3 text-center">
+            <p>
+              <a href="/register" class="text-sm text-gray-600 text-decoration-none rounded-md d-inline-block">
+                <span class="text-secondary">Don't have an account yet?</span> Register
+              </a>
+            </p>
+          </div>
+          
     </form>
 </x-guest-layout>

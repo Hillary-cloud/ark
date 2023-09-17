@@ -11,26 +11,277 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+    <link href="css/style.css" rel="stylesheet">
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+
+    <style>
+        footer{
+            padding: 10px;
+            text-align: center;
+            position: absolute;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        }
+        html{
+            height: 100%;
+            box-sizing: border-box;
+        }
+        body{
+            position: relative;
+            min-height: 100%;
+            padding-bottom: 6rem;
+            box-sizing: inherit;
+        }
+    </style>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            {{-- @if (isset($header))
-                <header class="bg-gray shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+    <body style="overflow-x: hidden">
+        <div id="app">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand text ps-4 fw-bold" href="/"><img src="../loggo2.png" class="img-fluid" style="width: 150px" alt=""></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                       
+                        <ul class="navbar-nav ms-auto mb-2 me-5 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/">Home</a>
+                            </li>
+                            {{-- <li class="nav-item">
+                                <a class="nav-link" href="{{route('postAd')}}"> <button class="btn btn-secondary fw-bold text-light btn-sm">Post Lodge</button></a>
+                            </li> --}}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle btn-primary btn-sm fw-bold rounded-pill p-2 text-light" href="#" id="navbarDropdownn" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Post Ad
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownn">
+                                    <li><a class="dropdown-item" href="{{route('postLodge')}}">Post Lodge</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{route('postService')}}">Post Service</a></li>
+                                </ul>
+                            </li>
+    
+                            
+                            @if (Route::has('login'))
+                                @auth
+                                    @if (Auth::user()->user_type === 'ADM')
+    
+                                    <li class="nav-item">
+                                        <a class="nav-link" aria-current="page" href="{{route('notification')}}">
+                                            <i class="bi bi-bell-fill" style="color: yellow"></i>
+                                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                            <span class="text-warning"><sup class="notification-count bg-warning text-danger fw-bold" style="border-radius: 50%; padding-left:5px; padding-right:5px;">{{ auth()->user()->unreadNotifications->count() }}</sup></span>
+                                        @endif
+                                    </a>
+                                    </li>
+    
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Dashboard
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="{{route('over-view')}}"><i class="bi bi-speedometer2"></i> Overview</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('admin.all-ads')}}"><i class="bi bi-badge-ad-fill"></i> All Ads</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('admin.lodge')}}"><i class="bi bi-house"></i> Lodge</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('admin.service')}}"><i class="bi bi-tools"></i> Service</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('admin.location')}}"><i class="bi bi-geo-alt"></i> Location</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('admin.school')}}"><i class="bi bi-bank2"></i> School</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('admin.school-area')}}"><i class="bi bi-houses"></i> School Area</a></li>
+                                        
+                                        </ul>
+                                    </li>
+            
+                                        <li class="nav-item dropdown">
+                                            <a id="navbarDropdowni" class="nav-link dropdown-toggle" href="#"
+                                                role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" v-pre>
+                                                User({{explode(' ', trim( Auth::user()->name) )[0]}})
+                                            </a>
+    
+                                            {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdowni">
+                                                <a class="dropdown-item" href="{{route('profile.edit')}}"><i class="bi bi-person"></i> Profile</a>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{route('my-ads')}}"><i class="bi bi-badge-ad"></i> My Ads</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{route('draft')}}"><i class="bi bi-file-earmark"></i> Draft</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('bookmarks')}}"><i class="bi bi-bookmark"></i> Saved</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('payment-history')}}"><i class="bi bi-credit-card-2-back"></i> Transaction History</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                                   <i class="bi bi-box-arrow-right"></i> {{ __('Logout') }}
+                                                </a>
+    
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </ul>
+                                            {{-- </div> --}}
+                                        </li>
+                                    @else
+                                    
+                                    <li class="nav-item">
+                                        <a class="nav-link" aria-current="page" href="{{route('notification')}}">
+                                            <i class="bi bi-bell-fill" style="color: yellow"></i>
+                                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                            <span class="text-warning"><sup class="notification-count bg-warning text-danger fw-bold" style="border-radius: 50%; padding-left:5px; padding-right:5px;">{{ auth()->user()->unreadNotifications->count() }}</sup></span>
+                                        @endif
+                                    </a>
+                                    </li>
+                                    
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownii" role="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                Dashboard
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownii">
+                                                
+                                                <li><a class="dropdown-item" href="{{route('my-ads')}}"><i class="bi bi-badge-ad"></i> My Ads</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{route('draft')}}"><i class="bi bi-file-earmark"></i> Draft</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{route('bookmarks')}}"><i class="bi bi-bookmark"></i> Saved</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{route('payment-history')}}"><i class="bi bi-credit-card-2-back"></i> Transaction History</a></li>
+    
+                                            </ul>
+                                        </li>
+                                        
+                                        <li class="nav-item dropdown">
+                                            <a id="navbarDropdowniii" class="nav-link dropdown-toggle" href="#"
+                                                role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" v-pre>
+                                                User({{explode(' ', trim( Auth::user()->name) )[0]}})
+                                            </a>
+    
+                                            {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdowniii">
+                                                <a class="dropdown-item" href="{{route('profile.edit')}}"><i class="bi bi-person"></i> Profile</a>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                                   <i class="bi bi-box-arrow-right"></i> {{ __('Logout') }}
+                                                </a>
+    
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </ul>
+                                            {{-- </div> --}}
+                                        </li>
+                                    @endif
+                                @else
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    </li>
+    
+                                    @if (Route::has('register'))
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        </li>
+                                    @endif
+                                @endauth
+    
+                            @endif
+                        </ul>
                     </div>
-                </header>
-            @endif --}}
-
+                </div>
+            </nav>
+    
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <div class="min-vh-100 mt-4 bg-gray-100">
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
+    
+            <footer class="bg-success">
+                <div class="container" >
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <p class="text-light">&copy; <script>document.write(new Date().getFullYear())</script> Tetmart. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end ">
+                      <p>
+                        <a style="color: black" href="#"><i class="bi bi-instagram"></i> </a>
+                         <a class="mx-3" style="color: black" href="#"><i class="bi bi-twitter"></i></a>
+                        <a style="color: black" href="#"><i class="bi bi-facebook"></i></a>
+                    </p>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            
         </div>
+       
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+        <script src="{{ asset('js/share.js') }}"></script>
+    
+        {{-- @vite('resources/js/slugify.js') --}}
+        {{-- @vite('resources/js/bootstrap.min.js') --}}
+        
+        
+        
     </body>
 </html>
+
+

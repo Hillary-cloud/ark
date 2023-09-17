@@ -16,6 +16,14 @@ a .card img{
     color: gray; /* Default color */
 }
 
+.bookmark-button:hover {
+    color: gray;
+}
+
+.bookmarked:hover{
+    color: rgb(233, 233, 21);
+}
+
 .bookmarked {
     color: rgb(233, 233, 21); /* Change color when bookmarked */
     font-weight: bold; /* Apply bold font */

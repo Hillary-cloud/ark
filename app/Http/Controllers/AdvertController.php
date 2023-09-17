@@ -109,11 +109,11 @@ class AdvertController extends Controller
         $uuid = Uuid::uuid4()->toString();
 
 
-        // Store the cover image
-        $coverImagePath = $request->file('cover_image')->store('public/advert_images');
+       // Store the cover image
+       $coverImagePath = $request->file('cover_image')->store('public/advert_images');
 
-        // Convert the cover image path to a publicly accessible URL
-        $coverImageURL = Storage::url($coverImagePath);
+       // Convert the cover image path to a publicly accessible URL
+       $coverImageURL = Storage::url($coverImagePath);
 
         // Store the other images (if any)
         $otherImages = [];
