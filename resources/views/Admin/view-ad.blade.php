@@ -89,7 +89,7 @@
                     <p><span class="">School Area -</span> {{ ucfirst($advert->school_area->name) }}</p>
                     <p><span class="">School -</span> {{ ucfirst($advert->school->name) }}</p>
                     <p><span class="">State -</span> {{ ucfirst($advert->location->state) }}</p>
-                    <p><span class="">Date Listed -</span> {{ $advert->updated_at }}</p>
+                    <p><span class="">Date Listed -</span> {{ \Carbon\Carbon::parse($advert->list_date)->diffForHumans() }}</p>
                     @if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false)
                         <p>Status - <span class="text-danger fst-italic">Ad has been de-listed</span></p>
                     @else

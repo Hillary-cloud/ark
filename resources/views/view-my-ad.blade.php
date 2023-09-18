@@ -88,7 +88,7 @@
                     <p><span class="">School Area -</span> {{ ucfirst($advert->school_area->name) }}</p>
                     <p><span class="">School -</span> {{ ucfirst($advert->school->name) }}</p>
                     <p><span class="">State -</span> {{ ucfirst($advert->location->state) }}</p>
-                    <p><span class="">Date Listed -</span> {{ $advert->updated_at }}</p>
+                    <p><span class="">Date Listed -</span> {{ \Carbon\Carbon::parse($advert->list_date)->diffForHumans() }}</p>
                     @if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false)
                         <p>Status - <span class="text-danger fst-italic">This ad has elapsed 30 days, and because of that,
                                 it has been de-listed from active ads.
@@ -96,7 +96,7 @@
                         <a href="{{ route('relist', $advert->uuid) }}"><button
                                 class="btn btn-primary w-25 text-light">Re-list</button></a>
                     @else
-                        <p><span class="">Expiration Date -</span> {{ $advert->expiration_date }}</p>
+                        <p><span class="">Expiration Date -</span> {{ \Carbon\Carbon::parse($advert->expiration_date)->diffForHumans() }}</p>
                     @endif
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">

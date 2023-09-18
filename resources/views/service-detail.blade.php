@@ -91,7 +91,7 @@
                     <p><span class="">School Area -</span> {{ ucfirst($advert->school_area->name) }}</p>
                     <p><span class="">School -</span> {{ ucfirst($advert->school->name) }}</p>
                     <p><span class="">State -</span> {{ ucfirst($advert->location->state) }}</p>
-                    <p><span class="">Time Listed -</span> {{ $advert->updated_at->diffForHumans() }}</p>
+                    <p><span class="">Time Listed -</span> {{ \Carbon\Carbon::parse($advert->list_date)->diffForHumans() }}</p>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <h4 class="fw-bold">Description</h4>
@@ -153,9 +153,9 @@
 
                                 <div class="d-flex justify-content-between">
                                     @if ($advert->on_contact == true)
-                                    <p class="card-text fw-bold bg-success p-2 rounded-pill text-light w-52 text-center">Price on contact</p>
+                                    <p class="text-success fw-bold">Price on contact</p>
                                     @else
-                                    <p class="card-text fw-bold bg-success p-2 rounded-pill text-light w-52 text-center">&#8358
+                                    <p class="text-success fw-bold">&#8358
                                         {{ number_format($advert->combined_price) }}</p>
                                     @endif
                                     
@@ -169,7 +169,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <p class="card-text "><small class="text-muted">Listed
-                                            {{ $advert->updated_at->diffForHumans() }}</small></p>
+                                        {{ \Carbon\Carbon::parse($advert->list_date)->diffForHumans() }}</small></p>
                                     <i class="bi bi-eye"> {{ $advert->view_count }}</i>
                                 </div>
                             </div>

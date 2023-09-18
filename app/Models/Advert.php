@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Lodge;
+use App\Models\AdView;
 use App\Models\School;
 use App\Models\Payment;
 use App\Models\Service;
@@ -63,6 +64,11 @@ class Advert extends Model
     public function bookmarks()
     {
         return $this->hasMany(Bookmark::class);
+    }
+
+    public function adViews()
+    {
+        return $this->hasMany(AdView::class);
     }
 
     public function payments()

@@ -109,11 +109,11 @@ class AdvertController extends Controller
         $uuid = Uuid::uuid4()->toString();
 
 
-       // Store the cover image
-       $coverImagePath = $request->file('cover_image')->store('public/advert_images');
+        // Store the cover image
+        $coverImagePath = $request->file('cover_image')->store('public/advert_images');
 
-       // Convert the cover image path to a publicly accessible URL
-       $coverImageURL = Storage::url($coverImagePath);
+        // Convert the cover image path to a publicly accessible URL
+        $coverImageURL = Storage::url($coverImagePath);
 
         // Store the other images (if any)
         $otherImages = [];
@@ -179,7 +179,7 @@ class AdvertController extends Controller
             $expirationDate = Carbon::now()->addDays(30);
 
             $advert = Advert::where('uuid', $uuid)->firstOrFail();
-            $advert->update(['expiration_date' => $expirationDate, 'draft' => false, 'active' => true]);
+            $advert->update(['expiration_date' => $expirationDate, 'list_date' => now(), 'draft' => false, 'active' => true]);
             // Dispatch the AdCreatedNotification
             $user = Auth::user(); // Get the user who created the ad
             $advert->user->notify(new AdCreatedNotification($advert));

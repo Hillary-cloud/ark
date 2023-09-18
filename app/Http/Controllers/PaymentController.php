@@ -103,7 +103,7 @@ class PaymentController extends Controller
             // For example, you can check if the payment was successful and update the user's order status.
             if ($status === 'success') {
                 $advert = Advert::where('uuid', $uuid)->firstOrFail();
-                $advert->update(['expiration_date' => $expirationDate, 'notification_sent' => false, 'draft' => false, 'active' => true]);
+                $advert->update(['expiration_date' => $expirationDate, 'list_date' => now(), 'notification_sent' => false, 'draft' => false, 'active' => true]);
 
                 // Create a new payment record and associate it with the authenticated user and advert
                 Payment::create([

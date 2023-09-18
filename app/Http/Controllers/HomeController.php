@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Lodge;
 use App\Models\Advert;
+use App\Models\AdView;
 use App\Models\School;
 use App\Models\Service;
 use App\Models\Location;
@@ -226,26 +227,28 @@ class HomeController extends Controller
     {
         $advert = Advert::where('uuid', $uuid)->firstOrFail();
 
-        // Check if the ad has been viewed in the current session
-        // $viewedAds = session()->get('viewed_ads', []);
-        // if (!in_array($uuid, $viewedAds)) {
-        //     $advert->increment('view_count'); // Increment view count
-        //     $viewedAds[] = $uuid;
-        //     session()->put('viewed_ads', $viewedAds);
-        // }
-        // Get the user's IP address
-        $ip = FacadesRequest::ip();
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            $userId = Auth::id();
 
-        // Check if the ad has been viewed by this IP address
-        $viewedAds = Cache::remember('viewed_ads:' . $ip, now()->addHours(24), function () use ($ip) {
-            return [];
-        });
+            // Check if the user has already viewed the ad
+            $existingView = AdView::where('user_id', $userId)
+                ->where('advert_id', $advert->id)
+                ->first();
 
-        if (!in_array($uuid, $viewedAds)) {
-            $advert->increment('view_count'); // Increment IP view count
-            $viewedAds[] = $uuid;
-            Cache::put('viewed_ads:' . $ip, $viewedAds, now()->addHours(24));
+            if (!$existingView) {
+                // Increment the view count
+                $advert->increment('view_count');
+
+                // Record the view in the ad_views table
+                AdView::create([
+                    'user_id' => $userId,
+                    'advert_id' => $advert->id,
+                ]);
+            }
         }
+
+
         $adverts = Advert::where('active', true)
             ->where('draft', false)
             ->where('expiration_date', '>', Carbon::now())
@@ -265,26 +268,27 @@ class HomeController extends Controller
     {
         $advert = Advert::where('uuid', $uuid)->firstOrFail();
 
-        // Check if the ad has been viewed in the current session
-        // $viewedAds = session()->get('viewed_ads', []);
-        // if (!in_array($uuid, $viewedAds)) {
-        //     $advert->increment('view_count'); // Increment view count
-        //     $viewedAds[] = $uuid;
-        //     session()->put('viewed_ads', $viewedAds);
-        // }
-        // Get the user's IP address
-        $ip = FacadesRequest::ip();
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            $userId = Auth::id();
 
-        // Check if the ad has been viewed by this IP address
-        $viewedAds = Cache::remember('viewed_ads:' . $ip, now()->addHours(24), function () use ($ip) {
-            return [];
-        });
+            // Check if the user has already viewed the ad
+            $existingView = AdView::where('user_id', $userId)
+                ->where('advert_id', $advert->id)
+                ->first();
 
-        if (!in_array($uuid, $viewedAds)) {
-            $advert->increment('view_count'); // Increment IP view count
-            $viewedAds[] = $uuid;
-            Cache::put('viewed_ads:' . $ip, $viewedAds, now()->addHours(24));
+            if (!$existingView) {
+                // Increment the view count
+                $advert->increment('view_count');
+
+                // Record the view in the ad_views table
+                AdView::create([
+                    'user_id' => $userId,
+                    'advert_id' => $advert->id,
+                ]);
+            }
         }
+
         $adverts = Advert::where('active', true)
             ->where('draft', false)
             ->where('expiration_date', '>', Carbon::now())

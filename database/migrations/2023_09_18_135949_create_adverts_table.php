@@ -31,6 +31,7 @@ return new class extends Migration
             $table->json('other_images')->nullable();
             $table->string('seller_name');
             $table->string('phone_number');
+            $table->dateTime('list_date')->nullable();
             $table->dateTime('expiration_date')->nullable();
             $table->boolean('active');
             $table->boolean('draft');
