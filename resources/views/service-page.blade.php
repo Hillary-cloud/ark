@@ -20,37 +20,56 @@
         #back-to-top.show {
             display: block;
         }
+
+        .scrollable-selects {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        /* Optional: Add some padding for better appearance */
+        .scrollable-selects select {
+            width: 100%;
+            height: 30px;
+            margin-right: 10px;
+            /* Adjust as needed */
+        }
     </style>
 
     <div class="container my-4">
         <div class="d-flex justify-content-between mb-3">
-            <h3 class="">Listed {{ucfirst($service->name)}}</h3>
+            <h3 class="">Listed {{ ucfirst($service->name) }}</h3>
             <a href="javascript:history.back()" class="text-decoration-none">
                 < Back</a>
         </div>
-        
+
         <form action="" method="GET" class="row g-3">
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="location" id="location">
-                    <option value="">Location</option>
-                    @foreach ($locations as $location)
-                        <option value="{{ $location->slug }}"
-                            {{ Request::get('location') == $location->slug ? 'selected' : '' }}>
-                            {{ ucfirst($location->state) }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <div class="container p-2" style="border-radius:5px;">
+                <div class="scrollable-selects">
+                    <div class="d-flex justify-content-start">
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="location" id="location">
+                                <option value="">Location</option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->slug }}"
+                                        {{ Request::get('location') == $location->slug ? 'selected' : '' }}>
+                                        {{ ucfirst($location->state) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="school" id="school" disabled>
-                    <option value="">School</option>
-                </select>
-            </div>
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="school" id="school" disabled>
+                                <option value="">School</option>
+                            </select>
+                        </div>
 
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="school_area" id="school_area" disabled>
-                    <option value=""> Area</option>
-                </select>
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="school_area" id="school_area" disabled>
+                                <option value=""> Area</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="">
@@ -63,14 +82,14 @@
             @if ($ads->count() > 0)
                 <p class="text-muted fst-italic">({{ $ads->count() }} result{{ $ads->count() !== 1 ? 's' : '' }})
                     @if (Request::has('location') && !empty(Request::get('location')))
-                    , Location: {{ ucfirst(Request::get('location')) }}
-                @endif
-                @if (Request::has('school') && !empty(Request::get('school')))
-                    , School: {{ ucfirst(Request::get('school')) }}
-                @endif
-                @if (Request::has('school_area') && !empty(Request::get('school_area')))
-                    , Area: {{ ucfirst(Request::get('school_area')) }}
-                @endif              
+                        , Location: {{ ucfirst(Request::get('location')) }}
+                    @endif
+                    @if (Request::has('school') && !empty(Request::get('school')))
+                        , School: {{ ucfirst(Request::get('school')) }}
+                    @endif
+                    @if (Request::has('school_area') && !empty(Request::get('school_area')))
+                        , Area: {{ ucfirst(Request::get('school_area')) }}
+                    @endif
                 </p>
 
                 @foreach ($ads as $advert)
@@ -134,7 +153,6 @@
                     </style>
                     {{ $ads->links() }}
                 </div>
-            
             @else
                 <p class="text-danger text-center">No service found</p>
             @endif

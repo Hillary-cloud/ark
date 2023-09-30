@@ -52,14 +52,14 @@
                 <div class="carousel-item active">
                     <div class="d-flex justify-content-center align-items-center">
                         <img src="{{ asset($advert->cover_image) }}" class="img-fluid col-lg-8 col-md-8 col-sm-12 col-12"
-                            style="height: 400px; object-cover: fit; border-radius:10px" alt="Cover Image">
+                            style="height: 400px; object-fit: cover; border-radius:10px" alt="Cover Image">
                     </div>
                 </div>
                 @foreach ($advert->other_images as $images)
                     <div class="carousel-item">
                         <div class="d-flex justify-content-center align-items-center">
                             <img src="{{ asset($images) }}" class="img-fluid col-lg-8 col-md-8 col-sm-12 col-12"
-                                style="height: 400px; object-cover: fit; border-radius:10px" alt="Other Image">
+                                style="height: 400px; object-fit: cover; border-radius:10px" alt="Other Image">
                         </div>
                     </div>
                 @endforeach
@@ -100,13 +100,14 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-2 ">
                     @if ($advert->lodge_id !== null)
-                    <p><span class="">Rent -</span> &#8358 {{ number_format($advert->price) }} per annum </p>
-                    <p><span class="">Agent Fee -</span> &#8358 {{ number_format($advert->agent_fee) }}
-                    </p>
-                        @if ($advert->negotiable == true)
-                            <p class="text-muted fst-italic"> Price is negotiable</p>
+                        <p><span class="">Rent -</span> &#8358 {{ number_format($advert->price) }} per annum </p>
+                        @if ($advert->agent_fee !== null && $advert->negotiable == true)
+                            <p><span class="">Agent Fee -</span> &#8358 {{ number_format($advert->agent_fee) }}</p>
+                            <p class="text-muted fst-italic"> Agent fee is negotiable</p>
+                        @elseif($advert->agent_fee !== null && $advert->negotiable == false)
+                            <p><span class="">Agent Fee -</span> &#8358 {{ number_format($advert->agent_fee) }}</p>
+                            <p class="text-muted fst-italic"> Agent fee is not negotiable</p>
                         @else
-                            <p class="text-muted fst-italic"> Price is not negotiable</p>
                         @endif
                     @else
                         @if ($advert->on_contact == true)
@@ -126,9 +127,9 @@
                         <a href="{{ route('relist', $advert->uuid) }}"><button
                                 class="btn btn-primary w-25 text-light">Re-list</button></a>
                     @else
-                        <p><span class="">Time Listed -</span>
+                        <p><span class="">Time listed -</span>
                             {{ \Carbon\Carbon::parse($advert->list_date)->diffForHumans() }}</p>
-                        <p><span class="">Expiration Date -</span>
+                        <p><span class="">Expiration time -</span>
                             {{ \Carbon\Carbon::parse($advert->expiration_date)->diffForHumans() }}</p>
                     @endif
                 </div>

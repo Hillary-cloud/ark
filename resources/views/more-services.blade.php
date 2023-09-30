@@ -20,6 +20,18 @@
         #back-to-top.show {
             display: block;
         }
+
+        .scrollable-selects {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        /* Optional: Add some padding for better appearance */
+        .scrollable-selects select {
+            width: 100%;
+            height: 30px;
+            margin-right: 10px; /* Adjust as needed */
+        }
     </style>
 
     <div class="container my-4">
@@ -30,37 +42,43 @@
         </div>
         
         <form action="{{ route('view-more-services') }}" method="GET" class="row g-3">
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="location" id="location">
-                    <option value="">Location</option>
-                    @foreach ($locations as $location)
-                        <option value="{{ $location->slug }}">
-                            {{ ucfirst($location->state) }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="school" id="school" disabled>
-                    <option value="">School</option>
-                </select>
-            </div>
-
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="school_area" id="school_area" disabled>
-                    <option value=""> Area</option>
-                </select>
-            </div>
-
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="service" id="service">
-                    <option value="">Service</option>
-                    @foreach ($services as $service)
-                        <option value="{{ $service->slug }}"
-                            {{ Request::get('service') == $service->slug ? 'selected' : '' }}>
-                            {{ ucfirst($service->name) }}</option>
-                    @endforeach
-                </select>
+            <div class="container p-2" style="border-radius:5px;">
+                <div class="scrollable-selects">
+                    <div class="d-flex justify-content-start">
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="location" id="location">
+                                <option value="">Location</option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->slug }}">
+                                        {{ ucfirst($location->state) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+            
+                        <div class="">
+                            <select style="width: 200px; height: 40px" name="school" id="school" disabled>
+                                <option value="">School</option>
+                            </select>
+                        </div>
+            
+                        <div class="">
+                            <select style="width: 200px; height: 40px" name="school_area" id="school_area" disabled>
+                                <option value="">Area</option>
+                            </select>
+                        </div>
+            
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="service" id="service">
+                                <option value="">Service</option>
+                                @foreach ($services as $service)
+                                    <option value="{{ $service->slug }}"
+                                        {{ Request::get('service') == $service->slug ? 'selected' : '' }}>
+                                        {{ ucfirst($service->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="">
                 <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-funnel"></i> Filter</button>

@@ -138,7 +138,7 @@
                             <div class="form-check mb-3">
                                 <input type="checkbox" name="negotiable" value="{{ old('negotiable') }}"
                                     id="negotiable" class="form-check-input">
-                                <label for="negotiable" class="form-check-label">Negotiable</label>
+                                <label for="negotiable" class="form-check-label">Negotiable<span style="font-size: 10px" class="text-muted fst-italic">(Agent fee)</span></label>
                                 @error('negotiable')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -187,4 +187,22 @@
     </div>
 
 <script src="{{asset('js/script.js')}}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get references to the agent fee input and negotiable checkbox
+        var agentFeeInput = document.getElementById("agent_fee");
+        var negotiableCheckbox = document.getElementById("negotiable");
+
+        // Disable negotiable checkbox initially
+        negotiableCheckbox.disabled = true;
+
+        // Add event listener to the agent fee input
+        agentFeeInput.addEventListener("input", function () {
+            // Enable negotiable checkbox if agent fee is filled, otherwise disable it
+            negotiableCheckbox.disabled = !agentFeeInput.value;
+        });
+    });
+</script>
+
 @endsection

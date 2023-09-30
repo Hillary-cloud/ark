@@ -20,6 +20,19 @@
         #back-to-top.show {
             display: block;
         }
+
+        .scrollable-selects {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        /* Optional: Add some padding for better appearance */
+        .scrollable-selects select {
+            width: 100%;
+            height: 30px;
+            margin-right: 10px;
+            /* Adjust as needed */
+        }
     </style>
 
     <div class="container my-4">
@@ -28,80 +41,102 @@
             <a href="javascript:history.back()" class="text-decoration-none">
                 < Back</a>
         </div>
-        
+
         <form action="{{ route('view-more-lodges') }}" method="GET" class="row g-3">
+            <div class="container p-2" style="border-radius:5px;">
+                <div class="scrollable-selects">
+                    <div class="d-flex justify-content-start">
 
-            <div class="col-4">
+                        <div class="">
 
-                <select style="width: 100%; height: 30px" name="location" id="location">
-                    <option value="">Location</option>
-                    @foreach ($locations as $location)
-                        <option value="{{ $location->slug }}">
-                            {{ ucfirst($location->state) }}</option>
-                    @endforeach
-                </select>
+                            <select style="width: 150px; height: 40px" name="location" id="location">
+                                <option value="">Location</option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->slug }}">
+                                        {{ ucfirst($location->state) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="school" id="school" disabled>
+                                <option value="">School</option>
+                            </select>
+                        </div>
+
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="school_area" id="school_area" disabled>
+                                <option value="">Area</option>
+                            </select>
+                        </div>
+
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="lodge" id="lodge">
+                                <option value="">Lodge</option>
+                                @foreach ($lodges as $lodge)
+                                    <option value="{{ $lodge->slug }}"
+                                        {{ Request::get('lodge') == $lodge->slug ? 'selected' : '' }}>
+                                        {{ ucfirst($lodge->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="">
+                            <select style="width: 150px; height: 40px" name="price" id="price">
+                                <option value="">Price</option>
+                                <option value="0-50000" {{ Request::get('price') == '0-50000' ? 'selected' : '' }}>&#8358 0
+                                    - &#8358
+                                    50,000</option>
+                                <option value="50001-100000"
+                                    {{ Request::get('price') == '50001-100000' ? 'selected' : '' }}>&#8358
+                                    50,001 - &#8358 100,000</option>
+                                <option value="100001-150000"
+                                    {{ Request::get('price') == '100001-150000' ? 'selected' : '' }}>&#8358
+                                    100,001 - &#8358 150,000</option>
+                                <option value="150001-200000"
+                                    {{ Request::get('price') == '150001-200000' ? 'selected' : '' }}>&#8358
+                                    150,001 - &#8358 200,000</option>
+                                <option value="200001-250000"
+                                    {{ Request::get('price') == '200001-250000' ? 'selected' : '' }}>&#8358
+                                    200,001 - &#8358 250,000</option>
+                                <option value="250001-300000"
+                                    {{ Request::get('price') == '250001-300000' ? 'selected' : '' }}>&#8358
+                                    250,001 - &#8358 300,000</option>
+                                <option value="300001-350000"
+                                    {{ Request::get('price') == '300001-350000' ? 'selected' : '' }}>&#8358
+                                    300,001 - &#8358 350,000</option>
+                                <option value="350001-400000"
+                                    {{ Request::get('price') == '350001-400000' ? 'selected' : '' }}>&#8358
+                                    350,001 - &#8358 400,000</option>
+                                <option value="400001-450000"
+                                    {{ Request::get('price') == '400001-450000' ? 'selected' : '' }}>&#8358
+                                    400,001 - &#8358 450,000</option>
+                                <option value="450001-500000"
+                                    {{ Request::get('price') == '450001-500000' ? 'selected' : '' }}>&#8358
+                                    450,001 - &#8358 500,000</option>
+                                <option value="500001-600000"
+                                    {{ Request::get('price') == '500001-600000' ? 'selected' : '' }}>&#8358
+                                    500,001 - &#8358 600,000</option>
+                                <option value="600001-700000"
+                                    {{ Request::get('price') == '600001-700000' ? 'selected' : '' }}>&#8358
+                                    600,001 - &#8358 700,000</option>
+                                <option value="700001-800000"
+                                    {{ Request::get('price') == '700001-800000' ? 'selected' : '' }}>&#8358
+                                    700,001 - &#8358 800,000</option>
+                                <option value="800001-900000"
+                                    {{ Request::get('price') == '800001-900000' ? 'selected' : '' }}>&#8358
+                                    800,001 - &#8358 900,000</option>
+                                <option value="900001-1000000"
+                                    {{ Request::get('price') == '900001-1000000' ? 'selected' : '' }}>&#8358
+                                    900,001 - &#8358 1000,000</option>
+                                <option value="1000001-1000000000000000"
+                                    {{ Request::get('price') == '1000001-1000000000000000' ? 'selected' : '' }}>&#8358
+                                    1000,000 and above</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="school" id="school" disabled>
-                    <option value="">School</option>
-                </select>
-            </div>
-
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="school_area" id="school_area" disabled>
-                    <option value=""> Area</option>
-                </select>
-            </div>
-
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="lodge" id="lodge">
-                    <option value="">Lodge</option>
-                    @foreach ($lodges as $lodge)
-                        <option value="{{ $lodge->slug }}" {{ Request::get('lodge') == $lodge->slug ? 'selected' : '' }}>
-                            {{ ucfirst($lodge->name) }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="col-4">
-                <select style="width: 100%; height: 30px" name="price" id="price">
-                    <option value="">Price</option>
-                    <option value="0-50000" {{ Request::get('price') == '0-50000' ? 'selected' : '' }}>&#8358 0 - &#8358
-                        50,000</option>
-                    <option value="50001-100000" {{ Request::get('price') == '50001-100000' ? 'selected' : '' }}>&#8358
-                        50,001 - &#8358 100,000</option>
-                    <option value="100001-150000" {{ Request::get('price') == '100001-150000' ? 'selected' : '' }}>&#8358
-                        100,001 - &#8358 150,000</option>
-                    <option value="150001-200000" {{ Request::get('price') == '150001-200000' ? 'selected' : '' }}>&#8358
-                        150,001 - &#8358 200,000</option>
-                    <option value="200001-250000" {{ Request::get('price') == '200001-250000' ? 'selected' : '' }}>&#8358
-                        200,001 - &#8358 250,000</option>
-                    <option value="250001-300000" {{ Request::get('price') == '250001-300000' ? 'selected' : '' }}>&#8358
-                        250,001 - &#8358 300,000</option>
-                    <option value="300001-350000" {{ Request::get('price') == '300001-350000' ? 'selected' : '' }}>&#8358
-                        300,001 - &#8358 350,000</option>
-                    <option value="350001-400000" {{ Request::get('price') == '350001-400000' ? 'selected' : '' }}>&#8358
-                        350,001 - &#8358 400,000</option>
-                    <option value="400001-450000" {{ Request::get('price') == '400001-450000' ? 'selected' : '' }}>&#8358
-                        400,001 - &#8358 450,000</option>
-                    <option value="450001-500000" {{ Request::get('price') == '450001-500000' ? 'selected' : '' }}>&#8358
-                        450,001 - &#8358 500,000</option>
-                    <option value="500001-600000" {{ Request::get('price') == '500001-600000' ? 'selected' : '' }}>&#8358
-                        500,001 - &#8358 600,000</option>
-                    <option value="600001-700000" {{ Request::get('price') == '600001-700000' ? 'selected' : '' }}>&#8358
-                        600,001 - &#8358 700,000</option>
-                    <option value="700001-800000" {{ Request::get('price') == '700001-800000' ? 'selected' : '' }}>&#8358
-                        700,001 - &#8358 800,000</option>
-                    <option value="800001-900000" {{ Request::get('price') == '800001-900000' ? 'selected' : '' }}>&#8358
-                        800,001 - &#8358 900,000</option>
-                    <option value="900001-1000000" {{ Request::get('price') == '900001-1000000' ? 'selected' : '' }}>&#8358
-                        900,001 - &#8358 1000,000</option>
-                    <option value="1000001-1000000000000000" {{ Request::get('price') == '1000001-1000000000000000' ? 'selected' : '' }}>&#8358 
-                        1000,000 and above</option>
-                </select>
-            </div>
-
             <div class="">
                 <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-funnel"></i> Filter</button>
             </div>
@@ -111,7 +146,7 @@
         <div class="row d-flex justify-content-start" style="margin-bottom: 100px">
             @if ($adverts->count() > 0)
                 <p class="text-muted fst-italic">({{ $adverts->count() }} result{{ $adverts->count() !== 1 ? 's' : '' }} )
-                
+
                     @if (Request::has('location') && !empty(Request::get('location')))
                         , Location: {{ ucfirst(Request::get('location')) }}
                     @endif
@@ -184,7 +219,6 @@
                     </style>
                     {{ $adverts->links() }}
                 </div>
-            
             @else
                 <p class="text-danger text-center">No lodge found</p>
             @endif

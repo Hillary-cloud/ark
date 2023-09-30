@@ -111,12 +111,16 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-2 ">
                     <p><span class="">Rent -</span> &#8358 {{ number_format($advert->price) }} per annum </p>
-                    <p><span class="">Agent Fee -</span> &#8358 {{ number_format($advert->agent_fee) }}
-                    </p>
-                    @if ($advert->negotiable == true)
-                        <p class="text-muted fst-italic"> Price is negotiable</p>
+                    
+                    
+                    @if ($advert->agent_fee !== null && $advert->negotiable == true)
+                    <p><span class="">Agent Fee -</span> &#8358 {{ number_format($advert->agent_fee) }}</p>
+                        <p class="text-muted fst-italic"> Agent fee is negotiable</p>
+                    @elseif($advert->agent_fee !== null && $advert->negotiable == false)
+                    <p><span class="">Agent Fee -</span> &#8358 {{ number_format($advert->agent_fee) }}</p>
+                        <p class="text-muted fst-italic"> Agent fee is not negotiable</p>
                     @else
-                        <p class="text-muted fst-italic"> Price is not negotiable</p>
+
                     @endif
 
                     <p><span class="">School Area -</span> {{ ucfirst($advert->school_area->name) }}</p>
