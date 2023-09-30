@@ -100,8 +100,9 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-2 ">
                     @if ($advert->lodge_id !== null)
-                        <p><span class="">Price -</span> &#8358 {{ number_format($advert->combined_price) }} per annum
-                        </p>
+                    <p><span class="">Rent -</span> &#8358 {{ number_format($advert->price) }} per annum </p>
+                    <p><span class="">Agent Fee -</span> &#8358 {{ number_format($advert->agent_fee) }}
+                    </p>
                         @if ($advert->negotiable == true)
                             <p class="text-muted fst-italic"> Price is negotiable</p>
                         @else
