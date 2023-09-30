@@ -1,7 +1,7 @@
 <base href="/public">
 @extends('layouts.base')
 @section('content')
-    <div class="container w-75 mx-auto my-3">
+    <div class="container mx-auto my-3">
         <div class="card p-2">
             <div class="d-flex justify-content-between">
                 <h3>Edit Draft</h3>
@@ -128,7 +128,7 @@
                                 <input type="checkbox" name="on_contact" id="onContact" class="form-check-input"
                                     onchange="handleInputToggle()" value="1"
                                     @if ($advert->on_contact) checked @endif>
-                                <label for="on_contact" class="form-check-label">On Contact</label>
+                                <label for="onContact" class="form-check-label">On Contact</label>
                                 @error('on_contact')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
