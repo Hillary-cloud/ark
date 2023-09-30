@@ -152,7 +152,7 @@
 
         .icon a.active {
         padding-top: 8px;
-        border-top: 2px solid green; 
+        border-top: 2px solid black; 
     }
     </style>
 
@@ -262,7 +262,7 @@
                                         {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdowni">
                                             <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
-                                                    class="bi bi-person"></i> Profile</a>
+                                                    class="bi bi-person-fill"></i> Profile</a>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
@@ -272,12 +272,12 @@
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li><a class="dropdown-item" href="{{ route('draft') }}"><i
-                                                        class="bi bi-file-earmark"></i> Draft</a></li>
+                                                        class="bi bi-file-earmark-fill"></i> Draft</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li><a class="dropdown-item" href="{{ route('bookmarks') }}"><i
-                                                        class="bi bi-bookmark"></i> Saved</a></li>
+                                                        class="bi bi-bookmark-fill"></i> Saved</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
@@ -324,12 +324,12 @@
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li><a class="dropdown-item" href="{{ route('draft') }}"><i
-                                                        class="bi bi-file-earmark"></i> Draft</a></li>
+                                                        class="bi bi-file-earmark-fill"></i> Draft</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li><a class="dropdown-item" href="{{ route('bookmarks') }}"><i
-                                                        class="bi bi-bookmark"></i> Saved</a></li>
+                                                        class="bi bi-bookmark-fill"></i> Saved</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
@@ -349,7 +349,7 @@
                                         {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdowniii">
                                             <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
-                                                    class="bi bi-person"></i> Profile</a>
+                                                    class="bi bi-person-fill"></i> Profile</a>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
@@ -420,19 +420,18 @@
         <nav id="bottom-navbar" class="navbar fixed-bottom d-md-none">
             <div class="d-flex justify-content-evenly text-center">
                 <div class="icon">
-                    <a href="/" class="{{ request()->is('/') ? 'active' : ''}} text-decoration-none"><i class="bi bi-house-door" 
-                        style="font-size: 20px; color: {{ request()->is('/') ? 'green' : 'black' }}"><p style="font-size: 10px;">Home</p></i></a>
+                    <a href="/" class="{{ request()->is('/') ? 'active' : ''}} text-decoration-none"><i class="bi bi-house-door-fill" 
+                        style="font-size: 20px; font-style:normal; color: {{ request()->is('/') ? 'black' : 'gray' }}"><p style="font-size: 10px;">Home</p></i></a>
                 </div>
                 
                 <div class="icon">
-                    <a href="{{ route('bookmarks') }}" class="{{ request()->is('bookmark') ? 'active' : ''}} text-decoration-none"><i class="bi bi-bookmark"
-                        style="font-size: 20px; color: {{ request()->is('bookmark') ? 'green' : 'black' }}"><p style="font-size: 10px;">Saved</p></i></a>
+                    <a href="{{ route('bookmarks') }}" class="{{ request()->is('bookmark') ? 'active' : ''}} text-decoration-none"><i class="bi bi-bookmark-fill"
+                        style="font-size: 20px; font-style:normal; color: {{ request()->is('bookmark') ? 'black' : 'gray' }}"><p style="font-size: 10px;">Saved</p></i></a>
                 </div>
 
                 <div class="dropup">
-                    <i type="button" class="dropdown-toggle bi bi-plus-circle" data-bs-toggle="dropdown"
-                        style="font-size: 20px; color: {{ request()->is('post-ad/lodge') || request()->is('post-ad/service') ? 'green' : 'black' }}">
-                    <p style="font-size: 10px;">Sell</p></i>
+                    <i type="button" class="dropdown-toggle bi bi-plus-circle-fill" style="font-size: 30px; color:green;" data-bs-toggle="dropdown"
+                        style="font-size: 20px; font-style:normal; color: {{ request()->is('post-ad/lodge') || request()->is('post-ad/service') ? 'green' : 'green' }}"></i>
 
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route('postLodge') }}">Post Lodge</a></li>
@@ -443,8 +442,8 @@
                     </ul>
                 </div>
                 <div class="icon notification-badge">
-                    <a href="{{ route('notification') }}" class="{{ request()->is('notification') ? 'active' : ''}} text-decoration-none"><i class="bi bi-bell"
-                        style="font-size: 20px; color: {{ request()->is('notification') ? 'green' : 'black' }}"><p style="font-size: 10px;">Notification</p></i>
+                    <a href="{{ route('notification') }}" class="{{ request()->is('notification') ? 'active' : ''}} text-decoration-none"><i class="bi bi-bell-fill"
+                        style="font-size: 20px; font-style:normal; color: {{ request()->is('notification') ? 'black' : 'gray' }}"><p style="font-size: 10px;">Notification</p></i>
                         @auth  
                         @if (auth()->user()->unreadNotifications->count() > 0)
                             <span class="badge-number">{{ auth()->user()->unreadNotifications->count() }}</span>
@@ -454,8 +453,8 @@
                     <p style="font-size: 10px;">Notification</p>
                 </div>
                 <div class="icon">
-                    <a href="{{ route('my-ads') }}" class="{{ request()->is('my-ads') ? 'active' : ''}} text-decoration-none"><i class="bi bi-badge-ad"
-                        style="font-size: 20px; color: {{ request()->is('my-ads') ? 'green' : 'black' }}"><p style="font-size: 10px;">My Ads</p></i></a>
+                    <a href="{{ route('profile.edit') }}" class="{{ request()->is('profile') ? 'active' : ''}} text-decoration-none"><i class="bi bi-person-fill"
+                        style="font-size: 20px; font-style:normal; color: {{ request()->is('profile') ? 'black' : 'gray' }}"><p style="font-size: 10px;">Person</p></i></a>
                 </div>
 
             </div>
