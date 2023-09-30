@@ -7,7 +7,7 @@
             <div class="d-flex justify-content-between">
                 <h3 class="fw-bold">Service</h3>
                 <a href="{{ route('admin.add-service') }}" class="btn btn-success rounded-pill text-light p-1"
-                    style="width: 12rem">Add Service</a>
+                    style="width: 6rem">Add Service</a>
             </div>
         </div>
         <div class="card w-100 p-2 m-3">
@@ -22,10 +22,12 @@
             @if (Service::count() < 1)
                 <p class="text-danger text-center">No Service found</p>
             @else
+            <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover text-center">
                     <thead class="bg-success text-light">
                         <tr class="align-middle text-center">
                             <th>S/N</th>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Slug</th>
                             <th>Date Added</th>
@@ -40,6 +42,7 @@
                         @foreach ($services as $service)
                             <tr class="align-middle text-center">
                                 <td>{{ $i++ }}</td>
+                                <td><img src="{{asset($service->cover_image)}}" class="img-fluid" style="object-fit: cover; width:10vw; height:10vh" alt=""></td>
                                 <td>{{ ucfirst($service->name) }}</td>
                                 <td>{{ $service->slug }}</td>
                                 <td>{{ $service->created_at }}</td>
@@ -56,6 +59,7 @@
 
                     </tbody>
                 </table>
+            </div>
             @endif
             </div>
         </div>

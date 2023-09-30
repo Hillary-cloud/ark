@@ -67,11 +67,14 @@ class HomeController extends Controller
         // Paginate Service Ads
         $serviceAds = $serviceAdsQuery->paginate(8);
 
-        return view('index', compact('lodgeAds', 'serviceAds', 'query'));
+        $lodges = Lodge::all();
+        $services = Service::all();
+
+        return view('index', compact('lodgeAds', 'serviceAds', 'query', 'lodges', 'services'));
     }
 
 
-    public function ViewMoreLodges(Request $request)
+    public function viewMoreLodges(Request $request)
     {
         $query = Advert::query();
 
@@ -152,7 +155,7 @@ class HomeController extends Controller
         return view('more-lodges', compact('adverts', 'locations', 'schools', 'school_areas', 'lodges'));
     }
 
-    public function ViewMoreServices(Request $request)
+    public function viewMoreServices(Request $request)
     {
         $query = Advert::query();
 
@@ -196,16 +199,16 @@ class HomeController extends Controller
             }
         }
 
-        if ($request->filled('lodge')) {
-            // Assuming the 'lodge' parameter now contains the lodge slug
-            $lodgeSlug = $request->input('lodge');
+        if ($request->filled('service')) {
+            // Assuming the 'service' parameter now contains the service slug
+            $serviceSlug = $request->input('service');
 
-            // Retrieve the lodge based on the slug
-            $lodge = Lodge::where('slug', $lodgeSlug)->first();
+            // Retrieve the service based on the slug
+            $service = Service::where('slug', $serviceSlug)->first();
 
-            if ($lodge) {
-                // Use the lodge's ID in the query
-                $query->where('lodge_id', $lodge->id);
+            if ($service) {
+                // Use the service's ID in the query
+                $query->where('service_id', $service->id);
             }
         }
         // Additional conditions for active, draft, and expiration date
@@ -222,6 +225,21 @@ class HomeController extends Controller
         return view('more-services', compact('ads', 'locations', 'schools', 'school_areas', 'services'));
     }
 
+    public function getSchoolsBySlug($locationSlug)
+    {
+        $location = Location::where('slug', $locationSlug)->firstOrFail();
+        $schools = $location->schools;
+
+        return response()->json(['schools' => $schools]);
+    }
+
+    public function getSchoolAreasBySlug($schoolSlug)
+    {
+        $school = School::where('slug', $schoolSlug)->firstOrFail();
+        $schoolAreas = $school->school_areas;
+
+        return response()->json(['schoolAreas' => $schoolAreas]);
+    }
 
     public function lodgeDetail($uuid)
     {
@@ -302,5 +320,134 @@ class HomeController extends Controller
             ->whatsapp();
 
         return view('service-detail', compact('advert', 'adverts', 'shareButton'));
+    }
+
+    public function lodgePage(Request $request, $slug)
+    {
+        $lodge = Lodge::where('slug', $slug)->firstOrFail();
+
+        $query = Advert::query();
+
+        // Apply filters if provided in the request
+        if ($request->filled('location')) {
+            // Assuming the 'location' parameter now contains the location slug
+            $locationSlug = $request->input('location');
+
+            // Retrieve the location based on the slug
+            $location = Location::where('slug', $locationSlug)->first();
+
+            if ($location) {
+                // Use the location's ID in the query
+                $query->where('location_id', $location->id);
+            }
+        }
+
+        if ($request->filled('school')) {
+            // Assuming the 'school' parameter now contains the school slug
+            $schoolSlug = $request->input('school');
+
+            // Retrieve the school based on the slug
+            $school = School::where('slug', $schoolSlug)->first();
+
+            if ($school) {
+                // Use the school's ID in the query
+                $query->where('school_id', $school->id);
+            }
+        }
+
+        if ($request->filled('school_area')) {
+            // Assuming the 'school_area' parameter now contains the school area slug
+            $schoolAreaSlug = $request->input('school_area');
+
+            // Retrieve the school area based on the slug
+            $schoolArea = SchoolArea::where('slug', $schoolAreaSlug)->first();
+
+            if ($schoolArea) {
+                // Use the school area's ID in the query
+                $query->where('school_area_id', $schoolArea->id);
+            }
+        }
+
+        if ($request->filled('price')) {
+            // Extract the price range from the request (e.g., '0-100000')
+            $priceRange = explode('-', $request->input('price'));
+            $minPrice = (int) $priceRange[0];
+            $maxPrice = (int) $priceRange[1];
+
+            // Filter the adverts where combined_price is within the selected range
+            $query->whereBetween('combined_price', [$minPrice, $maxPrice]);
+        }
+
+        // Additional conditions for active, draft, and expiration date
+        $adverts = $query->where('active', true)
+            ->where('draft', false)
+            ->whereNotNull('lodge_id')
+            ->where('slug', $slug)
+            ->where('expiration_date', '>', Carbon::now())->paginate(50);
+
+        $locations = Location::all();
+        $schools = School::all();
+        $school_areas = SchoolArea::all();
+        return view('lodge-page', compact('lodge', 'locations', 'schools', 'school_areas', 'adverts'));
+    }
+
+    public function servicePage(Request $request, $slug)
+    {
+        $service = Service::where('slug', $slug)->firstOrFail();
+
+        $query = Advert::query();
+
+        // Apply filters if provided in the request
+        if ($request->filled('location')) {
+            // Assuming the 'location' parameter now contains the location slug
+            $locationSlug = $request->input('location');
+
+            // Retrieve the location based on the slug
+            $location = Location::where('slug', $locationSlug)->first();
+
+            if ($location) {
+                // Use the location's ID in the query
+                $query->where('location_id', $location->id);
+            }
+        }
+
+        if ($request->filled('school')) {
+            // Assuming the 'school' parameter now contains the school slug
+            $schoolSlug = $request->input('school');
+
+            // Retrieve the school based on the slug
+            $school = School::where('slug', $schoolSlug)->first();
+
+            if ($school) {
+                // Use the school's ID in the query
+                $query->where('school_id', $school->id);
+            }
+        }
+
+        if ($request->filled('school_area')) {
+            // Assuming the 'school_area' parameter now contains the school area slug
+            $schoolAreaSlug = $request->input('school_area');
+
+            // Retrieve the school area based on the slug
+            $schoolArea = SchoolArea::where('slug', $schoolAreaSlug)->first();
+
+            if ($schoolArea) {
+                // Use the school area's ID in the query
+                $query->where('school_area_id', $schoolArea->id);
+            }
+        }
+
+        // Additional conditions for active, draft, and expiration date
+        $ads = $query->where('active', true)
+            ->where('draft', false)
+            ->whereNotNull('service_id')
+            ->where('slug', $slug)
+            ->where('expiration_date', '>', Carbon::now())->paginate(50);
+
+        $locations = Location::all();
+        $schools = School::all();
+        $school_areas = SchoolArea::all();
+
+        return view('service-page', compact('service', 'locations', 'schools', 'school_areas', 'ads'));
     }
 }

@@ -6,7 +6,7 @@
         <div class="card w-100 m-3 shadow-sm p-2">
             <div class="d-flex justify-content-between">
                 <h3 class="fw-bold">School</h3>
-                <a href="{{route('admin.add-school')}}" class="btn btn-success rounded-pill text-light p-1" style="width: 12rem">Add School</a>
+                <a href="{{route('admin.add-school')}}" class="btn btn-success rounded-pill text-light p-1" style="width: 6rem">Add School</a>
             </div>
         </div>
         <div class="card w-100 p-2 m-3">
@@ -22,6 +22,7 @@
         @if (School::count() < 1)
             <p class="text-danger text-center">No School found</p>
         @else
+        <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover text-center">
                 <thead class="bg-success text-light">
                     <tr class="align-middle text-center">
@@ -56,6 +57,7 @@
                 
                 </tbody>
             </table>
+        </div>
             @endif
         </div>
     </div>

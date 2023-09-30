@@ -94,6 +94,7 @@
                                 @enderror
                             </div>
 
+                            <span style="font-size: 10px" class="text-muted fst-italic">(Each image must not be more than 4MB)</span>
                             <div class="mb-3">
                                 <label for="cover_image" class="form-label">Cover Image<span class="text-danger">*</span></label>
                                 <input type="file" name="cover_image" id="cover_image" accept="image/*"
@@ -105,7 +106,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="other_images" class="form-label">Other Images (not more than 4 images)</label>
+                                <label for="other_images" class="form-label">Other Images <span style="font-size: 10px" class="text-muted fst-italic">(not more than 4 images)</span></label>
                                 <input type="file" name="other_images[]" id="other_images" accept="image/*"
                                     class="form-control" multiple max="4">
                                 <div id="otherImagesPreview" class="mt-2"></div>
@@ -128,7 +129,7 @@
                             <div class="mb-3">
                                 <label for="agent_fee" class="form-label">Agent fee(&#8358)</label>
                                 <input type="number" name="agent_fee" id="agent_fee" value="{{ old('agent_fee') }}"
-                                    class="form-control" step="0.01">
+                                    class="form-control">
                                 @error('agent_fee')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -157,7 +158,7 @@
                                 <input type="text" name="phone_number" id="phone_number"
                                     value="{{ old('phone_number') }}" placeholder="e.g, 080123456789"
                                     class="form-control">
-                                    <p class="text-muted fst-italic">NB: Provide your active phone number as people will reach out to you through it.</p>
+                                    <p class="text-muted fst-italic" style="font-size: 10px">NB: Provide your active phone number as people will reach out to you through it.</p>
                                 @error('phone_number')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror

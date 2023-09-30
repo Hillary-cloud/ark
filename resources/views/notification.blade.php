@@ -14,15 +14,37 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Notifications</div>
+                <div class="d-flex justify-content-between p-2">
+                    <div class="fw-bold">Notification</div>
+                    <a href="javascript:history.back()" class="text-decoration-none">
+                        < Back</a>
+                </div>
 
                 <div class="card-body">
                     @if (count($notifications) > 0)
                         <ul class="list-group ">
                             @foreach ($notifications as $notification)
                                 <li class="list-group-item ">
-                                    <a class="text-decoration-none {{ $notification->read_at ? 'read-notification' : '' }} notification-link " data-notification-id="{{ $notification->id }}" href="{{route('view-my-ad', $notification->data['ad_uuid']) }}">{{ $notification->data['message'] }}</a>
-                                    <p class="text-muted">{{$notification->created_at->diffForHumans()}}</p>
+                                    @if ($notification->type == 'App\Notifications\AdCreatedNotification')
+                                    <div class="d-flex justify-content-between">
+                                        <p class="bg-success text-light p-2 text-center" style="border-radius: 10px; width:150px">Advert listed</p>  
+                                        <a href="{{ route('delete-notification', $notification->id) }}"
+                                            onclick="event.preventDefault(); {{ route('delete-notification', $notification->id) }}"><i class="bi bi-x-circle" style="color: black"></i></a> 
+                                    </div>
+                                    @else
+                                    <div class="d-flex justify-content-between">
+                                    <p class="bg-danger text-light p-2 text-center" style="border-radius: 10px; width:150px">Advert delisted</p>   
+                                    <a href="{{ route('delete-notification', $notification->id) }}"
+                                        onclick="event.preventDefault(); {{ route('delete-notification', $notification->id) }}"><i class="bi bi-x-circle" style="color: black"></i></a>
+                                    </div>
+                                    @endif
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <a class="text-decoration-none {{ $notification->read_at ? 'read-notification' : '' }} notification-link " data-notification-id="{{ $notification->id }}" href="{{route('view-my-ad', $notification->data['ad_uuid']) }}">{{ $notification->data['message'] }}</a>
+                                            <p class="text-muted">{{$notification->created_at->diffForHumans()}}</p>
+                                        </div>
+                                        
+                                    </div>
                                 </li>
                             @endforeach
                         </ul>

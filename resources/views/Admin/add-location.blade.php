@@ -2,7 +2,7 @@
 @extends('layouts.base')
 @section('content')
     <div class="container">
-        <div class="card w-100 shadow-sm p-2">
+        <div class="card w-100 mt-3 shadow-sm p-2">
             <div class="d-flex justify-content-between">
                 <h3 class="fw-bold">Add Location</h3>
                 <a href="{{ route('admin.location') }}" class="btn btn-success rounded-pill text-light p-1"
@@ -32,5 +32,5 @@
         </div>
     </div>
 
-    <script src="{{asset('js/slug.js')}}"></script>
+    <script src="{{ asset('js/slug.js') }}"></script>
 @endsection

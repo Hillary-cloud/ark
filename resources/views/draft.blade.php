@@ -18,7 +18,7 @@
         @else
             <div class="row mx-auto w-100 ">
                 @foreach ($adverts as $advert)
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
 
                         <div class="card w-100 mt-3 shadow-lg">
                             <div class="card-header d-flex justify-content-between">
@@ -30,31 +30,31 @@
                                 <p>{{ ucfirst($advert->school_area->name) }}</p>
                             </div>
                             <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    @if ($advert->cover_image)
-                                        <img class="my-auto" src="{{ asset($advert->cover_image) }}"
-                                            style="object-fit: cover; height: 200px" class="img-fluid" width="50%"
-                                            alt="">
-                                    @endif
 
-                                    <div class="my-auto">
-                                        <a href="{{ route('edit-draft', $advert->uuid) }}"><button
-                                                class="btn btn-light btn-outline-success btn-sm ">Edit</button></a>
-                                        <a href="{{ route('delete-draft', $advert->uuid) }}"
-                                            onclick="event.preventDefault(); deleteDraft('{{ route('delete-draft', $advert->uuid) }}')"
-                                            class="btn btn-danger btn-sm text-light">Delete</a>
-                                        {{-- <a href="{{route('delete-draft', $advert->uuid)}}"><button class="btn btn-danger btn-sm">Delete</button></a> --}}
-                                    </div>
+                                @if ($advert->cover_image)
+                                    <img class="my-auto" src="{{ asset($advert->cover_image) }}"
+                                        style="object-fit: cover; height: 150px" class="img-fluid" width="100%"
+                                        alt="">
+                                @endif
+
+                                <div class="d-flex justify-content-between">
+                                    <p>{{ ucfirst($advert->location->state) }}</p>
+                                    @if ($advert->combined_price !== null)
+                                        <p>&#8358 {{ number_format($advert->combined_price) }}</p>
+                                    @else
+                                        Price on contact
+                                    @endif
                                 </div>
+
                             </div>
                             <div class="card-footer d-flex justify-content-between">
-                                <p>{{ ucfirst($advert->location->state) }}</p>
-                                @if ($advert->combined_price !== null)
-                                <p>&#8358 {{ number_format($advert->combined_price) }}</p>
-                                @else
-                                    Price on contact
-                                @endif
-                                
+                                <a href="{{ route('edit-draft', $advert->uuid) }}"><button
+                                        class="btn btn-light btn-outline-success btn-sm ">Edit</button></a>
+
+                                <a href="{{ route('delete-draft', $advert->uuid) }}"
+                                    onclick="event.preventDefault(); deleteDraft('{{ route('delete-draft', $advert->uuid) }}')"
+                                    class="btn btn-danger btn-sm text-light">Delete</a>
+                                {{-- <a href="{{route('delete-draft', $advert->uuid)}}"><button class="btn btn-danger btn-sm">Delete</button></a> --}}
                             </div>
 
                         </div>

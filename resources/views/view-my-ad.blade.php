@@ -47,19 +47,48 @@
             </div>
         </div>
 
-        <img src="{{ asset($advert->cover_image) }}" class="img-fluid mx-auto d-block"
-            style="width: 100%; object-fit:cover; height:500px" alt="">
-        <h4 class=" fw-bold text-success mt-4">More</h4>
-        <div class="row align-items-start mb-5">
-            @foreach ($advert->other_images as $images)
-                <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-                    <img src="{{ asset($images) }}" style="width:100%; object-fit:cover; height: 15vh;"
-                        class="img-fluid other-image" alt="">
-
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="{{ asset($advert->cover_image) }}" class="img-fluid col-lg-8 col-md-8 col-sm-12 col-12"
+                            style="height: 400px; object-cover: fit; border-radius:10px" alt="Cover Image">
+                    </div>
                 </div>
-            @endforeach
-
+                @foreach ($advert->other_images as $images)
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="{{ asset($images) }}" class="img-fluid col-lg-8 col-md-8 col-sm-12 col-12"
+                                style="height: 400px; object-cover: fit; border-radius:10px" alt="Other Image">
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev" style="left: 15%; top: %">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next" style="right: 15%; top: %">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+
+        <div style="border-radius: 10px; background-color: rgb(231, 222, 222)">
+            <h4 class="text-success mt-4 text-center">More Images</h4>
+            <div class="row justify-content-center mb-3 p-3">
+                @foreach ($advert->other_images as $images)
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                        <img src="{{ asset($images) }}"
+                            style="width: 100%; height: 15vh; object-fit: cover; border-radius: 10px;" class="other-image"
+                            alt="">
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
         @if ($advert->lodge_id !== null)
             <h1 class="display-4">{{ ucfirst($advert->lodge->name) }} for rent</h1>
         @else
@@ -88,7 +117,7 @@
                     <p><span class="">School Area -</span> {{ ucfirst($advert->school_area->name) }}</p>
                     <p><span class="">School -</span> {{ ucfirst($advert->school->name) }}</p>
                     <p><span class="">State -</span> {{ ucfirst($advert->location->state) }}</p>
-                    <p><span class="">Date Listed -</span> {{ \Carbon\Carbon::parse($advert->list_date)->diffForHumans() }}</p>
+
                     @if ($advert->expiration_date == null && $advert->draft == false && $advert->active == false)
                         <p>Status - <span class="text-danger fst-italic">This ad has elapsed 30 days, and because of that,
                                 it has been de-listed from active ads.
@@ -96,14 +125,19 @@
                         <a href="{{ route('relist', $advert->uuid) }}"><button
                                 class="btn btn-primary w-25 text-light">Re-list</button></a>
                     @else
-                        <p><span class="">Expiration Date -</span> {{ \Carbon\Carbon::parse($advert->expiration_date)->diffForHumans() }}</p>
+                        <p><span class="">Time Listed -</span>
+                            {{ \Carbon\Carbon::parse($advert->list_date)->diffForHumans() }}</p>
+                        <p><span class="">Expiration Date -</span>
+                            {{ \Carbon\Carbon::parse($advert->expiration_date)->diffForHumans() }}</p>
                     @endif
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <h4 class="fw-bold">Description</h4>
                     <p>{{ ucfirst($advert->description) }}</p>
 
-                    <h5 class="bg-success rounded-pill text-center p-2 text-light"> {{ $advert->phone_number }}</h5>
+                    <a class="text-decoration-none" href="tel:{{ $advert->phone_number }}">
+                        <h5 class="bg-success rounded-pill text-center p-2 text-light"> {{ $advert->phone_number }}</h5>
+                    </a>
                     <h5 class="bg-primary rounded-pill text-center p-2 text-light">Seller -
                         {{ ucfirst($advert->seller_name) }}</h5>
 

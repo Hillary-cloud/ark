@@ -2,7 +2,7 @@
 @extends('layouts.base')
 @section('content')
 
-    <div class="container">
+    <div class="container" style="margin-bottom: 100px;">
 
         <div class="card w-100 mt-3 shadow-sm p-2">
              <div class="d-flex justify-content-between">
@@ -25,7 +25,7 @@
             @endif
        
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 table-responsive">
                     <table class="table table-striped table-bordered table-hover text-center">
                         <thead class="bg-success text-light">
                             <tr class="align-middle">

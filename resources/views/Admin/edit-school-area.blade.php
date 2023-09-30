@@ -2,7 +2,7 @@
 @extends('layouts.base')
 @section('content')
     <div class="container">
-        <div class="card w-100 m-3 shadow-sm p-2">
+        <div class="card w-100 mt-3 shadow-sm p-2">
             <div class="d-flex justify-content-between">
                 <h3 class="fw-bold">Edit School Area</h3>
                 <a href="{{ route('admin.school-area') }}" class="btn btn-success rounded-pill text-light p-1"

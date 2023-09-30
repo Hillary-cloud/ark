@@ -115,7 +115,7 @@ $(document).ready(function() {
                 otherImagesArray.push(e.target.result); // Add image data URL to the array
                 container.append('<div id="' + previewId + '"><img src="' + e.target
                     .result +
-                    '" width="100" height="100" /></div>');
+                    '" width="50" height="50" /></div>');
                 imageCounter++;
             };
             reader.readAsDataURL(files[i]);

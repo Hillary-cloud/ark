@@ -10,6 +10,7 @@ use App\Models\School;
 use App\Models\Service;
 use App\Models\Location;
 use App\Models\SchoolArea;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -63,7 +64,6 @@ class AdvertController extends Controller
 
         // Calculate the combined price (ad price + agent fee)
         $combinedPrice = $request->input('price') + $request->input('agent_fee');
-
 
         // Save the ad as a draft in the database
         $advert = new Advert([
@@ -416,5 +416,13 @@ class AdvertController extends Controller
         $advert->save();
 
         return redirect()->route('payment-page', ['uuid' => $advert->uuid]);
+    }
+
+    public function deleteNotification($id)
+    {
+        $notification = Notification::where('id', $id)->firstOrFail();
+        $notification->delete();
+
+        return redirect()->back();
     }
 }

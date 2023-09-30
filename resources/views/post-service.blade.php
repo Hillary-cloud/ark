@@ -83,6 +83,7 @@
                                 @enderror
                             </div>
 
+                            <span style="font-size: 10px" class="text-muted fst-italic">(Each image must not be more than 4MB)</span>
                             <div class="mb-3">
                                 <label for="cover_image" class="form-label">Cover Image<span class="text-danger">*</span></label>
                                 <input type="file" name="cover_image" id="cover_image" accept="image/*"
@@ -94,7 +95,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="other_images" class="form-label">Other Images (not more than 4 images)</label>
+                                <label for="other_images" class="form-label">Other Images <span style="font-size: 10px" class="text-muted fst-italic">(not more than 4 images)</span></label>
                                 <input type="file" name="other_images[]" id="other_images" accept="image/*"
                                     class="form-control" multiple max="4">
                                 <div id="otherImagesPreview" class="mt-2"></div>
@@ -109,27 +110,25 @@
                             <div class="mb-3">
 
                                 <label for="" class="form-label">Price<span class="text-danger">*</span></label>
-                                <div class="d-flex justify-content-evenly">
+                                <div class="p-2" style="border-radius: 10px; background-color: rgb(231, 222, 222)">
                                     <div class="price">
-                                        <label for="price" class="">Amount(&#8358):</label>
-                                        <input type="number" name="price" value="{{ old('price') }}" id="price" onchange="handleInputToggle()" step="0.01">
+                                        <label for="price" class="" style="font-size: 12px">Amount(&#8358):</label>
+                                        <input type="number" name="price" value="{{ old('price') }}" style="width: 50%" id="price" onchange="handleInputToggle()">
 
                                     </div>
                                     @error('price')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                                    
-
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                
                                     <div class="on_contact">
-                                        <label for="onContact" class="">On Contact:</label>
-                                        <input type="checkbox" name="on_contact" id="onContact" onchange="handleInputToggle()" value="1">
-                                       
+                                        <label for="onContact" class="" style="font-size: 12px">Price On Contact:</label>
+                                        <input type="checkbox" name="on_contact" id="onContact" onchange="handleInputToggle()" value="1">             
                                     </div>
                                     @error('on_contact')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                                 </div>
-                                <p class="text-muted fst-italic">NB: Please select one option.</p>
+                                <p class="text-muted fst-italic" style="font-size: 10px">NB: Select one option.</p>
                                 
                             </div>
 
@@ -147,7 +146,7 @@
                                 <input type="text" name="phone_number" id="phone_number"
                                     value="{{ old('phone_number') }}" placeholder="e.g, 080123456789"
                                     class="form-control">
-                                    <p class="text-muted fst-italic">NB: Provide your active phone number as people will reach out to you through it.</p>
+                                    <p class="text-muted fst-italic" style="font-size: 10px">NB: Provide your active phone number as people will reach out to you through it.</p>
                                 @error('phone_number')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror

@@ -43,12 +43,18 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [HomeController::class, 'index'])->name('/');
 Route::get('/lodge/details/{uuid}', [HomeController::class, 'lodgeDetail'])->name('lodge-detail');
 Route::get('/service/details/{uuid}', [HomeController::class, 'serviceDetail'])->name('service-detail');
-Route::get('/lodges', [HomeController::class, 'ViewMoreLodges'])->name('view-more-lodges');
-Route::get('/services', [HomeController::class, 'ViewMoreServices'])->name('view-more-services');
+Route::get('/lodges', [HomeController::class, 'viewMoreLodges'])->name('view-more-lodges');
+Route::get('/services', [HomeController::class, 'viewMoreServices'])->name('view-more-services');
+
+Route::get('/lodge/{slug}', [HomeController::class, 'lodgePage'])->name('lodge-page');
+Route::get('/service/{slug}', [HomeController::class, 'servicePage'])->name('service-page');
+
+Route::get('/getSchools/{locationSlug}', [HomeController::class, 'getSchoolsBySlug']);
+Route::get('/getSchoolAreas/{SchoolSlug}', [HomeController::class, 'getSchoolAreasBySlug']);
 
 // protected routes
 Route::middleware('auth')->group(function () {
-    
+
     // advert
     Route::get('post-ad/lodge', [AdvertController::class, 'lodgeIndex'])->name('postLodge');
     Route::get('post-ad/service', [AdvertController::class, 'serviceIndex'])->name('postService');
@@ -82,6 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::put('update-relist-service/{uuid}', [AdvertController::class, 'updateRelistService'])->name('update-relist-service');
     Route::get('notification', [AdvertController::class, 'showNotifications'])->name('notification');
     Route::post('/mark-notification-as-read/{notification}', [AdvertController::class, 'markNotificationAsRead'])->name('mark-notification-as-read');
+    Route::get('/notification/delete/{id}', [AdvertController::class, 'deleteNotification'])->name('delete-notification');
 
 
     Route::get('/payment/{uuid}', [PaymentController::class, 'showPaymentPage'])->name('payment-page');
@@ -137,27 +144,26 @@ Route::middleware('auth')->group(function () {
 
     // bookmark
     Route::post('/bookmark/toggle', [BookmarkController::class, 'toggleBookmark'])
-    ->name('bookmark.toggle');
+        ->name('bookmark.toggle');
     Route::get('/bookmark', [BookmarkController::class, 'bookmarkAds'])->name('bookmarks');
     Route::get('/bookmark/delete/{id}', [BookmarkController::class, 'deleteBookmark'])->name('delete-bookmark');
-
 });
 // email verification routes
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
- 
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
- 
+
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
- 
+
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
- 
+
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

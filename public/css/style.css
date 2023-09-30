@@ -1,12 +1,12 @@
-a .card img:hover{
+/* a .card img:hover{
     transform: scale(1.1);
 }
 a .card img{
     transition: transform 0.2s ease;
-}
+} */
 
 .dropdown-menu .dropdown-item a:hover{
-    background-color: gray;
+    background-color: #28a745;
     color: white;
 }
 

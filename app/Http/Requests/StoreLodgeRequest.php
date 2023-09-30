@@ -26,9 +26,9 @@ class StoreLodgeRequest extends FormRequest
             'description' => 'required',
             'phone_number' => 'required|string',
             'seller_name' => 'required|string',
-            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:3072',
+            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
             'other_images' => 'nullable|array|max:4', // Allow up to 4 images
-            'other_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:3072',
+            'other_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:4096',
             // 'expiration_date' => 'required|date|after:today', // Assuming the product should expire in the future.
             'active' => 'nullable|boolean',
             'draft' => 'nullable|boolean',

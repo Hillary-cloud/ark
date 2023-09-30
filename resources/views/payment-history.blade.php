@@ -16,6 +16,7 @@
             @if (Payment::where('user_id',auth()->user()->id)->count() < 1)
                 <p class="text-danger text-center">No transaction yet</p>
             @else
+            <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover text-center">
                     <thead class="bg-success text-light">
                         <tr>
@@ -37,6 +38,7 @@
 
                     </tbody>
                 </table>
+            </div>
             @endif
             </div>
         </div>

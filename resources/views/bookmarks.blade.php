@@ -22,7 +22,7 @@
                                 <a href="{{ route('service-detail', $bookmark->advert->uuid) }}"
                                     class="text-decoration-none">
                         @endif
-                        <div class="card shadow-lg">
+                        <div class="card shadow-lg" style="border-radius: 10px">
                             <img src="{{ asset($bookmark->advert->cover_image) }}" class="card-img-top w-100"
                                 style="object-fit: cover; height:25vh" alt="">
                             </a>
@@ -38,8 +38,8 @@
 
                                     {{-- <a href="{{route('delete-bookmark',$bookmark->id)}}"><button class="btn btn-danger btn-sm">Delete</button></a>                               --}}
                                     <a href="{{ route('delete-bookmark', $bookmark->id) }}"
-                                        onclick="event.preventDefault(); deleteBookmark('{{ route('delete-bookmark', $bookmark->id) }}')"
-                                        class="btn text-danger"><i class="bi bi-trash"></i></a>
+                                        onclick="event.preventDefault(); {{ route('delete-bookmark', $bookmark->id) }}"
+                                        ><i class="bi bi-x-circle" style="color: black"></i></a>
                                 </div>
 
                                 <div class="d-flex justify-content-between">
@@ -79,22 +79,4 @@
 
         </div>
     </div>
-
-    <script>
-        function deleteBookmark(deleteUrl) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You are about to remove this saved ad',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, remove it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = deleteUrl;
-                }
-            });
-        }
-    </script>
 @endsection

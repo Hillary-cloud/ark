@@ -22,6 +22,7 @@
             @if (Location::count() < 1)
                 <p class="text-danger text-center">No Location found</p>
             @else
+            <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover text-center">
                     <thead class="bg-success text-light">
                         <tr class="align-middle text-center">
@@ -57,6 +58,7 @@
 
                     </tbody>
                 </table>
+            </div>
             @endif
             </div>
         </div>
