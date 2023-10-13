@@ -309,7 +309,10 @@ class AdvertController extends Controller
                             ->orWhere('lodges.name', 'like', '%' . $query . '%')
                             ->orWhere('services.name', 'like', '%' . $query . '%');
                     });
-            })->paginate(10);
+            })
+            // this is supposed to get an advert together with the cover image. but it only gets the image of the lodge or service
+            // ->select('adverts.*', 'lodges.name as lodge_name', 'services.name as service_name', 'locations.state as location_state', 'schools.name as school_name', 'school_areas.name as school_area_name')
+            ->paginate(10);
 
         return view('admin.all-ads', compact('adverts', 'query'));
     }

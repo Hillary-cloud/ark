@@ -7,10 +7,10 @@
         <div class="card w-100 mt-3 shadow-sm p-2">
              <div class="d-flex justify-content-between">
                 <h3 class="">My Ads</h3>
-                <form class=" d-flex">
+                {{-- <form class=" d-flex">
                     <input class=" me-2" style="width: 30vw;" type="search" name="query" value="{{ old('query', $query) }}" placeholder="Search" aria-label="Search" >
                     <button class="btn btn-outline-light btn-success form-control-lg" type="submit"><i class="bi bi-search" style="font-size: 20px"></i></button>
-                </form>
+                </form> --}}
             </div>
            
         </div>
@@ -40,7 +40,7 @@
                           
                             @foreach ($adverts as $advert)
                                 <tr class="align-middle">
-                                    <td><img src="{{asset($advert->cover_image)}}" class="img-fluid" style="object-fit: cover; width:10vw; height:10vh" alt=""></td>
+                                    <td><img src="{{asset($advert->cover_image)}}" class="img-fluid" style="object-fit: cover; border-radius:5px; width:100px; height:50px" alt=""></td>
                                     @if ($advert->service_id !== null)
                                     <td>{{ ucfirst($advert->service->name) }}</td>
                                     @else

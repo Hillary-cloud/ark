@@ -18,8 +18,8 @@ class Kernel extends ConsoleKernel
         // New scheduled task for ad expiration notifications
         $schedule->command('ads:send-expiration-notifications')->dailyAt('01:00');
 
-        $schedule->command('backup:clean')->daily()->at('01:00'); // Comment out or remove this line
-        $schedule->command('backup:run')->daily()->at('02:00');   // Create a new backup daily
+        $schedule->command('backup:clean')->daily()->at('03:00'); // Comment out or remove this line
+        $schedule->command('backup:run')->daily()->at('04:00');   // Create a new backup daily
 
     }
 

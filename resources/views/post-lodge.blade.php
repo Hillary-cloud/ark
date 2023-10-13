@@ -110,7 +110,7 @@
                                 <input type="file" name="other_images[]" id="other_images" accept="image/*"
                                     class="form-control" multiple max="4">
                                 <div id="otherImagesPreview" class="mt-2"></div>
-                                @error('other_images')
+                                @error('other_images.*')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>

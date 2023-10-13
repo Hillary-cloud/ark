@@ -63,7 +63,6 @@
                         <table class="table table-striped table-bordered table-hover text-center">
                             <thead class="bg-success text-light">
                                 <tr class="align-middle">
-                                    <th>S/N</th>
                                     <th>Image</th>
                                     <th>Ads</th>
                                     <th>School</th>
@@ -73,14 +72,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
+                               
                                 @foreach ($adverts as $advert)
                                     <tr class="align-middle">
-                                        <td>{{ $i++ }}</td>
                                         <td><img src="{{ asset($advert->cover_image) }}" class="img-fluid"
-                                                style="object-fit: cover; width:10vw; height:10vh" alt=""></td>
+                                                style="object-fit: cover; border-radius:5px; width:100px; height:50px" alt=""></td>
                                         @if ($advert->service_id !== null)
                                             <td>{{ ucfirst($advert->service->name) }}</td>
                                         @else
