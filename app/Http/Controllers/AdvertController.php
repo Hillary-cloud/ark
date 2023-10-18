@@ -428,4 +428,9 @@ class AdvertController extends Controller
 
         return redirect()->back();
     }
+
+    public function welcomeNotification($id){
+        $notification = Notification::where('id',$id)->firstOrFail();
+        return view('welcome-notification',compact('notification'));
+    }
 }

@@ -73,6 +73,11 @@ class HomeController extends Controller
         return view('index', compact('lodgeAds', 'serviceAds', 'query', 'lodges', 'services'));
     }
 
+    public function services(){
+        $services = Service::all();
+
+        return view('services', compact('services'));
+    }
 
     public function viewMoreLodges(Request $request)
     {
@@ -449,5 +454,9 @@ class HomeController extends Controller
         $school_areas = SchoolArea::all();
 
         return view('service-page', compact('service', 'locations', 'schools', 'school_areas', 'ads'));
+    }
+
+    public function profilePage(){
+        return view('profile-page');
     }
 }

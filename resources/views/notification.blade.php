@@ -31,13 +31,6 @@
                                         <a href="{{ route('delete-notification', $notification->id) }}"
                                             onclick="event.preventDefault(); {{ route('delete-notification', $notification->id) }}"><i class="bi bi-x-circle" style="color: black"></i></a> 
                                     </div>
-                                    @else
-                                    <div class="d-flex justify-content-between">
-                                    <p class="bg-danger text-light p-2 text-center" style="border-radius: 10px; width:150px">Advert delisted</p>   
-                                    <a href="{{ route('delete-notification', $notification->id) }}"
-                                        onclick="event.preventDefault(); {{ route('delete-notification', $notification->id) }}"><i class="bi bi-x-circle" style="color: black"></i></a>
-                                    </div>
-                                    @endif
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <a class="text-decoration-none {{ $notification->read_at ? 'read-notification' : '' }} notification-link " data-notification-id="{{ $notification->id }}" href="{{route('view-my-ad', $notification->data['ad_uuid']) }}">{{ $notification->data['message'] }}</a>
@@ -45,6 +38,34 @@
                                         </div>
                                         
                                     </div>
+                                    @elseif($notification->type == 'App\Notifications\AdExpired')
+                                    <div class="d-flex justify-content-between">
+                                    <p class="bg-danger text-light p-2 text-center" style="border-radius: 10px; width:150px">Advert delisted</p>   
+                                    <a href="{{ route('delete-notification', $notification->id) }}"
+                                        onclick="event.preventDefault(); {{ route('delete-notification', $notification->id) }}"><i class="bi bi-x-circle" style="color: black"></i></a>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <a class="text-decoration-none {{ $notification->read_at ? 'read-notification' : '' }} notification-link " data-notification-id="{{ $notification->id }}" href="{{route('view-my-ad', $notification->data['ad_uuid']) }}">{{ $notification->data['message'] }}</a>
+                                            <p class="text-muted">{{$notification->created_at->diffForHumans()}}</p>
+                                        </div>
+                                        
+                                    </div>
+                                    @else
+                                    <div class="d-flex justify-content-between">
+                                        <p class="bg-primary text-light p-2 text-center" style="border-radius: 10px; width:150px">Welcome</p>   
+                                        <a href="{{ route('delete-notification', $notification->id) }}"
+                                            onclick="event.preventDefault(); {{ route('delete-notification', $notification->id) }}"><i class="bi bi-x-circle" style="color: black"></i></a>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <a class="text-decoration-none {{ $notification->read_at ? 'read-notification' : '' }} notification-link " data-notification-id="{{ $notification->id }}" href="{{route('welcome-notification', $notification->id) }}">{{ $notification->data['message'] }}</a>
+                                                <p class="text-muted">{{$notification->created_at->diffForHumans()}}</p>
+                                            </div>
+                                            
+                                        </div>
+                                    @endif
+                                   
                                 </li>
                             @endforeach
                         </ul>

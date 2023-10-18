@@ -1,5 +1,6 @@
 <?php
 
+use Artisan;
 use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,17 +35,27 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::get('clear_cache', function () {     \Artisan::call('optimize:clear');
+         dd("Cache is cleared"); });
+Route::get('/create-symlink', function (){
+    $targetFolder = storage_path('/app/public');
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetFolder,$linkFolder);
+    echo "Symlink Created. Thanks";
+});
+
+Route::middleware(['auth','verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
+Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/lodge/details/{uuid}', [HomeController::class, 'lodgeDetail'])->name('lodge-detail');
 Route::get('/service/details/{uuid}', [HomeController::class, 'serviceDetail'])->name('service-detail');
-Route::get('/lodges', [HomeController::class, 'viewMoreLodges'])->name('view-more-lodges');
-Route::get('/services', [HomeController::class, 'viewMoreServices'])->name('view-more-services');
+Route::get('/more-lodges', [HomeController::class, 'viewMoreLodges'])->name('view-more-lodges');
+Route::get('/more-services', [HomeController::class, 'viewMoreServices'])->name('view-more-services');
 
 Route::get('/lodge/{slug}', [HomeController::class, 'lodgePage'])->name('lodge-page');
 Route::get('/service/{slug}', [HomeController::class, 'servicePage'])->name('service-page');
@@ -53,7 +64,9 @@ Route::get('/getSchools/{locationSlug}', [HomeController::class, 'getSchoolsBySl
 Route::get('/getSchoolAreas/{SchoolSlug}', [HomeController::class, 'getSchoolAreasBySlug']);
 
 // protected routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
+    // profile page
+    Route::get('/dashboard-page', [HomeController::class, 'profilePage'])->name('profile-page');
 
     // advert
     Route::get('post-ad/lodge', [AdvertController::class, 'lodgeIndex'])->name('postLodge');
@@ -89,6 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::get('notification', [AdvertController::class, 'showNotifications'])->name('notification');
     Route::post('/mark-notification-as-read/{notification}', [AdvertController::class, 'markNotificationAsRead'])->name('mark-notification-as-read');
     Route::get('/notification/delete/{id}', [AdvertController::class, 'deleteNotification'])->name('delete-notification');
+    Route::get('welcome-notification/{id}', [AdvertController::class, 'welcomeNotification'])->name('welcome-notification');
 
 
     Route::get('/payment/{uuid}', [PaymentController::class, 'showPaymentPage'])->name('payment-page');

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Notifications\NewUserNotification;
 
 class RegisteredUserController extends Controller
 {
@@ -43,6 +44,9 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        // Dispatch the notification
+        $user->notify(new NewUserNotification());
 
         event(new Registered($user));
 

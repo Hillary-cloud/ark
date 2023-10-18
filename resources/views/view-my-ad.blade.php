@@ -82,7 +82,7 @@
                 @foreach ($advert->other_images as $images)
                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
                         <img src="{{ asset($images) }}"
-                            style="width: 100%; height: 15vh; object-fit: cover; border-radius: 10px;" class="other-image"
+                            style="width: 100%; height: 15vh; object-fit: cover; border-radius: 5px;" class="other-image"
                             alt="">
                     </div>
                 @endforeach

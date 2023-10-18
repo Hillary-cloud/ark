@@ -96,7 +96,7 @@
                 @foreach ($advert->other_images as $images)
                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
                         <img src="{{ asset($images) }}"
-                            style="width: 100%; height: 15vh; object-fit: cover; border-radius: 10px;" class="other-image"
+                            style="width: 100%; height: 15vh; object-fit: cover; border-radius: 5px;" class="other-image"
                             alt="">
                     </div>
                 @endforeach
@@ -148,14 +148,13 @@
         <div class="card p-4 m-3 shadow-sm">
             <h4>Safety tips</h4>
             <ul>
-                <li>Don't pay in advance, including for delivery</li>
-                <li>Meet the seller at a safe public place</li>
-                <li>Inspect the property and ensure it's exactly what you want</li>
-                <li>Only pay when you are satisfied</li>
+                <li>Avoid making upfront payments, especially for delivery services.</li>
+                <li>Arrange to meet the seller in a secure and public location.</li>
+                <li>Thoroughly examine the property/service to confirm it meets your requirements.</li>
+                <li>Make payment only after you are content with the transaction.</li>
             </ul>
         </div>
-        <a href="{{ route('postService') }}" class="btn btn-outline-success btn-light fw-bold mb-4">POST SERVICE
-            SIMILAR TO THIS</a>
+        <a href="{{ route('postService') }}" class="btn btn-outline-success btn-light fw-bold mb-4">POST SERVICE</a>
 
         <div class="card p-3 my-3">
             <h2 class="">Similar Ads</h2>

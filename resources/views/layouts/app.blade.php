@@ -261,28 +261,8 @@
 
                                         {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdowni">
-                                            <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                            <a class="dropdown-item" href="{{ route('profile-page') }}"><i
                                                     class="bi bi-person-fill"></i> Profile</a>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" href="{{ route('my-ads') }}"><i
-                                                        class="bi bi-badge-ad"></i> My Ads</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" href="{{ route('draft') }}"><i
-                                                        class="bi bi-file-earmark-fill"></i> Draft</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" href="{{ route('bookmarks') }}"><i
-                                                        class="bi bi-bookmark-fill"></i> Saved</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" href="{{ route('payment-history') }}"><i
-                                                        class="bi bi-credit-card-2-back"></i> Transaction History</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
@@ -348,7 +328,7 @@
 
                                         {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdowniii">
-                                            <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                            <a class="dropdown-item" href="{{ route('profile-page') }}"><i
                                                     class="bi bi-person-fill"></i> Profile</a>
                                             <li>
                                                 <hr class="dropdown-divider">
@@ -453,8 +433,8 @@
                     <p style="font-size: 10px;">Notification</p>
                 </div>
                 <div class="icon">
-                    <a href="{{ route('profile.edit') }}" class="{{ request()->is('profile') ? 'active' : ''}} text-decoration-none"><i class="bi bi-person-fill"
-                        style="font-size: 20px; font-style:normal; color: {{ request()->is('profile') ? 'black' : 'gray' }}"><p style="font-size: 10px;">Person</p></i></a>
+                    <a href="{{ route('profile-page') }}" class="{{ request()->is('dashboard-page') ? 'active' : ''}} text-decoration-none"><i class="bi bi-person-fill"
+                        style="font-size: 20px; font-style:normal; color: {{ request()->is('dashboard-page') ? 'black' : 'gray' }}"><p style="font-size: 10px;">Profile</p></i></a>
                 </div>
 
             </div>

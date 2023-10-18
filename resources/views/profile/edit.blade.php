@@ -26,16 +26,17 @@
             </div>
 
             <!-- Uncomment this section for delete user form -->
-            {{-- 
-            <div class="col-md-6 mb-4">
+            
+            {{-- <div class="col-md-6 mb-4">
                 <div class="card shadow">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Delete User</h5>
                         @include('profile.partials.delete-user-form')
                     </div>
                 </div>
-            </div>
-            --}}
+            </div> --}}
+           
         </div>
     </div>
+
 </x-app-layout>
